@@ -510,7 +510,7 @@
                         ctx.HttpContext.Response.StatusCode = (int)httpActionValidationException.StatusCode;
                         ctx.ProblemDetails.Extensions.Add("FailureCode", httpActionValidationException.FailureCode);
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
                             ctx.ProblemDetails.Extensions.Add("StackTrace", httpActionValidationException.StackTrace);
                     }
                     else if (exception != null && exception is LoginApiException)
@@ -540,10 +540,10 @@
                         ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
                         ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        {
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //{
                             ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        }
+                        //}
                     }
                     else if (exception != null && exception is EmailApiException)
                     {
@@ -557,10 +557,10 @@
                         ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
                         ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        {
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //{
                             ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        }
+                        //}
                     }
                     else if (exception != null && exception is PricingApiException)
                     {
@@ -574,10 +574,10 @@
                         ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
                         ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        {
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //{
                             ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        }
+                        //}
                     }
                     else if (exception != null && exception is StorageApiException)
                     {
@@ -591,10 +591,10 @@
                         ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
                         ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        {
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //{
                             ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        }
+                        //}
                     }
                     else if (exception != null && exception is LocalizationApiException)
                     {
@@ -608,10 +608,10 @@
                         ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
                         ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        {
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //{
                             ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        }
+                        //}
                     }
                     else if (exception != null)
                     {
@@ -621,10 +621,10 @@
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        {
+                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+                        //{
                             ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
-                        }
+                        //}
                     }
                 };
             });
