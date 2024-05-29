@@ -121,7 +121,9 @@ jobs:
         file: Mshrm.Studio/Mshrm.Studio.Api/Dockerfile
         push: true
         tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioapi
-        
+        build-args: |
+           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+           
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
