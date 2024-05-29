@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Subscriptions\Commands\" />
+    <Folder Include="Subscriptions\Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

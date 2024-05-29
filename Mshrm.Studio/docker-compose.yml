@@ -1,0 +1,326 @@
+version: '3.4'
+
+services:
+  mshrm-studio-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudioapi
+    ports:
+      - '1230:8081'
+      - '1250:8080'
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    build:
+      context: .
+      dockerfile: Mshrm.Studio.Api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  mshrm-studio-auth-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudioauthapi
+    ports:
+      - '1231:8081'
+      - '1251:8080'
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    build:
+      context: .
+      dockerfile: Authorization/Mshrm.Studio.Auth.Api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+
+  mshrm-studio-auth-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}authapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "authapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+      - mshrm-studio-auth-api
+    network_mode: "service:mshrm-studio-auth-api"
+
+  mshrm-studio-domain-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudiodomainapi
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Domain/mshrm.studio.domain.api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+
+  mshrm-studio-domain-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}domainapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "domainapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+      - mshrm-studio-domain-api
+    network_mode: "service:mshrm-studio-domain-api"
+
+  mshrm-studio-email-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudioemailapi
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Email/mshrm.studio.email.api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+
+  mshrm-studio-email-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}emailapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "emailapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+      - mshrm-studio-email-api
+    network_mode: "service:mshrm-studio-email-api"
+
+  mshrm-studio-pricing-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudiopricingapi
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Pricing/mshrm.studio.pricing.api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+      - sqlserver
+
+  mshrm-studio-pricing-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}pricingapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "pricingapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+      - mshrm-studio-pricing-api 
+    network_mode: "service:mshrm-studio-pricing-api"
+
+  mshrm-studio-storage-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudiostorageapi
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Storage/mshrm.studio.storage.api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+      - sqlserver
+
+  mshrm-studio-storage-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}storageapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "storageapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+      - mshrm-studio-storage-api 
+    network_mode: "service:mshrm-studio-storage-api"
+
+  mshrm-studio-localization-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudiolocalizationapi
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Localization/mshrm.studio.localization.api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+      - sqlserver
+
+  mshrm-studio-localization-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}localizationapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "localizationapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+    network_mode: "service:mshrm-studio-localization-api"
+
+  mshrm-studio-subscription-api:
+    image: ${DOCKER_REGISTRY-}mshrmstudiosubscriptionapi
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: Subscriptions/mshrm.studio.subscription.api/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+      - sqlserver
+
+  mshrm-studio-subscription-api-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}subscriptionapi-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "subscriptionapi-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+    network_mode: "service:mshrm-studio-subscription-api"
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    volumes: 
+      - cache:/data
+
+  dapr-placement:
+    image: "daprio/dapr:1.9.4"
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_USER=sa
+      - MSSQL_SA_PASSWORD=${Sa_Password:-Password123!}
+      - MSSQL_PID=Developer
+    ports:
+      - 9987:1433
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${Sa_Password:-Password123!} -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 3s
+  sqlserver-configurator:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    depends_on:
+      - sqlserver
+    command: >
+      bash -c '
+      /opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P ${Sa_Password:-Password123!} -d master -i docker-entrypoint-initdb.d/sqlserver-init.sql;
+      echo "All done!";'
+volumes:
+    cache:
+      driver: local
+    sqlserver_data:
+    

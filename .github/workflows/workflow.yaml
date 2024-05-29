@@ -1,0 +1,174 @@
+name: Deploy to DigitalOcean Kubernetes
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+        NUGETUSERNAME: ${{ secrets.NUGETUSERNAME }}
+        NUGETPASSWORD: ${{ secrets.NUGETPASSWORD }}
+        ASPNETCORE_ENVIRONMENT: Production
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+
+    - name: Log in to DigitalOcean Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: registry.digitalocean.com
+        username: _
+        password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        
+    - name: Replace Github Username In Nuget.Config
+      run: find . -name "nuget.config*" -type f -exec sed -i -e 's/%NUGETUSERNAME%/${{ secrets.NUGETUSERNAME }}/g' {} \;
+      
+    - name: Replace Github Password In Nuget.Config
+      run: find . -name "nuget.config*" -type f -exec sed -i -e 's/%NUGETPASSWORD%/${{ secrets.NUGETPASSWORD }}/g' {} \;
+        
+    - name: Build and push Auth API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Authorization
+        file: Mshrm.Studio/Authorization/Mshrm.Studio.Auth.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioauthapi
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+        
+    - name: Build and push Storage API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Storage
+        file: Mshrm.Studio/Storage/Mshrm.Studio.Storage.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiostorageapi
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
+        
+    - name: Build and push Pricing API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Pricing
+        file: Mshrm.Studio/Pricing/Mshrm.Studio.Pricing.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiopricingapi
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
+           
+    - name: Build and push Localization API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Localization
+        file: Mshrm.Studio/Localization/Mshrm.Studio.Localization.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiolocalizationapi
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
+           
+    - name: Build and push Domain API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Domain
+        file: Mshrm.Studio/Domain/Mshrm.Studio.Domain.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiodomainapi
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+               
+    - name: Build and push Email API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Email
+        file: Mshrm.Studio/Email/Mshrm.Studio.Email.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioemailapi
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "CompanyEmail=${{ secrets.COMPANY_EMAIL }}"
+           "CompanyEmailPassword=${{ secrets.COMPANY_EMAIL_PASSWORD }}"
+           
+    - name: Build and push Aggregator API Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Mshrm.Studio.Api
+        file: Mshrm.Studio/Mshrm.Studio.Api/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioapi
+        
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+      
+    #- name: Install Kompose
+    #  run: |
+    #    curl -L https://github.com/kubernetes/kompose/releases/download/v1.26.0/kompose-linux-amd64 -o kompose
+    #    chmod +x kompose
+    #    sudo mv kompose /usr/local/bin/kompose
+
+    #- name: Convert Docker Compose to Kubernetes manifests
+    #  run: kompose convert -f Mshrm.Studio/docker-compose.yml -o ./k8s/
+
+    - name: Set up Kubectl
+      uses: azure/setup-kubectl@v3
+
+    - name: Configure Kubernetes context
+      uses: azure/k8s-set-context@v3
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.KUBECONFIG }}
+        
+    - name: Delete Previous Containers
+      run: kubectl delete all --all
+      
+    - name: Add Aggregator API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioapi/g' {} \;
+      
+    - name: Add Auth API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioauthapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioauthapi/g' {} \;
+      
+    - name: Add Domain API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudiodomainapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudiodomainapi/g' {} \;
+      
+    - name: Add Email API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioemailapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioemailapi/g' {} \;
+      
+    - name: Add Localization API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudiolocalizationapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudiolocalizationapi/g' {} \;
+    
+    - name: Add Pricing API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudiopricingapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudiopricingapi/g' {} \;
+    
+    - name: Add Storage API Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudiostorageapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudiostorageapi/g' {} \;
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f ./k8s/
+
+    - name: Verify deployment
+      run: kubectl rollout status deployment/mshrm-studio-api

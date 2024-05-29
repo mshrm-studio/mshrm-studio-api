@@ -1,0 +1,177 @@
+[
+  {
+    "Id": 1,
+    "Name": "RoleDoesntExist",
+    "Value": "Role doesn't exist"
+  },
+  {
+    "Id": 2,
+    "Name": "UserDoesntExist",
+    "Value": "User doesn't exist"
+  },
+  {
+    "Id": 3,
+    "Name": "IpNotValid",
+    "Value": "The IP address provided is not valid"
+  },
+  {
+    "Id": 4,
+    "Name": "EmailNotFound",
+    "Value": "Email doesn't exist"
+  },
+  {
+    "Id": 5,
+    "Name": "FailedToCreateIdentityUser",
+    "Value": "Failed to create identity user"
+  },
+  {
+    "Id": 6,
+    "Name": "FailedToCreateDomainUser",
+    "Value": "Failed to create domain user"
+  },
+  {
+    "Id": 7,
+    "Name": "CannotViewOtherUsersData",
+    "Value": "Non admin users can only see their own data"
+  },
+  {
+    "Id": 8,
+    "Name": "EmailIsInvalid Email",
+    "Value": "is invalid"
+  },
+  {
+    "Id": 9,
+    "Name": "FailedToGenerateToken",
+    "Value": "Failed to generate token"
+  },
+  {
+    "Id": 10,
+    "Name": "UserLockedOut",
+    "Value": "User is locked out"
+  },
+  {
+    "Id": 11,
+    "Name": "UserRequiresConfirmation",
+    "Value": "User requires confirmation"
+  },
+  {
+    "Id": 12,
+    "Name": "FailedToRefreshToken",
+    "Value": "Failed to refresh token"
+  },
+  {
+    "Id": 13,
+    "Name": "UserAlreadyExists",
+    "Value": "User already exists"
+  },
+  {
+    "Id": 14,
+    "Name": "FailedToGenerateConfirmationToken",
+    "Value": "Failed to generate confirmation token"
+  },
+  {
+    "Id": 15,
+    "Name": "CannotViewOtherUsersData",
+    "Value": "Non admin users can only see their own data"
+  },
+  {
+    "Id": 16,
+    "Name": "FailedToGenerateResetToken",
+    "Value": "Password could not be reset"
+  },
+  {
+    "Id": 17,
+    "Name": "FailedToUpdatePassword",
+    "Value": "Failed to update password"
+  },
+  {
+    "Id": 18,
+    "Name": "AlreadyConfirmed",
+    "Value": "Already confirmed"
+  },
+  {
+    "Id": 19,
+    "Name": "FailedToValidateConfirmationToken",
+    "Value": "Failed to validate confirmation token"
+  },
+  {
+    "Id": 20,
+    "Name": "ContactFormDoesntExist",
+    "Value": "Contact form doesn't exist"
+  },
+  {
+    "Id": 21,
+    "Name": "ToolDoesntExist",
+    "Value": "Tool doesn't exist"
+  },
+  {
+    "Id": 22,
+    "Name": "FailedToSendEmail",
+    "Value": "Failed to send email"
+  },
+  {
+    "Id": 23,
+    "Name": "NoEmailTypeRegistered",
+    "Value": "No email type has been registered for the email being sent"
+  },
+  {
+    "Id": 24,
+    "Name": "LocalizationResourceAlreadyExists",
+    "Value": "Localization resource already exists"
+  },
+  {
+    "Id": 25,
+    "Name": "LocalizationResourceDoesntExist",
+    "Value": "Localization resource doesn't exist"
+  },
+  {
+    "Id": 26,
+    "Name": "CurrencyAlreadyExists",
+    "Value": "The currency already exists"
+  },
+  {
+    "Id": 27,
+    "Name": "CurrencyNotSupported",
+    "Value": "Currency is not supported by the provider"
+  },
+  {
+    "Id": 28,
+    "Name": "BaseCurrencyNotSupported",
+    "Value": "The base currency symbol provided is not supported"
+  },
+  {
+    "Id": 29,
+    "Name": "BaseCurrencyPriceDoesntExist",
+    "Value": "The base currency symbols price doesn't exist"
+  },
+  {
+    "Id": 30,
+    "Name": "CurrencyDoesntExist",
+    "Value": "The currency doesn't exists"
+  },
+  {
+    "Id": 31,
+    "Name": "TemporaryFileNotFound",
+    "Value": "Temporary file not found"
+  },
+  {
+    "Id": 32,
+    "Name": "KeyNotProvided",
+    "Value": "Key must be provided"
+  },
+  {
+    "Id": 33,
+    "Name": "FileNotFound",
+    "Value": "File not found"
+  },
+  {
+    "Id": 34,
+    "Name": "ResourceDoesntExist",
+    "Value": "Resource doesn't exist"
+  },
+  {
+    "Id": 35,
+    "Name": "ResourceIsPrivate",
+    "Value": "Cannot view this resource unauthenticated"
+  }
+]

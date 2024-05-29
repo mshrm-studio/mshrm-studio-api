@@ -1,0 +1,21 @@
+﻿
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <DockerPublishLocally>False</DockerPublishLocally>
+    <ProjectGuid>68a6cf36-6d42-4328-b256-78bd2a248cb6</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
+    <DockerServiceName>mshrm.studio.api</DockerServiceName>
+    <UserSecretsId>66dcb72d-f78d-400b-ab45-4d66913694db</UserSecretsId>
+	<DockerfileRunArguments>-v "$(AppData)/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro"</DockerfileRunArguments>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
+  </ItemGroup>
+</Project>

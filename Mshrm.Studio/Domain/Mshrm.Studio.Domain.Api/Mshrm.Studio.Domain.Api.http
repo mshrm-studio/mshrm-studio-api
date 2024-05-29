@@ -1,0 +1,12 @@
+@Mshrm.Studio.Domain.Api_HostAddress = https://localhost:1235
+
+GET {{Mshrm.Studio.Domain.Api_HostAddress}}/api/v1/users/id/1
+Accept: application/json
+
+###
+
+POST {{Mshrm.Studio.Domain.Api_HostAddress}}/api/v1/users
+Accept: application/json
+Content-Type: application/json
+
+###
