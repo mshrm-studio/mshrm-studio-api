@@ -66,6 +66,11 @@ jobs:
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
+           "FreeCurrencyServiceApiKey=${{ secrets.FREE_CURRENCY_SERVICE_API_KEY }}" 
+           "MetalsDevServiceApiKey=${{ secrets.METALS_DEV_SERVICE_API_KEY }}" 
+           "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}" 
+           "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
+           "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
            
     - name: Build and push Localization API Docker image
       uses: docker/build-push-action@v2

@@ -10,11 +10,21 @@ ARG ApplicationDatabasePassword
 ARG HangfireDatabaseUsername
 ARG HangfireDatabasePassword
 ARG JwtSigningKey
+ARG FreeCurrencyServiceApiKey
+ARG MetalsDevServiceApiKey
+ARG PolygonIOServiceApiKey
+ARG TwelveDataServiceApiKey
+ARG MobulaServiceApiKey
 ENV ApplicationDatabaseUsername=${ApplicationDatabaseUsername}
 ENV ApplicationDatabasePassword=${ApplicationDatabasePassword}
 ENV HangfireDatabaseUsername=${HangfireDatabaseUsername}
 ENV HangfireDatabasePassword=${HangfireDatabasePassword}
 ENV Jwt:JwtSigningKey=${JwtSigningKey}
+ENV MobulaService:ApiKey=${MobulaServiceApiKey}
+ENV TwelveDataProvider:ApiKey:ApiKey=${TwelveDataServiceApiKey}
+ENV PolygonIOService:ApiKey=${PolygonIOServiceApiKey}
+ENV MetalsDevService:ApiKey=${MetalsDevServiceApiKey}
+ENV FreeCurrencyService:ApiKey=${FreeCurrencyServiceApiKey}
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
