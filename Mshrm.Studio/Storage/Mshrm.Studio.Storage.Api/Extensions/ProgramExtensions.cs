@@ -39,6 +39,7 @@ using Mshrm.Studio.Storage.Api.Contexts;
 using System.Data.SqlClient;
 using Mshrm.Studio.Storage.Domain.Resources;
 using Mshrm.Studio.Storage.Infrastructure.Factories;
+using System.Security.Authentication;
 
 
 namespace Mshrm.Studio.Storage.Api.Extensions
@@ -186,7 +187,6 @@ namespace Mshrm.Studio.Storage.Api.Extensions
         public static WebApplicationBuilder ConfigureOptions(this WebApplicationBuilder builder)
         {
             // Add Options
-            builder.Services.Configure<IdentityOptions>(options => { });
             builder.Services.Configure<DigitalOceanSpacesOptions>(options => builder.Configuration.GetSection("DigitalOceanSpaces").Bind(options));
 
             return builder;
