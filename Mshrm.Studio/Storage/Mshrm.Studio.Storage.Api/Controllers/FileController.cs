@@ -49,7 +49,6 @@ namespace Mshrm.Studio.Storage.Api.Controllers
         /// <returns>TThe temporary file key</returns>
         [HttpPost]
         [ProducesResponseType(typeof(TemporaryFileUploadDto), StatusCodes.Status200OK)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("temporary")]
         public async Task<ActionResult<TemporaryFileUploadDto>> UploadTemporaryFileAsync([FromForm] UploadTemporaryFileDto model)
         {
@@ -70,7 +69,6 @@ namespace Mshrm.Studio.Storage.Api.Controllers
         /// <returns>The resource saved</returns>
         [HttpPost]
         [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status200OK)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("")]
         public async Task<ActionResult<ResourceDto>> SaveTemporaryFileAsync([FromForm] SaveTemporaryFileDto model)
         {

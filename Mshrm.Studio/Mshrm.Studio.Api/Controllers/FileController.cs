@@ -66,7 +66,6 @@ namespace Mshrm.Studio.Api.Controllers
         /// <returns>A temp file key</returns>
         [HttpPost]
         [ProducesResponseType(typeof(TemporaryFileUploadResponseDto), StatusCodes.Status200OK)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("temporary")]
         public async Task<ActionResult<TemporaryFileUploadResponseDto>> UploadTemporaryFileAsync([FromForm] UploadTemporaryFileDto model)
         {

@@ -8,7 +8,6 @@ metadata:
     io.kompose.service: mshrm-studio-domain-api
   name: mshrm-studio-domain-api
 spec:
-  type: NodePort 
   ports:
     - name: "8081"
       port: 8081
