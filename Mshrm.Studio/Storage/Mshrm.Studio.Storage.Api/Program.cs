@@ -91,7 +91,7 @@ app.UseIpRateLimiting();
 // Use endpoint routing
 app.UseRouting();
 
-app.UseHangfireDashboard();
+//app.UseHangfireDashboard();
 
 app.UseCloudEvents();
 
@@ -105,7 +105,7 @@ app.UseEndpoints(endpoints =>
         endpoints.MapSubscribeHandler();
 
         // Setup hangfire dashboard
-        if (app.Environment.IsDevelopment())
+        /*if (app.Environment.IsDevelopment())
         {
             endpoints.MapHangfireDashboard("/hangfire", new DashboardOptions
             {
@@ -113,7 +113,7 @@ app.UseEndpoints(endpoints =>
                 Authorization = new[] { new DashboardNoAuthorizationFilter(), }
             });
         }
-        else endpoints.MapHangfireDashboard("/hangfire");
+        else endpoints.MapHangfireDashboard("/hangfire");*/
     }
 });
 
