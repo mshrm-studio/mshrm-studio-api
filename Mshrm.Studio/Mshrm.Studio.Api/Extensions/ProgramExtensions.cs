@@ -85,10 +85,10 @@
                 builder.Configuration.AddJsonFile("appsettings.Production.json", false, true);
             }
 
-            builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
-
             // Add environemnts vars
             builder.Configuration.AddEnvironmentVariables();
+
+            builder.Configuration.AddUserSecrets(Assembly.GetExecutingAssembly());
 
             return builder;
         }
