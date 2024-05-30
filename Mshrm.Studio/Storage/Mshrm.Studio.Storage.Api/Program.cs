@@ -21,7 +21,7 @@ builder.ConfigureOptions();
 builder.ConfigureServices();
 builder.ConfigureOpenTracing();
 builder.ConfigureMediatr();
-builder.ConfigureHangfire();
+//builder.ConfigureHangfire();
 builder.ConfigureAutomapper();
 builder.ConfigureDbContexts();
 builder.ConfigureSwagger();

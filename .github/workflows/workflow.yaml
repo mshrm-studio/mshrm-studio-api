@@ -53,7 +53,6 @@ jobs:
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
            "DigitalOceanSpacesKey=${{ secrets.DIGITALOCEANSPACES_KEY }}" 
            "DigitalOceanSpacesAccessToken=${{ secrets.DIGITALOCEANSPACES__ACCESS_TOKEN }}" 
         
