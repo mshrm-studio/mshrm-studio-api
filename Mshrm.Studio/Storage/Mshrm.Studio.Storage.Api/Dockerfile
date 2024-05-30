@@ -9,10 +9,14 @@ ARG ApplicationDatabaseUsername
 ARG ApplicationDatabasePassword
 ARG HangfireDatabaseUsername
 ARG HangfireDatabasePassword
+ARG DigitalOceanSpacesKey
+ARG DigitalOceanSpacesAccessToken
 ENV ApplicationDatabaseUsername=${ApplicationDatabaseUsername}
 ENV ApplicationDatabasePassword=${ApplicationDatabasePassword}
 ENV HangfireDatabaseUsername=${HangfireDatabaseUsername}
 ENV HangfireDatabasePassword=${HangfireDatabasePassword}
+ENV DigitalOceanSpaces:Key=${DigitalOceanSpacesKey}
+ENV DigitalOceanSpaces:Secret=${DigitalOceanSpacesAccessToken}
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
