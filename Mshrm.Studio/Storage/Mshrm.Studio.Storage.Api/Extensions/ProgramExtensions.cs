@@ -1,17 +1,14 @@
 ﻿using AspNetCoreRateLimit;
 using Hangfire;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mshrm.Studio.Shared.Builders;
 using Newtonsoft.Json;
 using System.Reflection;
-using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
@@ -313,79 +310,6 @@ namespace Mshrm.Studio.Storage.Api.Extensions
             {
                 //builder.Services.AddHostedService<MonthlyRewardInstructionIssuerHostedService>();
             }
-
-            return builder;
-        }
-
-        /// <summary>
-        /// Configure the authentication for the API
-        /// </summary>
-        /// <param name="builder">The api builder</param>
-        /// <returns>The api builder</returns>
-        public static WebApplicationBuilder ConfigureAuthentication(this WebApplicationBuilder builder)
-        {
-            // Get JWT options
-            var jwtOptions = new JwtOptions();
-            builder.Configuration.GetSection("Jwt").Bind(jwtOptions);
-
-            // Get OpenID Options
-            var openIdOptions = new OpenIdOptions();
-            builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
-
-            // Get JWT signing keys
-            var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints).GetAwaiter().GetResult();
-
-            // Setup JWT Auth
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    // JWT Signing Key
-                    IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
-
-                    // OIDC Signing Keys
-                    IssuerSigningKeys = signingKeys,
-
-                    // Name claim definition
-                    NameClaimType = ClaimTypes.NameIdentifier,
-
-                    // JWT Signing Key
-                    ValidAudience = jwtOptions.Audience,
-
-                    // External Audiences valid in JWT (to expect from)
-                    ValidAudiences = jwtOptions.ValidAudiences,
-
-                    // JWT Issuer
-                    ValidIssuer = jwtOptions.Issuer,
-
-                    // External Issuers valid in JWT (to expect from)
-                    ValidIssuers = jwtOptions.ValidIssuers,
-
-                    // Ensure issuer is validated
-                    ValidateIssuer = true,
-
-                    // Ensure audience is validated
-                    ValidateAudience = true,
-
-                    // Require check for expiration
-                    RequireExpirationTime = true,
-
-                    ValidateLifetime = true,
-
-                    // So expriy works
-                    ClockSkew = TimeSpan.Zero,
-
-                    // Custom issuer validater to support multi tenant requests
-                    IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
-                };
-
-                // Add events for adding claims that OpenID cannot (ie. role)
-                options.Events = JwtBearerEventHelper.CreateJwtBearerEvents();
-            });
-
-            // Setup Authorization for role base access
-            //builder.Services.AddAuthorizationPolicies(builder.Configuration);
 
             return builder;
         }

@@ -1,7 +1,5 @@
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mshrm.Studio.Shared.Exceptions;
 using Mshrm.Studio.Storage.Api.Models.CQRS.Files.Commands;

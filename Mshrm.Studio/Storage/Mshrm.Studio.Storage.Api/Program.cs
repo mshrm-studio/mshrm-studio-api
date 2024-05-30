@@ -21,7 +21,6 @@ builder.ConfigureOptions();
 builder.ConfigureServices();
 builder.ConfigureOpenTracing();
 builder.ConfigureMediatr();
-builder.ConfigureAuthentication();
 builder.ConfigureHangfire();
 builder.ConfigureAutomapper();
 builder.ConfigureDbContexts();
@@ -94,11 +93,6 @@ app.UseRouting();
 
 app.UseHangfireDashboard();
 
-//app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
-//app.UseMiddleware<ErrorHandlingMiddleware>();
-
 app.UseCloudEvents();
 
 // Setup endpoints
@@ -119,7 +113,7 @@ app.UseEndpoints(endpoints =>
                 Authorization = new[] { new DashboardNoAuthorizationFilter(), }
             });
         }
-        else endpoints.MapHangfireDashboard("/hangfire").RequireAuthorization();
+        else endpoints.MapHangfireDashboard("/hangfire");
     }
 });
 
