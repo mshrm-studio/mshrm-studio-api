@@ -186,8 +186,15 @@ namespace Mshrm.Studio.Storage.Api.Extensions
         /// <returns>The api builder</returns>
         public static WebApplicationBuilder ConfigureOptions(this WebApplicationBuilder builder)
         {
+            var key = builder.Configuration.GetValue<string>("DigitalOceanSpaces:Key");
+            var secret = builder.Configuration.GetValue<string>("DigitalOceanSpaces:Secret");
+
             // Add Options
-            builder.Services.Configure<DigitalOceanSpacesOptions>(options => builder.Configuration.GetSection("DigitalOceanSpaces").Bind(options));
+            builder.Services.Configure<DigitalOceanSpacesOptions>(options => {
+                builder.Configuration.GetSection("DigitalOceanSpaces").Bind(options);
+                options.Key = key;
+                options.Secret = secret;
+            });
 
             return builder;
         }
