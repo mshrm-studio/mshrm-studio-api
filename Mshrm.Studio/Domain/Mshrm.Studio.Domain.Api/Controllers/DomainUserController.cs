@@ -18,7 +18,7 @@ using Mshrm.Studio.Shared.Models.Pagination;
 namespace Mshrm.Studio.Domain.Api.Controllers
 {
     /// <summary>
-    /// User API
+    /// User API 
     /// </summary>
     [ApiController]
     [Route("api/v1/users")]
@@ -38,7 +38,7 @@ namespace Mshrm.Studio.Domain.Api.Controllers
         public DomainUserController(IMediator mediator, ILogger<DomainUserController> logger, IMapper mapper)
         {
             _logger = logger;
-            _mapper = mapper;
+            _mapper = mapper; 
 
             _mediator = mediator;
         }
