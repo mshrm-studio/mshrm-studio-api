@@ -38,7 +38,7 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
         public async Task<string?> UploadFileAsync(Stream file, string key, string? filePath = null)
         {
             // Build S3 client
-            var client = GetClient();
+            var client = CreateClient();
 
             try
             {
@@ -70,7 +70,7 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
         public async Task<bool> DeleteFileAsync(string key, string? filePath = "temp")
         {
             // Build S3 client
-            var client = GetClient();
+            var client = CreateClient();
 
             try
             {
@@ -99,7 +99,7 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
         public async Task<Stream?> GetFileAsync(string key, string? filePath = null)
         {
             // Build S3 client
-            var client = GetClient();
+            var client = CreateClient();
 
             try
             {
@@ -147,10 +147,10 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
         #region Helpers
 
         /// <summary>
-        /// Get the S3 client
+        /// Create an S3 client
         /// </summary>
         /// <returns>S3 Client</returns>
-        public AmazonS3Client GetClient()
+        public AmazonS3Client CreateClient()
         {
             return new AmazonS3Client(_options.Key, _options.Secret, new AmazonS3Config()
             {
@@ -173,7 +173,7 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
                 InputStream = file,
                 StorageClass = S3StorageClass.Standard,
                 Key = (!string.IsNullOrEmpty(filePath) ? (filePath + @"/") : string.Empty) + fileName, // filepath is your folder name in digital ocean space leave empty if not any.
-                //CannedACL = CalculateVisibility(filePath) //S3CannedACL.PublicRead
+                //CannedACL = CalculateVisibility(filePath) //S3CannedACL.PublicRead TODO:
             };
 
             var newHeaders = new Dictionary<string, string>()
