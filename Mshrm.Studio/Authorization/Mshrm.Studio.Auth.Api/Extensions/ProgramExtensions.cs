@@ -36,6 +36,7 @@ using Mshrm.Studio.Auth.Application.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Mshrm.Studio.Auth.Domain.Users;
 using Mshrm.Studio.Auth.Infrastructure.Factories;
+using Mshrm.Studio.Shared.Enums;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -527,6 +528,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                         ctx.ProblemDetails.Title = "Internal Server Error";
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                         ctx.ProblemDetails.Status = 500;
                     }
                 };

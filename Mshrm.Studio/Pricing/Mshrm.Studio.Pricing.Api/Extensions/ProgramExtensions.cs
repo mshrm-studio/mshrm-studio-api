@@ -57,6 +57,7 @@ using Mshrm.Studio.Pricing.Infrastructure.Factories;
 using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories;
 using Mshrm.Studio.Pricing.Domain.Currencies;
 using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs;
+using Mshrm.Studio.Shared.Enums;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -633,6 +634,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
                 };
             });

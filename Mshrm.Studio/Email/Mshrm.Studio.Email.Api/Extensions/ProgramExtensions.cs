@@ -35,6 +35,7 @@ using Mshrm.Studio.Email.Application.Services;
 using System.Data.SqlClient;
 using Mshrm.Studio.Email.Domain.Emails;
 using Mshrm.Studio.Email.Infrastructure.Factories;
+using Mshrm.Studio.Shared.Enums;
 
 namespace Mshrm.Studio.Email.Api.Extensions
 {
@@ -516,6 +517,7 @@ namespace Mshrm.Studio.Email.Api.Extensions
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
                 };
             });

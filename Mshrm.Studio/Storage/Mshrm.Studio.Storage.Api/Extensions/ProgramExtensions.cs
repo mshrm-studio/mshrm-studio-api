@@ -40,6 +40,7 @@ using System.Data.SqlClient;
 using Mshrm.Studio.Storage.Domain.Resources;
 using Mshrm.Studio.Storage.Infrastructure.Factories;
 using System.Security.Authentication;
+using Mshrm.Studio.Shared.Enums;
 
 
 namespace Mshrm.Studio.Storage.Api.Extensions
@@ -192,8 +193,8 @@ namespace Mshrm.Studio.Storage.Api.Extensions
             // Add Options
             builder.Services.Configure<DigitalOceanSpacesOptions>(options => {
                 builder.Configuration.GetSection("DigitalOceanSpaces").Bind(options);
-                options.Key = key;
-                options.Secret = secret;
+                options.Key = "";
+                options.Secret = "";
             });
 
             return builder;
@@ -450,9 +451,10 @@ namespace Mshrm.Studio.Storage.Api.Extensions
                     else if (exception != null)
                     {
                         ctx.ProblemDetails.Title = "Internal Server Error";
-                        ctx.ProblemDetails.Detail = exception.Message;
+                        ctx.ProblemDetails.Detail = string.IsNullOrEmpty(exception.Message) ? JsonConvert.SerializeObject(exception) : exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
                 };
             });

@@ -50,8 +50,6 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
             await fileTransferUtility.UploadAsync(fileTransferRequest);
 
             return key;
-
-            return null;
         }
 
         /// <summary>
@@ -93,9 +91,6 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
 
             // Send request
             return await fileTransferUtility.OpenStreamAsync(_options.Bucket, keyWithSubFolder);
-
-
-            return null;
         }
 
         /// <summary>

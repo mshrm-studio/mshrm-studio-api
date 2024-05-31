@@ -35,6 +35,7 @@ using Mshrm.Studio.Localization.Api.Models.CQRS.LocalizationResources.Commands;
 using System.Data.SqlClient;
 using Mshrm.Studio.Localization.Domain.LocalizationResources;
 using Mshrm.Studio.Localization.Infrastructure.Factories;
+using Mshrm.Studio.Shared.Enums;
 
 namespace Mshrm.Studio.Localization.Api.Extensions
 {
@@ -524,6 +525,7 @@ namespace Mshrm.Studio.Localization.Api.Extensions
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
                 };
             });

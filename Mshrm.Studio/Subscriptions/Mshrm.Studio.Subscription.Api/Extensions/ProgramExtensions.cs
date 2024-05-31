@@ -31,6 +31,7 @@ using Mshrm.Studio.Subscription.Domain.Subscriptions;
 using Mshrm.Studio.Subscription.Infrastructure.Repositories;
 using Mshrm.Studio.Subscription.Infrastructure.Factories;
 using Mshrm.Studio.Subscription.Domain.PricingStructures;
+using Mshrm.Studio.Shared.Enums;
 
 
 namespace Mshrm.Studio.Subscription.Api.Extensions
@@ -508,6 +509,7 @@ namespace Mshrm.Studio.Subscription.Api.Extensions
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
                 };
             });

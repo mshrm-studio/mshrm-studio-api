@@ -50,6 +50,7 @@ using Mshrm.Studio.Domain.Domain.Tools;
 using System.Data.SqlClient;
 using Mshrm.Studio.Domain.Infrastructure.Factories;
 using Mshrm.Studio.Domain.Domain.ContactForms;
+using Mshrm.Studio.Shared.Enums;
 
 namespace Mshrm.Studio.Domain.Api.Extensions
 {
@@ -550,6 +551,7 @@ namespace Mshrm.Studio.Domain.Api.Extensions
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
                 };
             });

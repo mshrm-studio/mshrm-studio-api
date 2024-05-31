@@ -593,7 +593,7 @@
 
                         //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
                         //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
+                            ctx.ProblemDetails.Extensions.Add("StackTrace", $"{propegatedProblemDetail.Detail} {propegatedProblemDetail.StackTrace}");
                         //}
                     }
                     else if (exception != null && exception is LocalizationApiException)
