@@ -24,4 +24,6 @@ spec:
       containers:
         - image: daprio/dapr:1.9.4
           name: dapr-placement
+          ports:
+            - containerPort: 80
       restartPolicy: Always
