@@ -77,8 +77,8 @@ var options = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 app.UseRequestLocalization(options.Value);
 
 // Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+if (app.Environment.IsDevelopment())
+{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -88,8 +88,9 @@ app.UseRequestLocalization(options.Value);
         c.ConfigObject.AdditionalItems.Add("syntaxHighlight", false); //Turns off syntax highlight which causing performance issues...
         c.ConfigObject.AdditionalItems.Add("theme", "agate"); //Reverts Swagger UI 2.x  theme which is simpler not much performance benefit...
     });
-    app.UseDeveloperExceptionPage();
-//}
+}
+
+app.UseDeveloperExceptionPage();
 
 // Global cors policy - handle this in Azure
 app.UseCors(x => x.AllowAnyMethod()
