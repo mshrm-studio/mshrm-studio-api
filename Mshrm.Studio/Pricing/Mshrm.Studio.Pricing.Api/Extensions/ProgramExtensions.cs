@@ -363,7 +363,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             // Set credentials
             var connectionStringWithCredentials = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("HangfireDatabase"));
             connectionStringWithCredentials.UserID = builder.Configuration.GetValue<string>("HangfireDatabaseUsername");
-            connectionStringWithCredentials.Password = builder.Configuration.GetValue<string>("HangfireDatabasePassword");
+            connectionStringWithCredentials.Password = builder.Configuration.GetValue<string>("ApplicationDatabasePassword");
 
             // Hangfire queues
             builder.Services.AddHangfire(x => x.UseSqlServerStorage(connectionStringWithCredentials.ToString()));
