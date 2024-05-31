@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Mshrm.Studio.Pricing.Api.Services.Jobs.Interfaces;
 using Mshrm.Studio.Pricing.Api.Extensions;
 using Mshrm.Studio.Pricing.Api.Context;
+using Microsoft.AspNetCore.HttpLogging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,8 +70,8 @@ var options = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 app.UseRequestLocalization(options.Value);
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
@@ -81,7 +82,7 @@ if (app.Environment.IsDevelopment())
         c.ConfigObject.AdditionalItems.Add("theme", "agate"); //Reverts Swagger UI 2.x  theme which is simpler not much performance benefit...
     });
     app.UseDeveloperExceptionPage();
-}
+//}
 
 // Global cors policy - handle this in Azure
 app.UseCors(x => x.AllowAnyMethod()
