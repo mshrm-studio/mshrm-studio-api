@@ -12,9 +12,11 @@ spec:
     - name: "8081"
       port: 8081
       targetPort: 8081
+      nodePort: 30232
     - name: "8080"
       port: 8080
       targetPort: 8080
+      nodePort: 30252
   externalIPs: 
     - 157.245.34.113
   selector:
