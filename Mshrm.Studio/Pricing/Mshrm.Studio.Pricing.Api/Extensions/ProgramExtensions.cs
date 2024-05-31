@@ -354,7 +354,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
         }
 
         /// <summary>
-        /// Configure the Hanfire delayed execution framework
+        /// Configure the Hangfire delayed execution framework
         /// </summary>
         /// <param name="builder">The api builder</param>
         /// <returns>The api builder</returns>

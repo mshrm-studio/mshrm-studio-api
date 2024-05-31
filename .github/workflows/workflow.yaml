@@ -55,7 +55,7 @@ jobs:
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "DigitalOceanSpacesKey=${{ secrets.DIGITALOCEANSPACES_KEY }}"
            "DigitalOceanSpacesAccessToken=${{ secrets.DIGITALOCEANSPACES__ACCESS_TOKEN }}"
-        
+
     - name: Build and push Pricing API Docker image
       uses: docker/build-push-action@v2
       with:
@@ -73,7 +73,7 @@ jobs:
            "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}"
            "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
            "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
-           
+
     - name: Build and push Localization API Docker image
       uses: docker/build-push-action@v2
       with:
@@ -86,7 +86,7 @@ jobs:
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           
+
     - name: Build and push Domain API Docker image
       uses: docker/build-push-action@v2
       with:
