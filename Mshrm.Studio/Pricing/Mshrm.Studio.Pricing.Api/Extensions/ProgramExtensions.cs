@@ -616,9 +616,11 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             {
                 x.CustomizeProblemDetails = ctx =>
                 {
+                    var logger = ctx.HttpContext.RequestServices.GetService<ILogger<ProgramExtensions>>();
                     var exception = ctx.HttpContext.Features.Get<IExceptionHandlerPathFeature>()?.Error;
                     if (exception != null && exception is HttpActionValidationException)
                     {
+                        logger.LogCritical("HERE1!");
                         var httpActionValidationException = exception as HttpActionValidationException;
 
                         ctx.ProblemDetails.Title = httpActionValidationException.StatusCode.ToString();
@@ -630,12 +632,15 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
                     }
                     else if (exception != null)
                     {
+                        logger.LogCritical("HERE2!");
                         ctx.ProblemDetails.Title = "Internal Server Error";
                         ctx.ProblemDetails.Detail = exception.Message;
                         ctx.ProblemDetails.Status = 500;
                         ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
                         ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
                     }
+
+                    logger.LogCritical("HERE3!");
                 };
             });
 
