@@ -50,6 +50,7 @@ namespace Mshrm.Studio.Storage.Api.Controllers
         [Route("temporary")]
         public async Task<ActionResult<TemporaryFileUploadDto>> UploadTemporaryFileAsync([FromForm] UploadTemporaryFileDto model)
         {
+            _logger.LogCritical("Uploading a temp file!!!!");
             // Open read
             using var fileStream = model.File.OpenReadStream();
 
