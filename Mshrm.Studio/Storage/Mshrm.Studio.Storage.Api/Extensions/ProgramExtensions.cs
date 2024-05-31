@@ -193,8 +193,8 @@ namespace Mshrm.Studio.Storage.Api.Extensions
             // Add Options
             builder.Services.Configure<DigitalOceanSpacesOptions>(options => {
                 builder.Configuration.GetSection("DigitalOceanSpaces").Bind(options);
-                options.Key = "";
-                options.Secret = "";
+                options.Key = key;
+                options.Secret = secret;
             });
 
             return builder;
