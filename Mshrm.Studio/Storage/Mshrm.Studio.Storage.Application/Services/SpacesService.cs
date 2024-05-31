@@ -40,23 +40,16 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
             // Build S3 client
             var client = CreateClient();
 
-            try
-            {
-                // Init util to send request
-                var fileTransferUtility = new TransferUtility(client);
+            // Init util to send request
+            var fileTransferUtility = new TransferUtility(client);
 
-                // Setup request
-                var fileTransferRequest = BuildTransferRequest(file, key, filePath);
+            // Setup request
+            var fileTransferRequest = BuildTransferRequest(file, key, filePath);
 
-                // Send request
-                await fileTransferUtility.UploadAsync(fileTransferRequest);
+            // Send request
+            await fileTransferUtility.UploadAsync(fileTransferRequest);
 
-                return key;
-            }
-            catch (AmazonS3Exception e)
-            {
-                _logger.LogCritical(e.StackTrace);
-            }
+            return key;
 
             return null;
         }
@@ -72,22 +65,13 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
             // Build S3 client
             var client = CreateClient();
 
-            try
-            {
-                // Setup request
-                var deleteRequest = BuildDeleteRequest(key, filePath);
+            // Setup request
+            var deleteRequest = BuildDeleteRequest(key, filePath);
 
-                // Send request
-                var response = await client.DeleteObjectAsync(deleteRequest);
+            // Send request
+            var response = await client.DeleteObjectAsync(deleteRequest);
 
-                return true;
-            }
-            catch (AmazonS3Exception e)
-            {
-                _logger.LogCritical(e.StackTrace);
-
-                return false;
-            }
+            return true;
         }
 
         /// <summary>
@@ -101,21 +85,15 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
             // Build S3 client
             var client = CreateClient();
 
-            try
-            {
-                // Init util to send request
-                var fileTransferUtility = new TransferUtility(client);
+            // Init util to send request
+            var fileTransferUtility = new TransferUtility(client);
 
-                // Build full name
-                var keyWithSubFolder = (!string.IsNullOrEmpty(filePath) ? (filePath + @"/") : string.Empty) + key;
+            // Build full name
+            var keyWithSubFolder = (!string.IsNullOrEmpty(filePath) ? (filePath + @"/") : string.Empty) + key;
 
-                // Send request
-                return await fileTransferUtility.OpenStreamAsync(_options.Bucket, keyWithSubFolder);
-            }
-            catch (AmazonS3Exception e)
-            {
-                _logger.LogCritical(e.StackTrace);
-            }
+            // Send request
+            return await fileTransferUtility.OpenStreamAsync(_options.Bucket, keyWithSubFolder);
+
 
             return null;
         }
@@ -167,7 +145,7 @@ namespace Mshrm.Studio.Storage.Api.Services.Http
         /// <returns>Upload request</returns>
         public TransferUtilityUploadRequest BuildTransferRequest(Stream file, string fileName, string? filePath = null)
         {
-            var request =  new TransferUtilityUploadRequest
+            var request = new TransferUtilityUploadRequest
             {
                 BucketName = _options.Bucket,
                 InputStream = file,
