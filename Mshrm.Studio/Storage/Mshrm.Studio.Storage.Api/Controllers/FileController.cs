@@ -22,7 +22,6 @@ namespace Mshrm.Studio.Storage.Api.Controllers
     public class FileController : ControllerBase
     {
         private readonly IMediator _mediator;
-
         private readonly ILogger<FileController> _logger;
         private readonly IMapper _mapper;
 
@@ -50,7 +49,6 @@ namespace Mshrm.Studio.Storage.Api.Controllers
         [Route("temporary")]
         public async Task<ActionResult<TemporaryFileUploadDto>> UploadTemporaryFileAsync([FromForm] UploadTemporaryFileDto model)
         {
-            _logger.LogCritical("Uploading a temp file!!!!");
             // Open read
             using var fileStream = model.File.OpenReadStream();
 

@@ -52,9 +52,9 @@ jobs:
            "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
-           "DigitalOceanSpacesKey=${{ secrets.DIGITALOCEANSPACES_KEY }}" 
-           "DigitalOceanSpacesAccessToken=${{ secrets.DIGITALOCEANSPACES__ACCESS_TOKEN }}" 
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "DigitalOceanSpacesKey=${{ secrets.DIGITALOCEANSPACES_KEY }}"
+           "DigitalOceanSpacesAccessToken=${{ secrets.DIGITALOCEANSPACES__ACCESS_TOKEN }}"
         
     - name: Build and push Pricing API Docker image
       uses: docker/build-push-action@v2
@@ -67,10 +67,10 @@ jobs:
            "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
-           "FreeCurrencyServiceApiKey=${{ secrets.FREE_CURRENCY_SERVICE_API_KEY }}" 
-           "MetalsDevServiceApiKey=${{ secrets.METALS_DEV_SERVICE_API_KEY }}" 
-           "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}" 
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "FreeCurrencyServiceApiKey=${{ secrets.FREE_CURRENCY_SERVICE_API_KEY }}"
+           "MetalsDevServiceApiKey=${{ secrets.METALS_DEV_SERVICE_API_KEY }}"
+           "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}"
            "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
            "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
            
@@ -85,7 +85,7 @@ jobs:
            "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}" 
+           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            
     - name: Build and push Domain API Docker image
       uses: docker/build-push-action@v2
