@@ -25,9 +25,9 @@ builder.ConfigureServices();
 builder.ConfigureOpenTracing();
 builder.ConfigureMediatr();
 builder.ConfigureAuthentication();
+builder.ConfigureDbContexts();
 builder.ConfigureHangfire();
 builder.ConfigureAutomapper();
-builder.ConfigureDbContexts();
 builder.ConfigureSwagger();
 builder.ConfigureHostedServices();
 builder.ConfigureLocalization();
@@ -97,7 +97,7 @@ app.UseRouting();
 
 app.UseHangfireDashboard();
 
-//app.ConfigureHangfireCronJobs();
+app.ConfigureHangfireCronJobs();
 
 //app.UseHttpsRedirection();
 app.UseAuthentication();
