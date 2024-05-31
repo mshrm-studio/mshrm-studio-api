@@ -58,6 +58,10 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <returns>Latest prices</returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<PriceDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("")]
         public async Task<ActionResult<List<PriceDto>>> GetLatestPricesAsync([FromQuery] PricingProviderType? pricingProviderType,
             [FromQuery] CurrencyType? currencyType, [FromQuery] string baseCurrency = "USD", [FromQuery] List<string>? symbols = null)

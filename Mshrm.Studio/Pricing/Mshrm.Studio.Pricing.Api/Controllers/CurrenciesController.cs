@@ -55,6 +55,11 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <returns>The new currency added</returns>
         [HttpPost]
         [ProducesResponseType(typeof(CurrencyDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("")]
         public async Task<ActionResult<CurrencyDto>> CreateSupportedCurrencyAsync([FromBody] CreateSupportedCurrencyDto model)
@@ -72,6 +77,11 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <returns>The updated currency</returns>
         [HttpPatch]
         [ProducesResponseType(typeof(CurrencyDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("{currencyId}")]
         public async Task<ActionResult<CurrencyDto>> UpdateSupportedCurrencyAsync([FromRoute] Guid currencyId, [FromBody] UpdateSupportedCurrencyDto model)
@@ -99,6 +109,10 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <returns>Supported currencies</returns>
         [HttpGet]
         [ProducesResponseType(typeof(PageResultDto<CurrencyDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Route("")]
         public async Task<ActionResult<PageResultDto<CurrencyDto>>> GetSupportedCurrenciesAsync([FromQuery] string? search, [FromQuery] string? symbol, 
              [FromQuery] string? name, [FromQuery] PricingProviderType? pricingProviderType, [FromQuery] CurrencyType? currencyType,
