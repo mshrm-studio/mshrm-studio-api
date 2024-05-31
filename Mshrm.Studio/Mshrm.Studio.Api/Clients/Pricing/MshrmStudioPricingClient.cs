@@ -795,7 +795,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PricingApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            throw new PricingApiException("The HTTP status code of the response was not expected (" + status_ + "). RD: {" + responseData_ + "}", status_, responseData_, headers_, null);
                         }
                     }
                     finally
