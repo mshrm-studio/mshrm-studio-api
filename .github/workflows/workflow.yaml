@@ -73,6 +73,7 @@ jobs:
            "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}"
            "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
            "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
+           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
 
     - name: Build and push Localization API Docker image
       uses: docker/build-push-action@v2
