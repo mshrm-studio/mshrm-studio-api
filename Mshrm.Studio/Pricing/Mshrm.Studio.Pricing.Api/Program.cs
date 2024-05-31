@@ -90,7 +90,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseDeveloperExceptionPage();
+app.UseExceptionHandler();
 
 // Global cors policy - handle this in Azure
 app.UseCors(x => x.AllowAnyMethod()

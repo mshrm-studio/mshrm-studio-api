@@ -56,8 +56,9 @@ var app = builder.Build();
         c.ConfigObject.AdditionalItems.Add("syntaxHighlight", false); //Turns off syntax highlight which causing performance issues...
         c.ConfigObject.AdditionalItems.Add("theme", "agate"); //Reverts Swagger UI 2.x  theme which is simpler not much performance benefit...
     });
-    app.UseDeveloperExceptionPage();
 //}
+
+app.UseExceptionHandler();
 
 // Use the request localization
 var options = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
