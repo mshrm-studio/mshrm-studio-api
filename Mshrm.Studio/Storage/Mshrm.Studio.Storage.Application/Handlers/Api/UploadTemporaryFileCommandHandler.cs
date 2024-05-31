@@ -20,19 +20,15 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
     {
         private readonly ISpacesService _spacesService;
         private readonly ITracer _tracer;
-        private readonly DigitalOceanSpacesOptions _digitalOceanSpacesOptions;
-        private readonly ILogger<UploadTemporaryFileCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UploadTemporaryFileCommandHandler"/> class.
         /// </summary>
         /// <param name="spacesService"></param>
         /// <param name="tracer"></param>
-        public UploadTemporaryFileCommandHandler(ISpacesService spacesService, ILogger<UploadTemporaryFileCommandHandler> logger, IOptions<DigitalOceanSpacesOptions> digitalOceanSpacesOptions, ITracer tracer)
+        public UploadTemporaryFileCommandHandler(ISpacesService spacesService, ITracer tracer)
         {
             _spacesService = spacesService;
-            _logger = logger;
-            _digitalOceanSpacesOptions = digitalOceanSpacesOptions.Value;
             _tracer = tracer;
         }
 
@@ -48,8 +44,6 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
             {
                 // Create new name
                 var name = Guid.NewGuid().ToString();
-
-                _logger.LogCritical($"{_digitalOceanSpacesOptions.Key} {_digitalOceanSpacesOptions.Secret}");
 
                 // Upload in temp bucket
                 var key = await _spacesService.UploadFileAsync(command.Stream, name, "temp");
