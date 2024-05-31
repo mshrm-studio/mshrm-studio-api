@@ -616,7 +616,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             {
                 x.CustomizeProblemDetails = ctx =>
                 {
-                    var logger = ctx.HttpContext.RequestServices.GetService<ILogger<ProgramExtensions>>();
+                    var logger = ctx.HttpContext.RequestServices.GetService<ILogger<Program>>();
                     var exception = ctx.HttpContext.Features.Get<IExceptionHandlerPathFeature>()?.Error;
                     if (exception != null && exception is HttpActionValidationException)
                     {
