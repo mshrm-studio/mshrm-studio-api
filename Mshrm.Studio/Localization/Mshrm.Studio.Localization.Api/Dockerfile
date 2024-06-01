@@ -9,10 +9,12 @@ ARG ApplicationDatabaseUsername
 ARG ApplicationDatabasePassword
 ARG HangfireDatabaseUsername
 ARG HangfireDatabasePassword
+ARG JwtSigningKey
 ENV ApplicationDatabaseUsername=${ApplicationDatabaseUsername}
 ENV ApplicationDatabasePassword=${ApplicationDatabasePassword}
 ENV HangfireDatabaseUsername=${HangfireDatabaseUsername}
 ENV HangfireDatabasePassword=${HangfireDatabasePassword}
+ENV Jwt:JwtSigningKey=${JwtSigningKey}
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release

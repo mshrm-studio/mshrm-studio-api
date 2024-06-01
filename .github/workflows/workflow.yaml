@@ -87,6 +87,7 @@ jobs:
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
 
     - name: Build and push Domain API Docker image
       uses: docker/build-push-action@v2
