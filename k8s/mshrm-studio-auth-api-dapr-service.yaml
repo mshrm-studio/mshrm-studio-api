@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f Mshrm.Studio/docker-compose.yml -o ./k8s/
+    kompose.version: 1.32.0 (765fde254)
+  labels:
+    io.kompose.service: mshrm-studio-auth-api-dapr
+  name: mshrm-studio-auth-api-dapr
+spec:
+  ports:
+    - name: "https"
+      port: 8081
+      targetPort: 8081
+    - name: "http"
+      port: 8080
+      targetPort: 8080
+  externalIPs: 
+    - 157.245.34.113
+  selector:
+    io.kompose.service: mshrm-studio-auth-api-dapr
