@@ -37,6 +37,9 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 30
           name: mshrm-studio-auth-api
+          volumeMounts:
+            - mountPath: /DaprComponents
+              name: mshrm-studio-auth-api-dapr-claim0
           ports:
             - containerPort: 8081
               hostPort: 1231
@@ -45,3 +48,7 @@ spec:
               hostPort: 1251
               protocol: TCP
       restartPolicy: Always
+      volumes:
+        - name: mshrm-studio-auth-api-dapr-claim0
+          persistentVolumeClaim:
+            claimName: mshrm-studio-auth-api-dapr-claim0

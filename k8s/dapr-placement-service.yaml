@@ -13,8 +13,6 @@ spec:
       protocol: TCP
       port: 50000
       targetPort: 50000
-  externalIPs: 
-    - 157.245.34.113
   selector:
     io.kompose.service: dapr-placement
 
