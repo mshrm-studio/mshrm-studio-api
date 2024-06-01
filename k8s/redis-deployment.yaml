@@ -6,7 +6,6 @@ metadata:
     kompose.version: 1.32.0 (765fde254)
   labels:
     io.kompose.service: redis-cluster
-  metadata:
   name: redis-cluster
   namespace: redis
 spec:
