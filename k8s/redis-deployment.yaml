@@ -7,7 +7,6 @@ metadata:
   labels:
     io.kompose.service: redis-cluster
   name: redis-cluster
-  namespace: redis
 spec:
   replicas: 1
   selector:
