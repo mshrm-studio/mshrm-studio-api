@@ -29,6 +29,14 @@ jobs:
     - name: Replace Github Password In Nuget.Config
       run: find . -name "nuget.config*" -type f -exec sed -i -e 's/%NUGETPASSWORD%/${{ secrets.NUGETPASSWORD }}/g' {} \;
         
+    - name: Install Dapr
+      uses: dapr/setup-dapr@v1
+
+    - name: Initialize Dapr
+      shell: pwsh
+      run: |
+        dapr init --kubernetes --wait
+            
     - name: Build and push Auth API Docker image
       uses: docker/build-push-action@v2
       with:
