@@ -37,8 +37,8 @@ spec:
               value: "admin"
             - name: RABBITMQ_DEFAULT_PASS
               value: "password"
-          volumes:
+      restartPolicy: Always
+      volumes:
           - name: rabbitmq-data
             persistentVolumeClaim:
               claimName: rabbitmq-pvc
-      restartPolicy: Always

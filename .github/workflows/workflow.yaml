@@ -155,16 +155,6 @@ jobs:
         
     - name: Delete Previous Containers
       run: kubectl delete all --all
-
-    - name: Start RabbitMQ
-      uses: namoshek/rabbitmq-github-action@v1
-      with:
-        version: '3.8.9'
-        ports: '5672:5672'
-        #certificates: ${{ github.workspace }}/.ci/tls-certificates
-        #config: ${{ github.workspace }}/.ci/rabbitmq.conf
-        #definitions: ${{ github.workspace }}/.ci/definitions.json
-        container-name: 'rabbitmq'
       
     - name: Reset Dapr
       run: |
