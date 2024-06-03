@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-api-ingress
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  ingressClassName: app-ingress
+  rules:
+  - http:
+      paths:
+        - path: /auth
+          backend:
+            serviceName: mshrm-studio-api
+            servicePort: 30250
+        - path: /aggregator
+          backend:
+            serviceName: mshrm-studio-auth-api
+            servicePort: 30251
