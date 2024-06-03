@@ -3,16 +3,17 @@ kind: Ingress
 metadata:
   name: aggregator-api-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: azure/application-gateway
 spec:
   ingressClassName: aggregator-ingress
   rules:
-  - http:
-      paths:
-      - path: /aggregator
-        pathType: Prefix
-        backend:
-          service:
-            name: aggregator
-            port:
-              number: 30250
+    - host: api.mshrm.studio
+      http:
+        paths:
+        - path: /aggregator
+          pathType: Prefix
+          backend:
+            service:
+              name: aggregator
+              port:
+                number: 30250

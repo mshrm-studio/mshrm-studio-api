@@ -3,16 +3,17 @@ kind: Ingress
 metadata:
   name: auth-api-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: azure/application-gateway
 spec:
   ingressClassName: auth-ingress
   rules:
-  - http:
-      paths:
-      - path: /auth
-        pathType: Prefix
-        backend:
-          service:
-            name: auth
-            port:
-              number: 30251
+    - host: api.mshrm.studio
+      http:
+        paths:
+        - path: /auth
+          pathType: Prefix
+          backend:
+            service:
+              name: auth
+              port:
+                number: 30251
