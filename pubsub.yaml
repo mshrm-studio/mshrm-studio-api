@@ -6,24 +6,28 @@ spec:
   type: pubsub.rabbitmq
   version: v1
   metadata:
-  - name: host
+  - name: connectionString
     value: "amqp://rabbitmq.default.svc.cluster.local:5672"
   - name: durable
-    value: "false"
+    value: false
   - name: deletedWhenUnused
-    value: "false"
+    value: false
   - name: autoAck
-    value: "false"
+    value: false
   - name: reconnectWait
-    value: "0"
+    value: 0
   - name: protocol
-    value: "amqp"
+    value: amqp
   - name: concurrency
     value: parallel
-  - name: initTimeout
-    value: "20s"
   - name: username
     value: admin
   - name: password
     value: password
+  - name: ttlInSeconds
+    value: 60
+  - name: clientName
+    value: {podName}
+  - name: heartBeat
+    value: 10s
 
