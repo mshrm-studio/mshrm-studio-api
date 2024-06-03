@@ -7,7 +7,7 @@ spec:
   version: v1
   metadata:
   - name: host
-    value: "http://rabbitmq.default.svc.cluster.local:5672"
+    value: "amqp://rabbitmq.default.svc.cluster.local:5672"
   - name: durable
     value: "false"
   - name: deletedWhenUnused
