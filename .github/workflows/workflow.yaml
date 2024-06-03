@@ -153,6 +153,10 @@ jobs:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
         
+    - name: Uninstall Dapr
+      run: |
+        dapr uninstall --kubernetes
+        
     - name: Install Dapr
       uses: dapr/setup-dapr@v1
       
