@@ -7,7 +7,7 @@ spec:
   version: v1
   metadata:
   - name: host
-    value: "amqp://rabbitmq.default.svc.cluster.local:5672"
+    value: "rabbitmq.default.svc.cluster.local:5672"
   - name: durable
     value: "false"
   - name: deletedWhenUnused
@@ -16,8 +16,14 @@ spec:
     value: "false"
   - name: reconnectWait
     value: "0"
+  - name: protocol
+    value: "amqp"
   - name: concurrency
     value: parallel
   - name: initTimeout
     value: "20s"
+  - name: username
+    value: admin
+  - name: password
+    value: password
 
