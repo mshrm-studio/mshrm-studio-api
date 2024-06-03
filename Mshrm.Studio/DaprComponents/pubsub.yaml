@@ -18,4 +18,6 @@ spec:
     value: "0"
   - name: concurrency
     value: parallel
+  - name: initTimeout
+    value: "20s"
 
