@@ -5,10 +5,13 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: generic
+  capacity:
+    storage: 10Mi
+  volumeMode: Filesystem
+  storageClassName: manual
   capacity:
     storage: 100Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/DaprComponents"
+    path: "Mshrm.Studio/DaprComponents"
