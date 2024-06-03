@@ -153,6 +153,7 @@ namespace Mshrm.Studio.Localization.Api.Extensions
             // Workaround to not use Redis for now
             builder.Services.AddTransient<IDistributedCache, InMemoryCache>();
 
+
             return builder;
         }
 
