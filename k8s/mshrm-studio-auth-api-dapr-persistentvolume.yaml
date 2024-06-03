@@ -1,0 +1,14 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: dapr-config-volume
+  labels:
+    type: local
+spec:
+  storageClassName: generic
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/DaprComponents"
