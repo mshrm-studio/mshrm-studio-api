@@ -153,14 +153,18 @@ jobs:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
         
-    #- name: Install Dapr
-    #  uses: dapr/setup-dapr@v1
-
-    #- name: Initialize Dapr
-    #  shell: pwsh
-    #  run: |
-    #    dapr init --kubernetes --wait   
+    - name: Create Dapr Config Map for Kubernetes
+      run: |
+        kubectl create configmap dapr-components-config --from-file=pubsub.yaml=/Mshrm.Studio/DaprComponents/pubsub.yaml
         
+    - name: Install Dapr
+      uses: dapr/setup-dapr@v1
+
+    - name: Initialize Dapr
+      shell: pwsh
+      run: |
+        dapr init --kubernetes --wait
+
     - name: Delete Previous Containers
       run: kubectl delete all --all
       
