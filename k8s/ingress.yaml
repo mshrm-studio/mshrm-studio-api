@@ -7,8 +7,9 @@ metadata:
 spec:
   ingressClassName: app-ingress
   rules:
-  - http:
-      paths:
+    - host: api.mshrm.studio
+      http:
+        paths:
         - path: /auth
           backend:
             serviceName: mshrm-studio-api
