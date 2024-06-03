@@ -37,11 +37,4 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 30
           name: mshrm-studio-domain-api
-          volumeMounts:
-            - mountPath: /DaprComponents
-              name: mshrm-studio-domain-api-dapr-claim0
       restartPolicy: Always
-      volumes:
-        - name: mshrm-studio-domain-api-dapr-claim0
-          persistentVolumeClaim:
-            claimName: mshrm-studio-domain-api-dapr-claim0
