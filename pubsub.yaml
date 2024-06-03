@@ -21,3 +21,7 @@ spec:
     value: parallel
   - name: initTimeout
     value: "60s"
+  - name: username
+    value: admin
+  - name: password
+    value: password
