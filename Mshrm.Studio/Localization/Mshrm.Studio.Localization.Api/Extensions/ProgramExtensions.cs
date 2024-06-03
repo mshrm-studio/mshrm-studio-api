@@ -144,6 +144,7 @@ namespace Mshrm.Studio.Localization.Api.Extensions
         /// <returns>The api builder</returns>
         public static WebApplicationBuilder ConfigureCache(this WebApplicationBuilder builder)
         {
+            // TODO: Fix Redis
             /*builder.Services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = builder.Configuration.GetConnectionString("Redis");
