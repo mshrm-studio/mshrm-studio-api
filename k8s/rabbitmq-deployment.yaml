@@ -27,10 +27,10 @@ spec:
           ports:
             - containerPort: 5672
             - containerPort: 15672
-            volumeMounts:
+          volumeMounts:
             - name: rabbitmq-data
               mountPath: /var/lib/rabbitmq
-            env:
+          env:
             - name: RABBITMQ_ERLANG_COOKIE
               value: "secret-cookie"
             - name: RABBITMQ_DEFAULT_USER
