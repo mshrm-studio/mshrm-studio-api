@@ -152,7 +152,11 @@ jobs:
       with:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
-
+        
+    - name: Reset Dapr
+      run: |
+        kubectl delete namespace dapr-system
+        
     - name: Install Dapr
       uses: dapr/setup-dapr@v1
       
