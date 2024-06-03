@@ -153,6 +153,9 @@ jobs:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
         
+    - name: Delete Previous Containers
+      run: kubectl delete all --all
+      
     - name: Reset Dapr
       run: |
         kubectl delete namespace dapr-system
@@ -164,9 +167,7 @@ jobs:
       shell: pwsh
       run: |
         dapr init --kubernetes --wait
-
-    - name: Delete Previous Containers
-      run: kubectl delete all --all
+        kubectl apply -f pubsub.yaml
       
     - name: Add Aggregator API Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioapi/g' {} \;
