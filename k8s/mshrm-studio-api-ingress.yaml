@@ -14,6 +14,6 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: aggregator
+              name: mshrm-studio-api
               port:
                 number: 30250
