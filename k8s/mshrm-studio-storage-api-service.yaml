@@ -15,7 +15,5 @@ spec:
     - name: "8080"
       port: 8080
       targetPort: 8080
-  externalIPs: 
-    - 157.245.34.113
   selector:
     io.kompose.service: mshrm-studio-storage-api
