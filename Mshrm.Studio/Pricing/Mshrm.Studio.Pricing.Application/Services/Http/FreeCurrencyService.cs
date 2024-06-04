@@ -25,18 +25,18 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<FreeCurrencyPriceResponse>> GetPricesAsync(string baseCurrency = "USD")
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<FreeCurrencyPriceResponse>> GetPricesAsync(string baseAsset = "USD")
         {
             // Get raw prices
             var prices = await base.GetAsync<object>(
-                $"{_options.Endpoint}/v1/latest?apikey={_options.ApiKey}&base_currency={baseCurrency}&currencies=", false);
+                $"{_options.Endpoint}/v1/latest?apikey={_options.ApiKey}&base_currency={baseAsset}&currencies=", false);
 
             // Process into response
-            return GetPricePairs(baseCurrency, JObject.FromObject(prices));
+            return GetPricePairs(baseAsset, JObject.FromObject(prices));
         }
 
         /// <summary>

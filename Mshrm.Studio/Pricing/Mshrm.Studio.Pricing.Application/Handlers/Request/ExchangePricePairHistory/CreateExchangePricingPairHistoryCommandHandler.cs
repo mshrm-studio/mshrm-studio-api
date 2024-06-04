@@ -21,7 +21,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePairHis
     public class CreateExchangePricingPairHistoryCommandHandler : IRequestHandler<CreateExchangePricingPairHistoryCommand, ExchangePricingPairHistory>
     {
         private readonly IExchangePricingPairHistoryRepository _exchangePricingPairHistoryRepository;
-        private readonly ICurrencyRepository _currencyRepository;
+        private readonly IAssetRepository _assetRepository;
         private readonly ILogger<CreateOrReplacePricingPairsCommandHandler> _logger;
         private readonly ITracer _tracer;
 
@@ -29,13 +29,14 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePairHis
         /// Initializes a new instance of the <see cref="CreateOrReplacePricingPairsCommandHandler"/> class.
         /// </summary>
         /// <param name="exchangePricingPairHistoryRepository"></param>
-        /// <param name="currencyRepository"></param>
+        /// <param name="assetRepository"></param>
         /// <param name="logger"></param>
         /// <param name="tracer"></param>
-        public CreateExchangePricingPairHistoryCommandHandler(IExchangePricingPairHistoryRepository exchangePricingPairHistoryRepository, ICurrencyRepository currencyRepository, ILogger<CreateOrReplacePricingPairsCommandHandler> logger, ITracer tracer)
+        public CreateExchangePricingPairHistoryCommandHandler(IExchangePricingPairHistoryRepository exchangePricingPairHistoryRepository, IAssetRepository assetRepository, 
+            ILogger<CreateOrReplacePricingPairsCommandHandler> logger, ITracer tracer)
         {
             _exchangePricingPairHistoryRepository = exchangePricingPairHistoryRepository;
-            _currencyRepository = currencyRepository;
+            _assetRepository = assetRepository;
 
             _tracer = tracer;
             _logger = logger;

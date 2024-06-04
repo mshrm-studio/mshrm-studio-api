@@ -11,7 +11,7 @@ using Mshrm.Studio.Pricing.Application.Services.Http.HttpService;
 
 namespace Mshrm.Studio.Pricing.Api.Services.Providers
 {
-    public class TwelveDataCurrencyPriceProvider : ICurrencyPriceProvider
+    public class TwelveDataCurrencyPriceProvider : IAssetPriceProvider
     {
         private readonly ITwelveDataService _twelveDataService;
         private readonly ILogger<TwelveDataCurrencyPriceProvider> _logger;
@@ -23,27 +23,27 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get prices for</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<PricePair>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The assets to get prices for</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<PricePair>> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
-            return await _twelveDataService.GetPricesAsync(baseCurrency);
+            return await _twelveDataService.GetPricesAsync(baseAsset);
         }
 
 
         /// <summary>
-        /// Get all currencies
+        /// Get all assets
         /// </summary>
-        /// <returns>Currencies</returns>
-        public async Task<List<PricingCurrency>> GetCurrenciesAsync()
+        /// <returns>Assets</returns>
+        public async Task<List<PricingCurrency>> GetAssetsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> IsCurrencySupportedAsync(string symbol)
+        public Task<bool> IsAssetSupportedAsync(string symbol)
         {
             throw new NotImplementedException();
         }

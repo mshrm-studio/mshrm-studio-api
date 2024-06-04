@@ -22,7 +22,7 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.Currency", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,15 +33,15 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
+                    b.Property<string>("AssetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CurrencyType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -78,7 +78,7 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     b.HasIndex("Symbol", "ProviderType", "Active");
 
-                    b.ToTable("Currencies", "dbo");
+                    b.ToTable("Assets", "dbo");
                 });
 
             modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPair", b =>
@@ -89,7 +89,10 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BaseCurrencyId")
+                    b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BaseAssetId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CreatedById")
@@ -97,9 +100,6 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("CurrencyId")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("GuidId")
                         .HasColumnType("uniqueidentifier");
@@ -125,9 +125,9 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BaseCurrencyId");
+                    b.HasIndex("AssetId");
 
-                    b.HasIndex("CurrencyId");
+                    b.HasIndex("BaseAssetId");
 
                     b.HasIndex("GuidId");
 
@@ -193,21 +193,21 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
             modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPair", b =>
                 {
-                    b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.Currency", "BaseCurrency")
-                        .WithMany("BasePricingPairs")
-                        .HasForeignKey("BaseCurrencyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.Currency", "Currency")
+                    b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", "Asset")
                         .WithMany("PricingPairs")
-                        .HasForeignKey("CurrencyId")
+                        .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("BaseCurrency");
+                    b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", "BaseAsset")
+                        .WithMany("BasePricingPairs")
+                        .HasForeignKey("BaseAssetId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Currency");
+                    b.Navigation("Asset");
+
+                    b.Navigation("BaseAsset");
                 });
 
             modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPairHistory", b =>
@@ -221,7 +221,7 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
                     b.Navigation("ExchangePricingPair");
                 });
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.Currency", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", b =>
                 {
                     b.Navigation("BasePricingPairs");
 

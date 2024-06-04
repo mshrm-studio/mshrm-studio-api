@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.Currencies.Queries;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairHistories.Commands;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Events;

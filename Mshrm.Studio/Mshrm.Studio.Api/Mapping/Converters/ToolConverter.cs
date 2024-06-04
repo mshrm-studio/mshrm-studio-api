@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Mshrm.Studio.Api.Clients.Domain;
 using Mshrm.Studio.Api.Clients.Pricing;
-using Mshrm.Studio.Api.Models.Dtos.Currencies;
+using Mshrm.Studio.Api.Models.Dtos.Assets;
 using Mshrm.Studio.Api.Models.Dtos.Tools;
 using System.Runtime.Intrinsics;
 
@@ -24,12 +24,12 @@ namespace Mshrm.Studio.Api.Mapping.Converters
         }
 
         /// <summary>
-        /// Convert a CurrencyDto to a PricingCurrencyDto
+        /// Convert models
         /// </summary>
-        /// <param name="parent">The CurrencyDto</param>
-        /// <param name="target">The PricingCurrencyDto</param>
+        /// <param name="parent">The ToolDto</param>
+        /// <param name="target">The ToolResponseDto</param>
         /// <param name="context">The request context</param>
-        /// <returns>A PricingCurrencyDto</returns>
+        /// <returns>A ToolResponseDto</returns>
         public ToolResponseDto Convert(
             ToolDto parent,
             ToolResponseDto target,

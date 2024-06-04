@@ -10,7 +10,7 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
     /// <summary>
     /// Provider PolygonIO
     /// </summary>
-    public class PolygonIOCurrencyPriceProvider : ICurrencyPriceProvider
+    public class PolygonIOCurrencyPriceProvider : IAssetPriceProvider
     {
         private readonly IPolygonIOService _polygonIOService;
         private readonly ILogger<PolygonIOCurrencyPriceProvider> _logger;
@@ -27,29 +27,29 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <param name="currencies">The currencies to get prices for</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<PricePair>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The assets to get prices for</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<PricePair>> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
-            var prices = await _polygonIOService.GetPricesAsync(currencies, baseCurrency);
+            var prices = await _polygonIOService.GetPricesAsync(assets, baseAsset);
 
             return prices.Select(x => new PricePair()
             {
-                BaseCurrency = baseCurrency,
-                Currency = x.Symbol,
+                BaseAsset = baseAsset,
+                Asset = x.Symbol,
                 Price = x.Close ?? x.Open,
                 Volume = x.Volume,
             }).ToList();
         }
 
         /// <summary>
-        /// Get all currencies
+        /// Get all assets
         /// </summary>
-        /// <returns>Currencies</returns>
-        public async Task<List<PricingCurrency>> GetCurrenciesAsync()
+        /// <returns>Assets</returns>
+        public async Task<List<PricingCurrency>> GetAssetsAsync()
         {
             var currencies = await _polygonIOService.GetCurrenciesAsync(null);
 
@@ -62,11 +62,11 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Check if the provider supports the currency
+        /// Check if the provider supports the asset
         /// </summary>
-        /// <param name="symbol">The currency</param>
+        /// <param name="symbol">The asset</param>
         /// <returns>True if supported</returns>
-        public async Task<bool> IsCurrencySupportedAsync(string symbol)
+        public async Task<bool> IsAssetSupportedAsync(string symbol)
         {
             var currencies = await _polygonIOService.GetCurrenciesAsync(symbol);
 

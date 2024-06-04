@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.Currencies.Queries;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
@@ -15,18 +14,18 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
     public class GetLatestPricesQueryHandler : IRequestHandler<GetLatestPricesQuery, List<ExchangePricingPair>>
     {
         private readonly IExchangePricingPairRepository _exchangePricingPairRepository;
-        private readonly ICurrencyRepository _currencyRepository;
+        private readonly IAssetRepository _assetRepository;
         private readonly ITracer _tracer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetLatestPricesQueryHandler"/> class.
         /// </summary>
         /// <param name="exchangePricingPairRepository"></param>
-        /// <param name="currencyRepository"></param>
-        public GetLatestPricesQueryHandler(IExchangePricingPairRepository exchangePricingPairRepository, ICurrencyRepository currencyRepository, ITracer tracer)
+        /// <param name="assetRepository"></param>
+        public GetLatestPricesQueryHandler(IExchangePricingPairRepository exchangePricingPairRepository, IAssetRepository assetRepository, ITracer tracer)
         {
             _exchangePricingPairRepository = exchangePricingPairRepository;
-            _currencyRepository = currencyRepository;
+            _assetRepository = assetRepository;
 
             _tracer = tracer;
         }
@@ -39,36 +38,36 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
         /// <returns>Latest prices</returns>
         public async Task<List<ExchangePricingPair>> Handle(GetLatestPricesQuery query, CancellationToken cancellationToken)
         {
-            using (var scope = _tracer.BuildSpan("CreateCurrencyAsync_CreateCurrencyService").StartActive(true))
+            using (var scope = _tracer.BuildSpan("CreateAssetAsync_CreateAssetService").StartActive(true))
             {
                 // Make sure everything provided is upper
                 if (query.Symbols != null)
                     query.Symbols = query.Symbols.Select(x => x.Trim().ToUpper()).ToList();
 
-                // Get base currency
-                var baseCurrency = (await _currencyRepository.GetCurrenciesReadOnlyAsync(null, null, true, new List<string>() { query.BaseCurrencySymbol })).FirstOrDefault();
-                if (baseCurrency == null)
-                    throw new UnprocessableEntityException("The base currency symbol provided is not supported", FailureCode.BaseCurrencyNotSupported);
+                // Get base asset
+                var baseAsset = (await _assetRepository.GetAssetsReadOnlyAsync(null, null, true, new List<string>() { query.BaseAssetSymbol })).FirstOrDefault();
+                if (baseAsset == null)
+                    throw new UnprocessableEntityException("The base asset symbol provided is not supported", FailureCode.BaseAssetNotSupported);
 
-                // Get the OLD base currency price
-                var oldBaseCurrency = (await _currencyRepository.GetCurrenciesReadOnlyAsync(null, null, true, new List<string>() { "USD" })).FirstOrDefault();
-                var oldBaseCurrencyPrice = (await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(new List<int>() { oldBaseCurrency.Id }, null, null, cancellationToken)).FirstOrDefault();
+                // Get the OLD base asset price
+                var oldBaseAsset = (await _assetRepository.GetAssetsReadOnlyAsync(null, null, true, new List<string>() { "USD" })).FirstOrDefault();
+                var oldBaseAssetPrice = (await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(new List<int>() { oldBaseAsset.Id }, null, null, cancellationToken)).FirstOrDefault();
 
-                // Get NEW base currency price
-                var newBaseCurrencyPrice = (await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(new List<int>() { baseCurrency.Id }, null, null, cancellationToken)).FirstOrDefault();
-                if (newBaseCurrencyPrice == null)
-                    throw new UnprocessableEntityException("The base currency symbols price doesn't exist", FailureCode.BaseCurrencyPriceDoesntExist);
+                // Get NEW base asset price
+                var newBaseAssetPrice = (await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(new List<int>() { baseAsset.Id }, null, null, cancellationToken)).FirstOrDefault();
+                if (newBaseAssetPrice == null)
+                    throw new UnprocessableEntityException("The base asset symbols price doesn't exist", FailureCode.BaseAssetPriceDoesntExist);
 
-                // Get currencies
-                var currencies = await _currencyRepository.GetCurrenciesReadOnlyAsync(query.CurrencyType, query.PricingProviderType, true, query.Symbols);
-                var currencyIds = currencies.Select(x => x.Id).ToList();
+                // Get assets
+                var assets = await _assetRepository.GetAssetsReadOnlyAsync(query.AssetType, query.PricingProviderType, true, query.Symbols);
+                var assetIds = assets.Select(x => x.Id).ToList();
 
                 // Get prices
-                var prices = await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(currencyIds, query.PricingProviderType, query.CurrencyType,
+                var prices = await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(assetIds, query.PricingProviderType, query.AssetType,
                     cancellationToken);
 
-                // Convert to base currency price
-                prices.ForEach(x => { x.SetNewBaseCurrency(baseCurrency, oldBaseCurrencyPrice, newBaseCurrencyPrice); });
+                // Convert to base asset price
+                prices.ForEach(x => { x.SetNewBaseAsset(baseAsset, oldBaseAssetPrice, newBaseAssetPrice); });
 
                 return prices;
             }

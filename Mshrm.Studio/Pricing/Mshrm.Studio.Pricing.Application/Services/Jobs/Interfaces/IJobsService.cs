@@ -5,9 +5,9 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs.Interfaces
     public interface IJobsService
     {
         /// <summary>
-        /// Pull in currency pair updates
+        /// Pull in asset pair updates
         /// </summary>
-        /// <param name="type">Currency type</param>
+        /// <param name="type">Provider type</param>
         /// <returns>An async task</returns>
         public Task ImportProviderPairsAsync(PricingProviderType type);
     }

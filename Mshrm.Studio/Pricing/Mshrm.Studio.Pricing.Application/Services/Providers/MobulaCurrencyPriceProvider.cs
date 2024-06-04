@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Mshrm.Studio.Pricing.Api.Services.Providers
 {
-    public class MobulaCurrencyPriceProvider : ICurrencyPriceProvider
+    public class MobulaCurrencyPriceProvider : IAssetPriceProvider
     {
         private readonly IMobulaService _mobulaService;
         private readonly ILogger<MobulaCurrencyPriceProvider> _logger;
@@ -23,10 +23,10 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Get all currencies
+        /// Get all assets
         /// </summary>
-        /// <returns>Currencies</returns>
-        public async Task<List<PricingCurrency>> GetCurrenciesAsync()
+        /// <returns>Assets</returns>
+        public async Task<List<PricingCurrency>> GetAssetsAsync()
         {
             var currencies = await _mobulaService.GetCurrenciesAsync(null);
 
@@ -39,20 +39,20 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get prices for</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<PricePair>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The assets to get prices for</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<PricePair>> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
             // Get raw prices
-            var prices = await _mobulaService.GetPricesAsync(currencies, baseCurrency);
+            var prices = await _mobulaService.GetPricesAsync(assets, baseAsset);
 
             return prices.PricePairs.Select(x => new PricePair()
             {
-                BaseCurrency = baseCurrency,
-                Currency = x.Symbol,
+                BaseAsset = baseAsset,
+                Asset = x.Symbol,
                 Price = x.Price,
                 Volume = x.Volume,
                 MarketCap = x.MarketCap
@@ -60,11 +60,11 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Check if the provider supports the currency
+        /// Check if the provider supports the asset
         /// </summary>
-        /// <param name="symbol">The currency</param>
+        /// <param name="symbol">The asset</param>
         /// <returns>True if supported</returns>
-        public async Task<bool> IsCurrencySupportedAsync(string symbol)
+        public async Task<bool> IsAssetSupportedAsync(string symbol)
         {
             return (await _mobulaService.GetCurrenciesAsync(symbol)) != null;
         }

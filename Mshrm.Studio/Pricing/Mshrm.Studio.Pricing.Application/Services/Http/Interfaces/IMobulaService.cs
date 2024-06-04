@@ -6,12 +6,12 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http.Interfaces
     public interface IMobulaService
     {
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get prices of</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public Task<MobulaPriceResponse> GetPricesAsync(List<string> currencies, string baseCurrency = "USD");
+        /// <param name="assets">The assets to get prices of</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public Task<MobulaPriceResponse> GetPricesAsync(List<string> assets, string baseAsset = "USD");
 
         /// <summary>
         /// Get all currencies

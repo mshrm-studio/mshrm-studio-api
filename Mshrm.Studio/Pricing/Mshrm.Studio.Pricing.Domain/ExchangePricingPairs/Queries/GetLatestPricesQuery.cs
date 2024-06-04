@@ -7,8 +7,8 @@ namespace Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries
     public class GetLatestPricesQuery : IRequest<List<ExchangePricingPair>>
     {
         public List<string>? Symbols { get; set; }
-        public string BaseCurrencySymbol { get; set; }
-        public CurrencyType? CurrencyType { get; set; }
+        public string BaseAssetSymbol { get; set; }
+        public AssetType? AssetType { get; set; }
         public PricingProviderType? PricingProviderType { get; set; }
     }
 }

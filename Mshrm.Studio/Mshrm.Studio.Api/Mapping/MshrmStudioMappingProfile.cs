@@ -6,7 +6,7 @@ using Mshrm.Studio.Api.Clients.Pricing;
 using Mshrm.Studio.Api.Clients.Storage;
 using Mshrm.Studio.Api.Mapping.Converters;
 using Mshrm.Studio.Api.Models.Dtos.ContactForms;
-using Mshrm.Studio.Api.Models.Dtos.Currencies;
+using Mshrm.Studio.Api.Models.Dtos.Assets;
 using Mshrm.Studio.Api.Models.Dtos.Files;
 using Mshrm.Studio.Api.Models.Dtos.Localization;
 using Mshrm.Studio.Api.Models.Dtos.Prices;
@@ -48,10 +48,10 @@ namespace Mshrm.Studio.Api.Mapping
 
             #endregion
 
-            #region Currency
+            #region Assey
 
-            CreateMap<CurrencyDto, CurrencyResponseDto>().ConvertUsing<CurrencyConverter>();
-            CreateMap<PageResultDtoOfCurrencyDto, PageResultDto<CurrencyResponseDto>>().ReverseMap();
+            CreateMap<AssetDto, AssetResponseDto>().ConvertUsing<AssetConverter>();
+            CreateMap<PageResultDtoOfAssetDto, PageResultDto<AssetResponseDto>>().ReverseMap();
 
             #endregion
 

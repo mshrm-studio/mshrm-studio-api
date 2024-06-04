@@ -1,4 +1,4 @@
-﻿using Mshrm.Studio.Pricing.Api.Models.Dtos.Currency;
+﻿using Mshrm.Studio.Pricing.Api.Models.Dtos.Asset;
 using Newtonsoft.Json;
 
 namespace Mshrm.Studio.Pricing.Api.Models.Dtos.Prices
@@ -14,10 +14,10 @@ namespace Mshrm.Studio.Pricing.Api.Models.Dtos.Prices
         [JsonProperty("volume")]
         public decimal? Volume { get; set; }
 
-        [JsonProperty("baseCurrency")]
-        public CurrencyDto BaseCurrency { get; set; }
+        [JsonProperty("baseAsset")]
+        public AssetDto BaseAsset { get; set; }
 
-        [JsonProperty("currency")]
-        public CurrencyDto Currency { get; set; }
+        [JsonProperty("asset")]
+        public AssetDto Asset { get; set; }
     }
 }

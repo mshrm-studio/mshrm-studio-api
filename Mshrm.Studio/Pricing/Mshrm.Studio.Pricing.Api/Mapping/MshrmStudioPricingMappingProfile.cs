@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.Currencies.Commands;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairHistories.Commands;
-using Mshrm.Studio.Pricing.Api.Models.Dtos.Currencies;
-using Mshrm.Studio.Pricing.Api.Models.Dtos.Currency;
+using Mshrm.Studio.Pricing.Api.Models.Dtos.Asset;
 using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Events;
@@ -29,17 +28,17 @@ namespace Mshrm.Studio.Pricing.Api.Mapping
         /// </summary>
         public void Init()
         {
-            #region Currencies
+            #region Assets
 
-            CreateMap<Currency, CurrencyDto>().ReverseMap();
-            CreateMap<PagedResult<Currency>, PageResultDto<CurrencyDto>>()
+            CreateMap<Asset, AssetDto>().ReverseMap();
+            CreateMap<PagedResult<Asset>, PageResultDto<AssetDto>>()
                 .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
                 .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
                 .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
                 .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName))
                 .ReverseMap();
-            CreateMap<UpdateSupportedCurrencyDto, UpdateSupportedCurrencyCommand>().ReverseMap();
-            CreateMap<CreateSupportedCurrencyDto, CreateSupportedCurrencyCommand>().ReverseMap();
+            CreateMap<UpdateSupportedAssetDto, UpdateSupportedAssetCommand>().ReverseMap();
+            CreateMap<CreateSupportedAssetDto, CreateSupportedAssetCommand>().ReverseMap();
 
             #endregion
 

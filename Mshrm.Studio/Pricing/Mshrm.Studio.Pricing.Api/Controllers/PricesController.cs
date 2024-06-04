@@ -7,7 +7,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Mshrm.Studio.Pricing.Api.Extensions;
 using Mshrm.Studio.Pricing.Api.Models.Cache;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
-using Mshrm.Studio.Pricing.Api.Models.Dtos.Currency;
 using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
@@ -52,21 +51,21 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// Gets the latest price data for symbols
         /// </summary>
         /// <param name="pricingProviderType">The provider used to import</param>
-        /// <param name="currencyType">The type of currency</param>
-        /// <param name="baseCurrency">The base currency</param>
+        /// <param name="assetType">The type of asset</param>
+        /// <param name="baseAsset">The base asset</param>
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<PriceDto>), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<List<PriceDto>>> GetLatestPricesAsync([FromQuery] PricingProviderType? pricingProviderType,
-            [FromQuery] CurrencyType? currencyType, [FromQuery] string baseCurrency = "USD", [FromQuery] List<string>? symbols = null)
+            [FromQuery] AssetType? assetType, [FromQuery] string baseAsset = "USD", [FromQuery] List<string>? symbols = null)
         {
             var prices = await _mediator.Send<List<ExchangePricingPair>>(new GetLatestPricesQuery()
             {
                 Symbols = symbols,
-                BaseCurrencySymbol = baseCurrency,
-                CurrencyType = currencyType,
+                BaseAssetSymbol = baseAsset,
+                AssetType = assetType,
                 PricingProviderType = pricingProviderType
             });
 

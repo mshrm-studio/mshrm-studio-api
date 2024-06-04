@@ -7,18 +7,18 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http.Interfaces
     public interface IPolygonIOService
     {
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public Task<List<PolygonIOPriceResponse>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD");
+        /// <param name="currencies">The assets to get</param>
+        /// <param name="baseCurrency">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public Task<List<PolygonIOPriceResponse>> GetPricesAsync(List<string> assets, string baseAsset = "USD");
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="symbol">The currency symbol to get</param>
-        /// <returns>Prices for 1 of a base currency</returns>
+        /// <param name="symbol">The asset symbol to get</param>
+        /// <returns>Prices for 1 of a base asset</returns>
         public Task<PolygonIOPriceResponse> GetPriceAsync(string symbol);
 
         /// <summary>

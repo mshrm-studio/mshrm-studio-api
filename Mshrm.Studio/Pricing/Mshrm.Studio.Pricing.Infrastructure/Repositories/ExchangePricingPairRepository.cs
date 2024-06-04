@@ -20,33 +20,33 @@ namespace Mshrm.Studio.Pricing.Api.Repositories
         /// <summary>
         /// Get the latest exchange pricing pairs
         /// </summary>
-        /// <param name="currencyIds">The currencies to get - all if left null/empty</param>
+        /// <param name="assetIds">The assets to get - all if left null/empty</param>
         /// <param name="pricingProviderType">The provider used to generate price</param>
-        /// <param name="currencyType">The currency type the price is for</param>
+        /// <param name="assetType">The asset type the price is for</param>
         /// <param name="cancellationToken">The stopping token</param>
         /// <returns>Pricing pairs for a set of symbols</returns>
-        public async Task<List<ExchangePricingPair>> GetLatestExchangePricingPairsReadOnlyAsync(List<int>? currencyIds, PricingProviderType? pricingProviderType,
-            CurrencyType? currencyType, CancellationToken cancellationToken)
+        public async Task<List<ExchangePricingPair>> GetLatestExchangePricingPairsReadOnlyAsync(List<int>? assetIds, PricingProviderType? pricingProviderType,
+            AssetType? assetType, CancellationToken cancellationToken)
         {
             var pairs = GetAll()
                 .AsNoTracking()
-                .Include(x => x.Currency)
-                .Include(x => x.BaseCurrency)
+                .Include(x => x.Asset)
+                .Include(x => x.BaseAsset)
                 .Where(x => true);
 
-            if ((currencyIds?.Any() ?? false))
+            if ((assetIds?.Any() ?? false))
             {
-                pairs = pairs.Where(x => currencyIds.Contains(x.CurrencyId));
+                pairs = pairs.Where(x => assetIds.Contains(x.AssetId));
             }
 
             if (pricingProviderType.HasValue)
             {
-                pairs = pairs.Where(x => x.Currency.ProviderType == pricingProviderType);
+                pairs = pairs.Where(x => x.Asset.ProviderType == pricingProviderType);
             }
 
-            if (currencyType.HasValue)
+            if (assetType.HasValue)
             {
-                pairs = pairs.Where(x => x.Currency.CurrencyType == currencyType);
+                pairs = pairs.Where(x => x.Asset.AssetType == assetType);
             }
 
             return await pairs.ToListAsync(cancellationToken);

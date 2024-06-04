@@ -8,7 +8,7 @@ using Mshrm.Studio.Pricing.Application.Services.Http.HttpService;
 
 namespace Mshrm.Studio.Pricing.Api.Services.Providers
 {
-    public class MetalsDevCurrencyPriceProvider : ICurrencyPriceProvider
+    public class MetalsDevCurrencyPriceProvider : IAssetPriceProvider
     {
         private readonly IMetalsDevService _metalsDevService;
         private readonly ILogger<MetalsDevCurrencyPriceProvider> _logger;
@@ -22,10 +22,10 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Get all currencies (assets in this case)
+        /// Get all assets
         /// </summary>
-        /// <returns>Currencies</returns>
-        public async Task<List<PricingCurrency>> GetCurrenciesAsync()
+        /// <returns>Assets</returns>
+        public async Task<List<PricingCurrency>> GetAssetsAsync()
         {
             var assets = await _metalsDevService.GetAssestAsync();
 
@@ -38,32 +38,32 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get prices for</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<PricePair>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The assets to get prices for</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<PricePair>> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
             // Get raw prices
-            var prices = await _metalsDevService.GetPricesAsync(baseCurrency);
+            var prices = await _metalsDevService.GetPricesAsync(baseAsset);
 
-            var selectedPrices = prices.PricePairs.Where(x => currencies.Contains(x.Symbol.ToUpper()));
+            var selectedPrices = prices.PricePairs.Where(x => assets.Contains(x.Symbol.ToUpper()));
 
             return selectedPrices.Select(x => new PricePair()
             {
-                BaseCurrency = baseCurrency,
-                Currency = x.Symbol.ToUpper(),
+                BaseAsset = baseAsset,
+                Asset = x.Symbol.ToUpper(),
                 Price = x.Price
             }).ToList();
         }
 
         /// <summary>
-        /// Check if the provider supports the currency
+        /// Check if the provider supports the asset
         /// </summary>
-        /// <param name="symbol">The currency</param>
+        /// <param name="symbol">The asset</param>
         /// <returns>True if supported</returns>
-        public async Task<bool> IsCurrencySupportedAsync(string symbol)
+        public async Task<bool> IsAssetSupportedAsync(string symbol)
         {
             var assets = await _metalsDevService.GetAssestAsync();
             var assetSymbols = assets.Select(x => x.Symbol);

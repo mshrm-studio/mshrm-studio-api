@@ -22,21 +22,21 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http
             _options = options.Value;
             _logger = logger;
         }
-        
+
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
         /// <param name="unit">The unit to get price of</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<MetalsDevPriceResponse> GetPricesAsync(string baseCurrency = "USD", string unit = "toz")
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<MetalsDevPriceResponse> GetPricesAsync(string baseAsset = "USD", string unit = "toz")
         {
-            var url = $"{_options.Endpoint}/v1/latest?api_key={_options.ApiKey}&currency={baseCurrency}&unit={unit}";
+            var url = $"{_options.Endpoint}/v1/latest?api_key={_options.ApiKey}&currency={baseAsset}&unit={unit}";
             
             // Get raw prices
             var prices = await base.GetAsync<object>(url, false);
 
-            return FormatPriceResponse(baseCurrency, JObject.FromObject(prices));
+            return FormatPriceResponse(baseAsset, JObject.FromObject(prices));
         }
 
         /// <summary>

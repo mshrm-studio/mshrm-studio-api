@@ -6,14 +6,14 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
     public interface IQueryPricesService
     {
         /// <summary>
-        /// Get the latest prices for supported currencies
+        /// Get the latest prices for supported assets
         /// </summary>
         /// <param name="pricingProviderType">An optional pricing provider</param>
-        /// <param name="currencyType">An optional currency type</param>
-        /// <param name="baseCurrency">An optional base currencie ie. output to what</param>
-        /// <param name="symbols">Filter by supported currencies</param>
-        /// <param name="cancellaationToken">Stopping token</param>
+        /// <param name="assetType">An optional asset type</param>
+        /// <param name="baseAsset">An optional base asset ie. output to what</param>
+        /// <param name="symbols">Filter by supported assets</param>
+        /// <param name="cancellationToken">Stopping token</param>
         /// <returns>A list of latest prices</returns>
-        Task<List<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, CurrencyType? currencyType, string baseCurrency, List<string>? symbols, CancellationToken cancellaationToken);
+        Task<List<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, List<string>? symbols, CancellationToken cancellationToken);
     }
 }

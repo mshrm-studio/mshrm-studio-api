@@ -38,14 +38,12 @@ using Mshrm.Studio.Shared.Exceptions.HttpAction;
 using Mshrm.Studio.Shared.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.Currencies.Queries;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Mshrm.Studio.Shared.Models.Pagination;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.Currencies.Commands;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Commands;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairHistories.Commands;
-using Mshrm.Studio.Pricing.Application.Handlers.Request.Currencies;
+using Mshrm.Studio.Pricing.Application.Handlers.Request.Assets;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePairHistory;
 using Google.Api;
@@ -55,9 +53,12 @@ using Mshrm.Studio.Pricing.Application.Services.Providers;
 using System.Data.SqlClient;
 using Mshrm.Studio.Pricing.Infrastructure.Factories;
 using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories;
-using Mshrm.Studio.Pricing.Domain.Currencies;
 using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs;
 using Mshrm.Studio.Shared.Enums;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Queries;
+using Mshrm.Studio.Pricing.Application.Handlers.Request.Assets;
+using Mshrm.Studio.Pricing.Domain.Assets;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -247,14 +248,14 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
 
             builder.Services.AddTransient<IExchangePricingPairHistoryFactory, ExchangePricingPairHistoryFactory>();
             builder.Services.AddTransient<IExchangePricingPairFactory, ExchangePricingPairFactory>();
-            builder.Services.AddTransient<ICurrencyFactory, CurrencyFactory>();
+            builder.Services.AddTransient<IAssetFactory, AssetFactory>();
 
             builder.Services.AddTransient<FreeCurrencyCurrencyPriceProvider>();
             builder.Services.AddTransient<TwelveDataCurrencyPriceProvider>();
             builder.Services.AddTransient<MobulaCurrencyPriceProvider>();
             builder.Services.AddTransient<PolygonIOCurrencyPriceProvider>();
             builder.Services.AddTransient<MetalsDevCurrencyPriceProvider>();
-            builder.Services.AddTransient<CurrencyPriceServiceResolver>(serviceProvider => pricingProviderType =>
+            builder.Services.AddTransient<AssetPriceServiceResolver>(serviceProvider => pricingProviderType =>
             {
                 switch (pricingProviderType)
                 {
@@ -271,7 +272,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
                 }
             });
 
-            builder.Services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+            builder.Services.AddTransient<IAssetRepository, AssetRepository>();
             builder.Services.AddTransient<IExchangePricingPairRepository, ExchangePricingPairRepository>();
             builder.Services.AddTransient<IExchangePricingPairHistoryRepository, ExchangePricingPairHistoryRepository>();
 
@@ -340,10 +341,10 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             // Setup Mediatr service
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
-            builder.Services.AddScoped<IRequestHandler<GetPagedCurrenciesQuery, PagedResult<Currency>>, GetPagedCurrenciesQueryHandler>();
-            builder.Services.AddScoped<IRequestHandler<GetCurrenciesQuery, List<Currency>>, GetCurrenciesQueryHandler>();
-            builder.Services.AddScoped<IRequestHandler<CreateSupportedCurrencyCommand, Currency>, CreateSupportedCurrencyCommandHandler>();
-            builder.Services.AddScoped<IRequestHandler<UpdateSupportedCurrencyCommand, Currency>, UpdateSupportedCurrencyCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetPagedAssetsQuery, PagedResult<Asset>>, GetPagedAssetsQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetAssetsQuery, List<Asset>>, GetAssetsQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateSupportedAssetCommand, Asset>, CreateSupportedAssetCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<UpdateSupportedAssetCommand, Asset>, UpdateSupportedAssetCommandHandler>();
 
             builder.Services.AddScoped<IRequestHandler<GetLatestPricesQuery, List<ExchangePricingPair>>, GetLatestPricesQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<CreateOrReplacePricingPairsCommand, List<ExchangePricingPair>>, CreateOrReplacePricingPairsCommandHandler>();

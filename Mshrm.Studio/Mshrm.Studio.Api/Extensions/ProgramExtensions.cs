@@ -223,12 +223,12 @@
             builder.Services.AddTransient<IQueryToolsService, QueryToolsService>();
             builder.Services.AddTransient<ICreateToolsService, CreateToolsService>();
             builder.Services.AddTransient<IUpdateToolsService, UpdateToolsService>();
-            builder.Services.AddTransient<ICreateCurrenciesService, CreateCurrenciesService>();
-            builder.Services.AddTransient<IUpdateCurrenciesService, UpdateCurrenciesService>();
+            builder.Services.AddTransient<ICreateAssetService, CreateAssetService>();
+            builder.Services.AddTransient<IUpdateAssetsService, UpdateAssetsService>();
             builder.Services.AddTransient<IDeleteLocalizationService, DeleteLocalizationService>();
             builder.Services.AddTransient<IQueryLocalizationService, QueryLocalizationService>();
             builder.Services.AddTransient<ICreateLocalizationService, CreateLocalizationService>();
-            builder.Services.AddTransient<IQueryCurrenciesService, QueryCurrenciesService>();
+            builder.Services.AddTransient<IQueryAssetService, QueryAssetService>();
             builder.Services.AddTransient<IQueryPricesService, QueryPricesService>();
             
             // Setup the Http services
@@ -260,8 +260,8 @@
                 new PricesClient(builder.Configuration.GetValue<string>("PriceApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("PriceApi"), s.GetService<IHttpContextAccessor>())
             );
 
-            builder.Services.AddTransient<ICurrenciesClient, CurrenciesClient>(s =>
-                new CurrenciesClient(builder.Configuration.GetValue<string>("CurrenciesApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("PriceApi"), s.GetService<IHttpContextAccessor>())
+            builder.Services.AddTransient<IAssetsClient, AssetsClient>(s =>
+                new AssetsClient(builder.Configuration.GetValue<string>("CurrenciesApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("PriceApi"), s.GetService<IHttpContextAccessor>())
             );
 
             builder.Services.AddTransient<IFileClient, FileClient>(s =>

@@ -21,81 +21,81 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface ICurrenciesClient
+    public partial interface IAssetsClient
     {
         /// <summary>
-        /// Create a supported currency.
+        /// Create a supported asset.
         /// </summary>
-        /// <param name="model">The new currency to add</param>
-        /// <returns>The new currency added</returns>
+        /// <param name="model">The new asset to add</param>
+        /// <returns>The new asset added</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CurrencyDto> CreateSupportedCurrencyAsync(CreateSupportedCurrencyDto model);
+        System.Threading.Tasks.Task<AssetDto> CreateSupportedAssetAsync(CreateSupportedAssetDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create a supported currency.
+        /// Create a supported asset.
         /// </summary>
-        /// <param name="model">The new currency to add</param>
-        /// <returns>The new currency added</returns>
+        /// <param name="model">The new asset to add</param>
+        /// <returns>The new asset added</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CurrencyDto> CreateSupportedCurrencyAsync(CreateSupportedCurrencyDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AssetDto> CreateSupportedAssetAsync(CreateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets currencies
+        /// Gets assets
         /// </summary>
         /// <param name="search">A search value</param>
         /// <param name="symbol">The symbol</param>
         /// <param name="name">A name</param>
         /// <param name="pricingProviderType">The provider type</param>
-        /// <param name="currencyType">The type of currency</param>
+        /// <param name="assetType">The type of asset</param>
         /// <param name="orderProperty">The property to order by</param>
         /// <param name="order">The order to return set in</param>
         /// <param name="pageNumber">The page number</param>
         /// <param name="perPage">How many to return in the page</param>
-        /// <returns>Supported currencies</returns>
+        /// <returns>Supported assets</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PageResultDtoOfCurrencyDto> GetSupportedCurrenciesAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, CurrencyType? currencyType, string orderProperty, Order? order, int? pageNumber, int? perPage);
+        System.Threading.Tasks.Task<PageResultDtoOfAssetDto> GetSupportedAssetsAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, AssetType? assetType, string orderProperty, Order? order, int? pageNumber, int? perPage);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets currencies
+        /// Gets assets
         /// </summary>
         /// <param name="search">A search value</param>
         /// <param name="symbol">The symbol</param>
         /// <param name="name">A name</param>
         /// <param name="pricingProviderType">The provider type</param>
-        /// <param name="currencyType">The type of currency</param>
+        /// <param name="assetType">The type of asset</param>
         /// <param name="orderProperty">The property to order by</param>
         /// <param name="order">The order to return set in</param>
         /// <param name="pageNumber">The page number</param>
         /// <param name="perPage">How many to return in the page</param>
-        /// <returns>Supported currencies</returns>
+        /// <returns>Supported assets</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PageResultDtoOfCurrencyDto> GetSupportedCurrenciesAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, CurrencyType? currencyType, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PageResultDtoOfAssetDto> GetSupportedAssetsAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, AssetType? assetType, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Update a supported currency.
+        /// Update a supported asset.
         /// </summary>
-        /// <param name="currencyId">The currency to update</param>
+        /// <param name="assetId">The asset to update</param>
         /// <param name="model">The update data</param>
-        /// <returns>The updated currency</returns>
+        /// <returns>The updated asset</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CurrencyDto> UpdateSupportedCurrencyAsync(System.Guid currencyId, UpdateSupportedCurrencyDto model);
+        System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Update a supported currency.
+        /// Update a supported asset.
         /// </summary>
-        /// <param name="currencyId">The currency to update</param>
+        /// <param name="assetId">The asset to update</param>
         /// <param name="model">The update data</param>
-        /// <returns>The updated currency</returns>
+        /// <returns>The updated asset</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CurrencyDto> UpdateSupportedCurrencyAsync(System.Guid currencyId, UpdateSupportedCurrencyDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken);
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CurrenciesClient : ICurrenciesClient
+    public partial class AssetsClient : IAssetsClient
     {
         #pragma warning disable 8618
         private string _baseUrl;
@@ -105,7 +105,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _requestSettings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => CreateSerializerSettings(true), true);
         private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _responseSettings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => CreateSerializerSettings(false), true);
 
-        public CurrenciesClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        public AssetsClient(string baseUrl, System.Net.Http.HttpClient httpClient)
         {
             BaseUrl = baseUrl;
             _httpClient = httpClient;
@@ -140,24 +140,24 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
 
         /// <summary>
-        /// Create a supported currency.
+        /// Create a supported asset.
         /// </summary>
-        /// <param name="model">The new currency to add</param>
-        /// <returns>The new currency added</returns>
+        /// <param name="model">The new asset to add</param>
+        /// <returns>The new asset added</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CurrencyDto> CreateSupportedCurrencyAsync(CreateSupportedCurrencyDto model)
+        public virtual System.Threading.Tasks.Task<AssetDto> CreateSupportedAssetAsync(CreateSupportedAssetDto model)
         {
-            return CreateSupportedCurrencyAsync(model, System.Threading.CancellationToken.None);
+            return CreateSupportedAssetAsync(model, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Create a supported currency.
+        /// Create a supported asset.
         /// </summary>
-        /// <param name="model">The new currency to add</param>
-        /// <returns>The new currency added</returns>
+        /// <param name="model">The new asset to add</param>
+        /// <returns>The new asset added</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CurrencyDto> CreateSupportedCurrencyAsync(CreateSupportedCurrencyDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AssetDto> CreateSupportedAssetAsync(CreateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -177,8 +177,8 @@ namespace Mshrm.Studio.Api.Clients.Pricing
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/v1/currencies"
-                    urlBuilder_.Append("api/v1/currencies");
+                    // Operation Path: "api/v1/assets"
+                    urlBuilder_.Append("api/v1/assets");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -205,7 +205,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CurrencyDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AssetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -279,40 +279,40 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         }
 
         /// <summary>
-        /// Gets currencies
+        /// Gets assets
         /// </summary>
         /// <param name="search">A search value</param>
         /// <param name="symbol">The symbol</param>
         /// <param name="name">A name</param>
         /// <param name="pricingProviderType">The provider type</param>
-        /// <param name="currencyType">The type of currency</param>
+        /// <param name="assetType">The type of asset</param>
         /// <param name="orderProperty">The property to order by</param>
         /// <param name="order">The order to return set in</param>
         /// <param name="pageNumber">The page number</param>
         /// <param name="perPage">How many to return in the page</param>
-        /// <returns>Supported currencies</returns>
+        /// <returns>Supported assets</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PageResultDtoOfCurrencyDto> GetSupportedCurrenciesAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, CurrencyType? currencyType, string orderProperty, Order? order, int? pageNumber, int? perPage)
+        public virtual System.Threading.Tasks.Task<PageResultDtoOfAssetDto> GetSupportedAssetsAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, AssetType? assetType, string orderProperty, Order? order, int? pageNumber, int? perPage)
         {
-            return GetSupportedCurrenciesAsync(search, symbol, name, pricingProviderType, currencyType, orderProperty, order, pageNumber, perPage, System.Threading.CancellationToken.None);
+            return GetSupportedAssetsAsync(search, symbol, name, pricingProviderType, assetType, orderProperty, order, pageNumber, perPage, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Gets currencies
+        /// Gets assets
         /// </summary>
         /// <param name="search">A search value</param>
         /// <param name="symbol">The symbol</param>
         /// <param name="name">A name</param>
         /// <param name="pricingProviderType">The provider type</param>
-        /// <param name="currencyType">The type of currency</param>
+        /// <param name="assetType">The type of asset</param>
         /// <param name="orderProperty">The property to order by</param>
         /// <param name="order">The order to return set in</param>
         /// <param name="pageNumber">The page number</param>
         /// <param name="perPage">How many to return in the page</param>
-        /// <returns>Supported currencies</returns>
+        /// <returns>Supported assets</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PageResultDtoOfCurrencyDto> GetSupportedCurrenciesAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, CurrencyType? currencyType, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PageResultDtoOfAssetDto> GetSupportedAssetsAsync(string search, string symbol, string name, PricingProviderType? pricingProviderType, AssetType? assetType, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -325,8 +325,8 @@ namespace Mshrm.Studio.Api.Clients.Pricing
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/v1/currencies"
-                    urlBuilder_.Append("api/v1/currencies");
+                    // Operation Path: "api/v1/assets"
+                    urlBuilder_.Append("api/v1/assets");
                     urlBuilder_.Append('?');
                     if (search != null)
                     {
@@ -344,9 +344,9 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("pricingProviderType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pricingProviderType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
-                    if (currencyType != null)
+                    if (assetType != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("currencyType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(currencyType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(System.Uri.EscapeDataString("assetType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(assetType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     if (orderProperty != null)
                     {
@@ -391,7 +391,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfCurrencyDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfAssetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -419,29 +419,29 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         }
 
         /// <summary>
-        /// Update a supported currency.
+        /// Update a supported asset.
         /// </summary>
-        /// <param name="currencyId">The currency to update</param>
+        /// <param name="assetId">The asset to update</param>
         /// <param name="model">The update data</param>
-        /// <returns>The updated currency</returns>
+        /// <returns>The updated asset</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<CurrencyDto> UpdateSupportedCurrencyAsync(System.Guid currencyId, UpdateSupportedCurrencyDto model)
+        public virtual System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model)
         {
-            return UpdateSupportedCurrencyAsync(currencyId, model, System.Threading.CancellationToken.None);
+            return UpdateSupportedAssetAsync(assetId, model, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Update a supported currency.
+        /// Update a supported asset.
         /// </summary>
-        /// <param name="currencyId">The currency to update</param>
+        /// <param name="assetId">The asset to update</param>
         /// <param name="model">The update data</param>
-        /// <returns>The updated currency</returns>
+        /// <returns>The updated asset</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<CurrencyDto> UpdateSupportedCurrencyAsync(System.Guid currencyId, UpdateSupportedCurrencyDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken)
         {
-            if (currencyId == null)
-                throw new System.ArgumentNullException("currencyId");
+            if (assetId == null)
+                throw new System.ArgumentNullException("assetId");
 
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -461,9 +461,9 @@ namespace Mshrm.Studio.Api.Clients.Pricing
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/v1/currencies/{currencyId}"
-                    urlBuilder_.Append("api/v1/currencies/");
-                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(currencyId, System.Globalization.CultureInfo.InvariantCulture)));
+                    // Operation Path: "api/v1/assets/{assetId}"
+                    urlBuilder_.Append("api/v1/assets/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(assetId, System.Globalization.CultureInfo.InvariantCulture)));
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -490,7 +490,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<CurrencyDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<AssetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -636,24 +636,24 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// Gets the latest price data for symbols
         /// </summary>
         /// <param name="pricingProviderType">The provider used to import</param>
-        /// <param name="currencyType">The type of currency</param>
-        /// <param name="baseCurrency">The base currency</param>
+        /// <param name="assetType">The type of asset</param>
+        /// <param name="baseAsset">The base asset</param>
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, CurrencyType? currencyType, string baseCurrency, System.Collections.Generic.IEnumerable<string> symbols);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Gets the latest price data for symbols
         /// </summary>
         /// <param name="pricingProviderType">The provider used to import</param>
-        /// <param name="currencyType">The type of currency</param>
-        /// <param name="baseCurrency">The base currency</param>
+        /// <param name="assetType">The type of asset</param>
+        /// <param name="baseAsset">The base asset</param>
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, CurrencyType? currencyType, string baseCurrency, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -706,14 +706,14 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// Gets the latest price data for symbols
         /// </summary>
         /// <param name="pricingProviderType">The provider used to import</param>
-        /// <param name="currencyType">The type of currency</param>
-        /// <param name="baseCurrency">The base currency</param>
+        /// <param name="assetType">The type of asset</param>
+        /// <param name="baseAsset">The base asset</param>
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, CurrencyType? currencyType, string baseCurrency, System.Collections.Generic.IEnumerable<string> symbols)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols)
         {
-            return GetLatestPricesAsync(pricingProviderType, currencyType, baseCurrency, symbols, System.Threading.CancellationToken.None);
+            return GetLatestPricesAsync(pricingProviderType, assetType, baseAsset, symbols, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -721,12 +721,12 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// Gets the latest price data for symbols
         /// </summary>
         /// <param name="pricingProviderType">The provider used to import</param>
-        /// <param name="currencyType">The type of currency</param>
-        /// <param name="baseCurrency">The base currency</param>
+        /// <param name="assetType">The type of asset</param>
+        /// <param name="baseAsset">The base asset</param>
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, CurrencyType? currencyType, string baseCurrency, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -746,13 +746,13 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("pricingProviderType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pricingProviderType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
-                    if (currencyType != null)
+                    if (assetType != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("currencyType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(currencyType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(System.Uri.EscapeDataString("assetType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(assetType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
-                    if (baseCurrency != null)
+                    if (baseAsset != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("baseCurrency")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(baseCurrency, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(System.Uri.EscapeDataString("baseAsset")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(baseAsset, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     if (symbols != null)
                     {
@@ -795,7 +795,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         else
                         {
                             var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new PricingApiException("The HTTP status code of the response was not expected (" + status_ + "). RD: {" + responseData_ + "}", status_, responseData_, headers_, null);
+                            throw new PricingApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
                         }
                     }
                     finally
@@ -925,7 +925,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CurrencyDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class AssetDto : System.ComponentModel.INotifyPropertyChanged
     {
         private System.Guid _guidId;
         private string _name;
@@ -934,7 +934,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private string _description;
         private bool _active;
         private PricingProviderType _providerType;
-        private CurrencyType _currencyType;
+        private AssetType _assetType;
         private System.DateTime _createdDate;
         private System.Guid? _logoGuidId;
 
@@ -1049,18 +1049,18 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("currencyType", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("assetType", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CurrencyType CurrencyType
+        public AssetType AssetType
         {
-            get { return _currencyType; }
+            get { return _assetType; }
 
             set
             {
-                if (_currencyType != value)
+                if (_assetType != value)
                 {
-                    _currencyType = value;
+                    _assetType = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1103,10 +1103,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static CurrencyDto FromJson(string data)
+        public static AssetDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CurrencyDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<AssetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1142,7 +1142,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public enum CurrencyType
+    public enum AssetType
     {
 
         [System.Runtime.Serialization.EnumMember(Value = @"Fiat")]
@@ -1293,14 +1293,14 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateSupportedCurrencyDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class CreateSupportedAssetDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _name;
         private string _symbol;
         private string _symbolNative;
         private string _description;
         private PricingProviderType _providerType;
-        private CurrencyType _currencyType;
+        private AssetType _assetType;
         private System.Guid? _logoGuidId;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
@@ -1387,18 +1387,18 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("currencyType", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("assetType", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CurrencyType CurrencyType
+        public AssetType AssetType
         {
-            get { return _currencyType; }
+            get { return _assetType; }
 
             set
             {
-                if (_currencyType != value)
+                if (_assetType != value)
                 {
-                    _currencyType = value;
+                    _assetType = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1425,10 +1425,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static CreateSupportedCurrencyDto FromJson(string data)
+        public static CreateSupportedAssetDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateSupportedCurrencyDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateSupportedAssetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1443,13 +1443,13 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdateSupportedCurrencyDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class UpdateSupportedAssetDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _name;
         private string _symbolNative;
         private string _description;
         private PricingProviderType _providerType;
-        private CurrencyType _currencyType;
+        private AssetType _assetType;
         private System.Guid? _logoGuidId;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
@@ -1519,18 +1519,18 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("currencyType", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("assetType", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CurrencyType CurrencyType
+        public AssetType AssetType
         {
-            get { return _currencyType; }
+            get { return _assetType; }
 
             set
             {
-                if (_currencyType != value)
+                if (_assetType != value)
                 {
-                    _currencyType = value;
+                    _assetType = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1557,10 +1557,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static UpdateSupportedCurrencyDto FromJson(string data)
+        public static UpdateSupportedAssetDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateSupportedCurrencyDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateSupportedAssetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1575,14 +1575,14 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PageResultDtoOfCurrencyDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class PageResultDtoOfAssetDto : System.ComponentModel.INotifyPropertyChanged
     {
         private int _pageNumber;
         private int _perPage;
         private int _totalResults;
         private Order _order;
         private string _propertyName;
-        private System.Collections.ObjectModel.ObservableCollection<CurrencyDto> _results;
+        private System.Collections.ObjectModel.ObservableCollection<AssetDto> _results;
 
         [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
         public int PageNumber
@@ -1662,7 +1662,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         }
 
         [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<CurrencyDto> Results
+        public System.Collections.ObjectModel.ObservableCollection<AssetDto> Results
         {
             get { return _results; }
 
@@ -1682,10 +1682,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static PageResultDtoOfCurrencyDto FromJson(string data)
+        public static PageResultDtoOfAssetDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfCurrencyDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfAssetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1717,8 +1717,8 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private decimal _price;
         private decimal? _marketCap;
         private decimal? _volume;
-        private CurrencyDto _baseCurrency = new CurrencyDto();
-        private CurrencyDto _currency = new CurrencyDto();
+        private AssetDto _baseAsset = new AssetDto();
+        private AssetDto _asset = new AssetDto();
 
         [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.Always)]
         public decimal Price
@@ -1765,33 +1765,33 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("baseCurrency", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("baseAsset", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public CurrencyDto BaseCurrency
+        public AssetDto BaseAsset
         {
-            get { return _baseCurrency; }
+            get { return _baseAsset; }
 
             set
             {
-                if (_baseCurrency != value)
+                if (_baseAsset != value)
                 {
-                    _baseCurrency = value;
+                    _baseAsset = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("asset", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public CurrencyDto Currency
+        public AssetDto Asset
         {
-            get { return _currency; }
+            get { return _asset; }
 
             set
             {
-                if (_currency != value)
+                if (_asset != value)
                 {
-                    _currency = value;
+                    _asset = value;
                     RaisePropertyChanged();
                 }
             }

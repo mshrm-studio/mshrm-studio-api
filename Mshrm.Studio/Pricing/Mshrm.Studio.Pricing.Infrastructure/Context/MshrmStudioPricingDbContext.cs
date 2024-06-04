@@ -27,9 +27,9 @@ namespace Mshrm.Studio.Pricing.Api.Context
         protected int? UserId => this.GetLoggedInUserId();
 
         /// <summary>
-        /// Currency table
+        /// Assets table
         /// </summary>
-        public DbSet<Currency> Currencies { get; set; }
+        public DbSet<Asset> Assets { get; set; }
 
         /// <summary>
         /// Exchange price pairs table
@@ -64,7 +64,7 @@ namespace Mshrm.Studio.Pricing.Api.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Map entities
-            _ = new CurrencyMap(builder.Entity<Currency>());
+            _ = new AssetMap(builder.Entity<Asset>());
             _ = new ExchangePricingPairMap(builder.Entity<ExchangePricingPair>());
 			_ = new ExchangePricingPairHistoryMap(builder.Entity<ExchangePricingPairHistory>());
 

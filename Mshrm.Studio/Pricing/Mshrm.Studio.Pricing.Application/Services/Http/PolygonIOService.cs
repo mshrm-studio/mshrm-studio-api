@@ -21,19 +21,19 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<PolygonIOPriceResponse>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The asset to get</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<PolygonIOPriceResponse>> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
             var priceResponses = new List<PolygonIOPriceResponse>();
 
             // Polygon API has rate limit so this needs to be split across a minute - we set to 2 mins so we can have some calls free if we need to update currency
             var waitTimeInMillis = Convert.ToInt32((120m / _options.RequestsPerMinute) * 1000m);
 
-            foreach (var currency in currencies)
+            foreach (var currency in assets)
             {
                 var priceResponse = await GetPriceAsync(currency);
                 if (priceResponse != null)
@@ -47,10 +47,10 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="symbol">The currency symbol to get</param>
-        /// <returns>Prices for 1 of a base currency</returns>
+        /// <param name="symbol">The asset symbol to get</param>
+        /// <returns>Prices for 1 of a base asset</returns>
         public async Task<PolygonIOPriceResponse> GetPriceAsync(string symbol)
         {
             var url = $"{_options.Endpoint}/v1/open-close/{symbol}/{DateTime.UtcNow.Date.AddDays(-1).ToString("yyyy-MM-dd")}?adjusted=true&apiKey={_options.ApiKey}";

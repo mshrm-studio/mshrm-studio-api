@@ -6,12 +6,12 @@
     public class ExchangeRate
     {
         /// <summary>
-        /// From currency
+        /// From asset
         /// </summary>
         public required string From { get; set; }
 
         /// <summary>
-        /// To currency
+        /// To asset
         /// </summary>
         public required string To { get; set; }
 

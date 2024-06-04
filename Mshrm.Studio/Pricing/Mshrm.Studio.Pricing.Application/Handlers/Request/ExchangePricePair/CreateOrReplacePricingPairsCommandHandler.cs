@@ -22,7 +22,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
     {
         private readonly IExchangePricingPairRepository _exchangePricingPairRepository;
         private readonly IExchangePricingPairFactory _exchangePricingPairFactory;
-        private readonly ICurrencyRepository _currencyRepository;
+        private readonly IAssetRepository _assetRepository;
         private readonly ILogger<CreateOrReplacePricingPairsCommandHandler> _logger;
         private readonly ITracer _tracer;
 
@@ -30,15 +30,15 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
         /// Initializes a new instance of the <see cref="CreateOrReplacePricingPairsCommandHandler"/> class.
         /// </summary>
         /// <param name="exchangePricingPairRepository"></param>
-        /// <param name="currencyRepository"></param>
+        /// <param name="assetRepository"></param>
         /// <param name="logger"></param>
         /// <param name="tracer"></param>
-        public CreateOrReplacePricingPairsCommandHandler(IExchangePricingPairRepository exchangePricingPairRepository, ICurrencyRepository currencyRepository, IExchangePricingPairFactory exchangePricingPairFactory,
+        public CreateOrReplacePricingPairsCommandHandler(IExchangePricingPairRepository exchangePricingPairRepository, IAssetRepository assetRepository, IExchangePricingPairFactory exchangePricingPairFactory,
             ILogger<CreateOrReplacePricingPairsCommandHandler> logger, ITracer tracer)
         {
             _exchangePricingPairFactory = exchangePricingPairFactory;
             _exchangePricingPairRepository = exchangePricingPairRepository;
-            _currencyRepository = currencyRepository;
+            _assetRepository = assetRepository;
 
             _tracer = tracer;
             _logger = logger;
@@ -54,14 +54,14 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
         {
             using (var scope = _tracer.BuildSpan("CreateOrReplaceNewRatePairsAsync_CreatePriceService").StartActive(true))
             {
-                // Get all the currencies for the symbols provided
-                var allSymbols = command.Prices.Select(x => x.Currency).ToList();
-                var allBaseSymbols = command.Prices.Select(x => x.BaseCurrency).ToList();
-                var allCurrencies = await _currencyRepository.GetCurrenciesReadOnlyAsync(null, null, true, allSymbols);
-                var allCurrencyIds = allCurrencies.Select(x => x.Id).ToList();
-                var baseCurrencies = await _currencyRepository.GetCurrenciesReadOnlyAsync(null, null, true, allBaseSymbols);
+                // Get all the assets for the symbols provided
+                var allSymbols = command.Prices.Select(x => x.Asset).ToList();
+                var allBaseSymbols = command.Prices.Select(x => x.BaseAsset).ToList();
+                var allAssets = await _assetRepository.GetAssetsReadOnlyAsync(null, null, true, allSymbols);
+                var allAssetIds = allAssets.Select(x => x.Id).ToList();
+                var baseAssets = await _assetRepository.GetAssetsReadOnlyAsync(null, null, true, allBaseSymbols);
 
-                var existingPrices = await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(allCurrencyIds, null, null, cancellationToken);
+                var existingPrices = await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(allAssetIds, null, null, cancellationToken);
 
                 var allPairs = new List<ExchangePricingPair>();
                 var allPairsToAdd = new List<ExchangePricingPair>();
@@ -70,7 +70,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
                 foreach (var price in command.Prices)
                 {
                     // Check the price doesn't already exist, if so then its replaced
-                    var existingPrice = existingPrices.FirstOrDefault(x => x.Currency.Symbol == price.Currency);
+                    var existingPrice = existingPrices.FirstOrDefault(x => x.Asset.Symbol == price.Asset);
                     if (existingPrice != null)
                     {
                         existingPrice.SetPrice(price.Price);
@@ -78,25 +78,25 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
                     }
                     else
                     {
-                        // Get the base currency
-                        var baseCurrency = baseCurrencies.FirstOrDefault(x => x.Symbol == price.BaseCurrency);
-                        if (baseCurrency == null)
+                        // Get the base asset
+                        var baseAsset = baseAssets.FirstOrDefault(x => x.Symbol == price.BaseAsset);
+                        if (baseAsset == null)
                         {
-                            _logger.LogCritical($"Base currency: {price.BaseCurrency} doesn't exist");
+                            _logger.LogCritical($"Base asset: {price.BaseAsset} doesn't exist");
 
-                            throw new NotFoundException("Base currency doesn't exist", FailureCode.CurrencyDoesntExist);
+                            throw new NotFoundException("Base asset doesn't exist", FailureCode.AssetDoesntExist);
                         }
 
-                        // Get the currency
-                        var currency = allCurrencies.FirstOrDefault(x => x.Symbol == price.Currency);
-                        if (currency == null)
+                        // Get the asset
+                        var asset = allAssets.FirstOrDefault(x => x.Symbol == price.Asset);
+                        if (asset == null)
                         {
-                            _logger.LogCritical($"Currency: {price.Currency} doesn't exist");
+                            _logger.LogCritical($"Asset: {price.Asset} doesn't exist");
 
-                            throw new NotFoundException("Base currency doesn't exist", FailureCode.CurrencyDoesntExist);
+                            throw new NotFoundException("Asset doesn't exist", FailureCode.AssetDoesntExist);
                         }
 
-                        allPairsToAdd.Add(_exchangePricingPairFactory.CreateExchangePricingPair(baseCurrency.Id, currency.Id, price.Price, price.MarketCap, price.Volume, command.PricingProviderType));
+                        allPairsToAdd.Add(_exchangePricingPairFactory.CreateExchangePricingPair(baseAsset.Id, asset.Id, price.Price, price.MarketCap, price.Volume, command.PricingProviderType));
                     }
                 }
 

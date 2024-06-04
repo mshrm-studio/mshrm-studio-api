@@ -13,13 +13,13 @@ namespace Mshrm.Studio.Pricing.Domain.ExchangePricingPairs
         /// <summary>
         /// Create a new exchange pricing pair
         /// </summary>
-        /// <param name="baseCurrencyId">The base currrency</param>
-        /// <param name="currencyId">The currency to create price for</param>
-        /// <param name="price">The price against base currency</param>
+        /// <param name="baseAssetId">The base asset</param>
+        /// <param name="assetId">The asset to create price for</param>
+        /// <param name="price">The price against base asset</param>
         /// <param name="marketCap">The market cap</param>
         /// <param name="volume">The volume</param>
         /// <param name="pricingProviderType">A pricing provider type (imported with)</param>
-        /// <returns>A price for a currency</returns>
-        public ExchangePricingPair CreateExchangePricingPair(int baseCurrencyId, int currencyId, decimal price, decimal? marketCap, decimal? volume, PricingProviderType pricingProviderType);
+        /// <returns>A price for a asset</returns>
+        public ExchangePricingPair CreateExchangePricingPair(int baseAssetId, int assetId, decimal price, decimal? marketCap, decimal? volume, PricingProviderType pricingProviderType);
     }
 }

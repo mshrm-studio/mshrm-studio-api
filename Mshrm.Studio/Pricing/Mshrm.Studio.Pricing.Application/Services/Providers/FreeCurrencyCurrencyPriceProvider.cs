@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Mshrm.Studio.Pricing.Api.Services.Providers
 {
-    public class FreeCurrencyCurrencyPriceProvider : ICurrencyPriceProvider
+    public class FreeCurrencyCurrencyPriceProvider : IAssetPriceProvider
     {
         private readonly IFreeCurrencyService _freeCurrencyService;
         private readonly ILogger<FreeCurrencyCurrencyPriceProvider> _logger;
@@ -25,29 +25,29 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get prices for</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<List<PricePair>> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The assets to get prices for</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<List<PricePair>> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
             // Get raw prices
-            var prices = await _freeCurrencyService.GetPricesAsync(baseCurrency);
+            var prices = await _freeCurrencyService.GetPricesAsync(baseAsset);
 
-            return prices.Where(x => currencies.Contains(x.Currency)).Select(x => new PricePair()
+            return prices.Where(x => assets.Contains(x.Currency)).Select(x => new PricePair()
             {
-                BaseCurrency = baseCurrency,
-                Currency = x.Currency,
+                BaseAsset = baseAsset,
+                Asset = x.Currency,
                 Price = x.Price
             }).ToList();
         }
 
         /// <summary>
-        /// Get all currencies
+        /// Get all assets
         /// </summary>
-        /// <returns>Currencies</returns>
-        public async Task<List<PricingCurrency>> GetCurrenciesAsync()
+        /// <returns>Assets</returns>
+        public async Task<List<PricingCurrency>> GetAssetsAsync()
         {
             // Get raw currencies
             var currencies = await _freeCurrencyService.GetCurrenciesAsync();
@@ -61,13 +61,13 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         }
 
         /// <summary>
-        /// Check if the provider supports the currency
+        /// Check if the provider supports the asset
         /// </summary>
-        /// <param name="symbol">The currency</param>
+        /// <param name="symbol">The asset</param>
         /// <returns>True if supported</returns>
-        public async Task<bool> IsCurrencySupportedAsync(string symbol)
+        public async Task<bool> IsAssetSupportedAsync(string symbol)
         {
-            // Get currencies
+            // Get assets
             var currencies = await _freeCurrencyService.GetCurrenciesAsync();
 
             return currencies.Select(x => x.Symbol == symbol.ToUpper().Trim()).Any();

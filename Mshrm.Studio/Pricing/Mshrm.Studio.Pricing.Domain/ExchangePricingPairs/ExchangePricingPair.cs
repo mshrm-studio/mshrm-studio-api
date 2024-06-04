@@ -14,8 +14,8 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
     {
         public int Id { get; private set; }
         public Guid GuidId { get; private set; }
-        public int BaseCurrencyId { get; private set; }
-        public int CurrencyId { get; private set; }
+        public int BaseAssetId { get; private set; }
+        public int AssetId { get; private set; }
 
         [Column(TypeName = "decimal(28, 8)")]
         public decimal Price { get; private set; }
@@ -28,15 +28,15 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
 
         public PricingProviderType PricingProviderType { get; private set; }
 
-        public Currency BaseCurrency { get; private set; }
-        public Currency Currency { get; private set; }
+        public Asset BaseAsset { get; private set; }
+        public Asset Asset { get; private set; }
         public List<ExchangePricingPairHistory> ExchangePricingPairHistories { get; private set; }
 
-        public ExchangePricingPair(int baseCurrencyId, int currencyId, decimal price, decimal? marketCap, decimal? volume, PricingProviderType pricingProviderType)
+        public ExchangePricingPair(int baseAssetId, int assetId, decimal price, decimal? marketCap, decimal? volume, PricingProviderType pricingProviderType)
         {
             PricingProviderType = pricingProviderType;
-            BaseCurrencyId = baseCurrencyId;
-            CurrencyId = currencyId;
+            BaseAssetId = baseAssetId;
+            AssetId = assetId;
             Price = price;
             CreatedDate = DateTime.UtcNow;
             MarketCap = marketCap;
@@ -58,14 +58,14 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
         /// <summary>
         /// Do not call this before save - only for returning read only
         /// </summary>
-        /// <param name="newBaseCurrency">The base currency to set price as</param>
-        /// <param name="oldBasePrice">The base currency price of the original base</param>
-        /// <param name="newBasePrice">The base currency price of the new base</param>
-        public void SetNewBaseCurrency(Currency newBaseCurrency, ExchangePricingPair oldBasePrice, ExchangePricingPair newBasePrice)
+        /// <param name="newBaseAsset">The base asset to set price as</param>
+        /// <param name="oldBasePrice">The base asset price of the original base</param>
+        /// <param name="newBasePrice">The base asset price of the new base</param>
+        public void SetNewBaseAsset(Asset newBaseAsset, ExchangePricingPair oldBasePrice, ExchangePricingPair newBasePrice)
         {
-            // Set the new base currency
-            BaseCurrency = newBaseCurrency;
-            BaseCurrencyId = newBaseCurrency.Id;
+            // Set the new base asset
+            BaseAsset = newBaseAsset;
+            BaseAssetId = newBaseAsset.Id;
 
             // Update the price
             Price = (oldBasePrice.Price / newBasePrice.Price) * Price;

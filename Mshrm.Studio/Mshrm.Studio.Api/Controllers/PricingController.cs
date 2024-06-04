@@ -34,20 +34,20 @@ namespace Mshrm.Studio.Api.Controllers
         }
 
         /// <summary>
-        /// Gets currencies
+        /// Gets assets
         /// </summary>
         /// <param name="pricingProviderType">The provider type</param>
-        /// <param name="currencyType">The type of currency</param>
-        /// <param name="baseCurrency">The base currency (conversion to)</param>
+        /// <param name="assetType">The type of asset</param>
+        /// <param name="baseAsset">The base asset (conversion to)</param>
         /// <param name="symbols">Symbols to get prices for - all returned if left null</param>
         /// <returns>Latest prices</returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<PriceResponseDto>), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<List<PriceResponseDto>>> GetLatestPricesAsync([FromQuery] PricingProviderType? pricingProviderType,
-            [FromQuery] CurrencyType? currencyType, [FromQuery] string baseCurrency = "USD", [FromQuery] List<string>? symbols = null)
+            [FromQuery] AssetType? assetType, [FromQuery] string baseAsset = "USD", [FromQuery] List<string>? symbols = null)
         {
-            var prices = await _queryPricesService.GetLatestPricesAsync(pricingProviderType, currencyType, baseCurrency, symbols, Request.HttpContext.RequestAborted);
+            var prices = await _queryPricesService.GetLatestPricesAsync(pricingProviderType, assetType, baseAsset, symbols, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<List<PriceResponseDto>>(prices));
         }

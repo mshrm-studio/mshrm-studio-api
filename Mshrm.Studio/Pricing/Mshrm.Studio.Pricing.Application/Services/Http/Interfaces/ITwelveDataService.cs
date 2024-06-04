@@ -5,10 +5,10 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http.Interfaces
     public interface ITwelveDataService
     {
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public Task<List<PricePair>> GetPricesAsync(string baseCurrency = "USD");
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public Task<List<PricePair>> GetPricesAsync(string baseAsset = "USD");
     }
 }

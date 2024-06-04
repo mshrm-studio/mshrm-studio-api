@@ -11,7 +11,7 @@ namespace Mshrm.Studio.Storage.Domain.Resources.Enums
         Temp = 0,
         Tools = 1,
         Users = 2,
-        Currencies = 3,
+        Assets = 3,
         ContactFormAttachments = 4,
     }
 }

@@ -22,21 +22,21 @@ namespace Mshrm.Studio.Pricing.Api.Services.Http
         }
 
         /// <summary>
-        /// Prices for 1 of a base currency
+        /// Prices for 1 of a base asset
         /// </summary>
-        /// <param name="currencies">The currencies to get prices of</param>
-        /// <param name="baseCurrency">The base currency</param>
-        /// <returns>Prices for 1 of a base currency</returns>
-        public async Task<MobulaPriceResponse> GetPricesAsync(List<string> currencies, string baseCurrency = "USD")
+        /// <param name="assets">The assets to get prices of</param>
+        /// <param name="baseAsset">The base asset</param>
+        /// <returns>Prices for 1 of a base asset</returns>
+        public async Task<MobulaPriceResponse> GetPricesAsync(List<string> assets, string baseAsset = "USD")
         {
-            var formattedCurrencies = string.Join(',', currencies.Select(x => x.Trim().ToUpper()));
+            var formattedCurrencies = string.Join(',', assets.Select(x => x.Trim().ToUpper()));
 
             // Get raw prices
             var prices = await base.GetAsync<object>(
                 $"{_options.Endpoint}/api/1/market/multi-data?symbols={formattedCurrencies}", true);
 
             // Process into response
-            return FormatPriceResponse(baseCurrency, JObject.FromObject(prices));
+            return FormatPriceResponse(baseAsset, JObject.FromObject(prices));
         }
 
         /// <summary>
