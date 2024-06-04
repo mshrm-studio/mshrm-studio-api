@@ -42,6 +42,6 @@ namespace Mshrm.Studio.Domain.Api.Models.Dtos.ContactForms
         /// Any contact form attachments ids
         /// </summary>
         [JsonProperty("temporaryAttachmentIds")]
-        public List<string> TemporaryAttachmentIds { get; set; } = new List<string>();
+        public List<string>? TemporaryAttachmentIds { get; set; }
     }
 }

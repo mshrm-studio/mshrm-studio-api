@@ -2021,8 +2021,8 @@ namespace Mshrm.Studio.Api.Clients.Domain
         private string _firstName;
         private string _lastName;
         private string _websiteUrl;
-        private System.Collections.ObjectModel.ObservableCollection<System.Guid> _attachmentGuidIds = new System.Collections.ObjectModel.Collection<System.Guid>();
-        private System.Collections.ObjectModel.ObservableCollection<string> _attachmentUrls = new System.Collections.ObjectModel.Collection<string>();
+        private System.Collections.ObjectModel.ObservableCollection<System.Guid> _attachmentGuidIds;
+        private System.Collections.ObjectModel.ObservableCollection<string> _attachmentUrls;
 
         [Newtonsoft.Json.JsonProperty("guidId", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2117,8 +2117,7 @@ namespace Mshrm.Studio.Api.Clients.Domain
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("attachmentGuidIds", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [Newtonsoft.Json.JsonProperty("attachmentGuidIds", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.ObjectModel.ObservableCollection<System.Guid> AttachmentGuidIds
         {
             get { return _attachmentGuidIds; }
@@ -2133,8 +2132,7 @@ namespace Mshrm.Studio.Api.Clients.Domain
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("attachmentUrls", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [Newtonsoft.Json.JsonProperty("attachmentUrls", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.ObjectModel.ObservableCollection<string> AttachmentUrls
         {
             get { return _attachmentUrls; }
@@ -2317,7 +2315,7 @@ namespace Mshrm.Studio.Api.Clients.Domain
         private string _firstName;
         private string _lastName;
         private string _websiteUrl;
-        private System.Collections.ObjectModel.ObservableCollection<string> _temporaryAttachmentIds = new System.Collections.ObjectModel.Collection<string>();
+        private System.Collections.ObjectModel.ObservableCollection<string> _temporaryAttachmentIds;
 
         [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2399,8 +2397,7 @@ namespace Mshrm.Studio.Api.Clients.Domain
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("temporaryAttachmentIds", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [Newtonsoft.Json.JsonProperty("temporaryAttachmentIds", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.ObjectModel.ObservableCollection<string> TemporaryAttachmentIds
         {
             get { return _temporaryAttachmentIds; }

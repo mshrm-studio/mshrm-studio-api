@@ -45,12 +45,12 @@ namespace Mshrm.Studio.Domain.Api.Models.Dtos.ContactForms
         /// Any contact form attachments guid ids
         /// </summary>
         [JsonProperty("attachmentGuidIds")]
-        public List<Guid> AttachmentGuidIds { get; set; } = new List<Guid>();
+        public List<Guid>? AttachmentGuidIds { get; set; }
 
         /// <summary>
         /// Any contact form attachment URLs
         /// </summary>
         [JsonProperty("attachmentUrls")]
-        public List<string> AttachmentUrls { get; set; } = new List<string>();
+        public List<string>? AttachmentUrls { get; set; }
     }
 }
