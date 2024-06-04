@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: "azure/application-gateway"
   rules:
-  - host: rabbitmq.example.com
+  - host: api.mshrm.studio
     http:
       paths:
       - path: /auth
