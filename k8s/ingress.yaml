@@ -3,9 +3,11 @@ kind: Ingress
 metadata:
   name: app-api-ingress
   annotations:
-    kubernetes.io/ingress.class: application-gateway
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  labels:
+    name: app-api-ingress
 spec:
-  ingressClassName: application-gateway
+  ingressClassName: nginx
   rules:
   - host: api.mshrm.studio
     http:
