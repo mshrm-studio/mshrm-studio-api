@@ -6,7 +6,7 @@ using Mshrm.Studio.Shared.Repositories.Bases;
 namespace Mshrm.Studio.Domain.Api.Repositories.Interfaces
 {
     /// <summary>
-    /// Repository for contaact forms
+    /// Repository for contact forms
     /// </summary>
     public interface IContactFormRepository
     {
@@ -17,7 +17,8 @@ namespace Mshrm.Studio.Domain.Api.Repositories.Interfaces
         /// <param name="contactEmail">A contact email</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new contact form</returns>
-        public Task<ContactForm> CreateContactFormAsync(string message, string contactEmail, CancellationToken cancellationToken);
+        public Task<ContactForm> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<Guid> attachmentGuidIds, 
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a contact form by its guid id

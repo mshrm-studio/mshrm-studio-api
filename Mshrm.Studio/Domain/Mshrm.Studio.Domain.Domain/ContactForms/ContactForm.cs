@@ -36,11 +36,31 @@ namespace Mshrm.Studio.Domain.Api.Models.Entity
         public string Message { get; private set; }
 
         /// <summary>
+        /// First name
+        /// </summary>
+        public string? FirstName { get; private set; }
+
+        /// <summary>
+        /// Last name
+        /// </summary>
+        public string? LastName { get; private set; }
+
+        /// <summary>
+        /// Any website URL to link to
+        /// </summary>
+        public string? WebsiteUrl { get; private set; }
+
+        /// <summary>
+        /// Any contact form attachments
+        /// </summary>
+        public List<Guid> AttachmentGuidIds { get; private set; } = new List<Guid>();
+
+        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="message">The message sent</param>
         /// <param name="contactEmail"></param>
-        public ContactForm(string message, string contactEmail)
+        public ContactForm(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<Guid> attachmentGuidIds)
         {
             // Check email exists
             if (!(contactEmail?.IsValidEmail() ?? false))
@@ -50,6 +70,14 @@ namespace Mshrm.Studio.Domain.Api.Models.Entity
 
             Message = message;
             ContactEmail = contactEmail.ToLower().Trim();
+            FirstName = firstName;
+            LastName = lastName;
+            WebsiteUrl = websiteUrl;
+
+            if (attachmentGuidIds.Any())
+            {
+                AttachmentGuidIds.AddRange(attachmentGuidIds);
+            }
         }
     }
 }

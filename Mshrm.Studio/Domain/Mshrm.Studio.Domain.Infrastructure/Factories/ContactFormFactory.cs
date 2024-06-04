@@ -17,9 +17,9 @@ namespace Mshrm.Studio.Domain.Infrastructure.Factories
         /// <param name="message">The message sent</param>
         /// <param name="contactEmail"></param>
         /// <returns>A new contact form</returns>
-        public ContactForm CreateContactForm(string message, string contactEmail)
+        public ContactForm CreateContactForm(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<Guid> attachmentGuidIds)
         {
-            return new ContactForm(message, contactEmail);
+            return new ContactForm(message, contactEmail, firstName, lastName, websiteUrl, attachmentGuidIds);
         }
     }
 }

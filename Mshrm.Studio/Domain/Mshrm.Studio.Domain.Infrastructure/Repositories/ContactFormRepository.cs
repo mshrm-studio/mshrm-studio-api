@@ -42,10 +42,11 @@ namespace Mshrm.Studio.Domain.Api.Repositories
         /// <param name="contactEmail">A contact email</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new contact form</returns>
-        public async Task<ContactForm> CreateContactFormAsync(string message, string contactEmail, CancellationToken cancellationToken)
+        public async Task<ContactForm> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<Guid> attachmentGuidIds,
+            CancellationToken cancellationToken)
         {
             // Create form
-            var contactForm = new ContactForm(message, contactEmail);
+            var contactForm = _contactFormFactory.CreateContactForm(message, contactEmail, firstName, lastName, websiteUrl, attachmentGuidIds);
 
             // Save
             Add(contactForm);

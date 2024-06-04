@@ -42,7 +42,19 @@ namespace Mshrm.Studio.Domain.Api.Handlers.Request.ContactForms
         {
             using (var scope = _tracer.BuildSpan("CreateContactFormAsync_CreateContactFormService").StartActive(true))
             {
-                return await _contactFormRepository.CreateContactFormAsync(command.Message, command.ContactEmail, cancellationToken);
+                // TODO: upload files and get guid ids
+                var attachmentGuidIds = new List<Guid>();
+
+                // Create form
+                return await _contactFormRepository.CreateContactFormAsync(
+                    command.Message, 
+                    command.ContactEmail, 
+                    command.FirstName, 
+                    command.LastName,
+                    command.WebsiteUrl, 
+                    attachmentGuidIds, 
+                    cancellationToken
+                );
             }
         }
     }
