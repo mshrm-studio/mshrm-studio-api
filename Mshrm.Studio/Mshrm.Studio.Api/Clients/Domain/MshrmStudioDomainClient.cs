@@ -2018,6 +2018,11 @@ namespace Mshrm.Studio.Api.Clients.Domain
         private System.Guid _guidId;
         private string _message;
         private string _contactEmail;
+        private string _firstName;
+        private string _lastName;
+        private string _websiteUrl;
+        private System.Collections.ObjectModel.ObservableCollection<System.Guid> _attachmentGuidIds = new System.Collections.ObjectModel.Collection<System.Guid>();
+        private System.Collections.ObjectModel.ObservableCollection<string> _attachmentUrls = new System.Collections.ObjectModel.Collection<string>();
 
         [Newtonsoft.Json.JsonProperty("guidId", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2062,6 +2067,83 @@ namespace Mshrm.Studio.Api.Clients.Domain
                 if (_contactEmail != value)
                 {
                     _contactEmail = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("firstName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string FirstName
+        {
+            get { return _firstName; }
+
+            set
+            {
+                if (_firstName != value)
+                {
+                    _firstName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LastName
+        {
+            get { return _lastName; }
+
+            set
+            {
+                if (_lastName != value)
+                {
+                    _lastName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("websiteUrl", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string WebsiteUrl
+        {
+            get { return _websiteUrl; }
+
+            set
+            {
+                if (_websiteUrl != value)
+                {
+                    _websiteUrl = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("attachmentGuidIds", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<System.Guid> AttachmentGuidIds
+        {
+            get { return _attachmentGuidIds; }
+
+            set
+            {
+                if (_attachmentGuidIds != value)
+                {
+                    _attachmentGuidIds = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("attachmentUrls", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<string> AttachmentUrls
+        {
+            get { return _attachmentUrls; }
+
+            set
+            {
+                if (_attachmentUrls != value)
+                {
+                    _attachmentUrls = value;
                     RaisePropertyChanged();
                 }
             }
@@ -2232,6 +2314,10 @@ namespace Mshrm.Studio.Api.Clients.Domain
     {
         private string _message;
         private string _contactEmail;
+        private string _firstName;
+        private string _lastName;
+        private string _websiteUrl;
+        private System.Collections.ObjectModel.ObservableCollection<string> _temporaryAttachmentIds = new System.Collections.ObjectModel.Collection<string>();
 
         [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2263,6 +2349,67 @@ namespace Mshrm.Studio.Api.Clients.Domain
                 if (_contactEmail != value)
                 {
                     _contactEmail = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("firstName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string FirstName
+        {
+            get { return _firstName; }
+
+            set
+            {
+                if (_firstName != value)
+                {
+                    _firstName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LastName
+        {
+            get { return _lastName; }
+
+            set
+            {
+                if (_lastName != value)
+                {
+                    _lastName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("websiteUrl", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string WebsiteUrl
+        {
+            get { return _websiteUrl; }
+
+            set
+            {
+                if (_websiteUrl != value)
+                {
+                    _websiteUrl = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("temporaryAttachmentIds", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<string> TemporaryAttachmentIds
+        {
+            get { return _temporaryAttachmentIds; }
+
+            set
+            {
+                if (_temporaryAttachmentIds != value)
+                {
+                    _temporaryAttachmentIds = value;
                     RaisePropertyChanged();
                 }
             }
