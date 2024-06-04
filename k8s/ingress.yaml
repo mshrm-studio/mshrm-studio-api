@@ -7,14 +7,19 @@ metadata:
 spec:
   ingressClassName: app-ingress
   rules:
-    - host: api.mshrm.studio
-      http:
+    - http:
         paths:
         - path: /auth
+          pathType: Prefix
           backend:
-            serviceName: mshrm-studio-api
-            servicePort: 30250
+            service:
+              name: auth
+              port:
+                number: 30251
         - path: /aggregator
+          pathType: Prefix
           backend:
-            serviceName: mshrm-studio-auth-api
-            servicePort: 30251
+            service:
+              name: aggregator
+              port:
+                number: 30250
