@@ -144,11 +144,7 @@ jobs:
       with:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
-        
-    - name: Setup NGinx Controller
-      run: |
-        minikube addons enable ingress
-        
+
     - name: Delete Previous Containers
       run: kubectl delete all --all
       
