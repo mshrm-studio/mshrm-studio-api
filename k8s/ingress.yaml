@@ -14,13 +14,13 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: auth
+            name: mshrm-studio-auth-api
             port:
               number: 30251
       - path: /aggregator
         pathType: Prefix
         backend:
           service:
-            name: aggregator
+            name: mshrm-studio-api
             port:
               number: 30250
