@@ -655,6 +655,35 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Gets price history paged
+        /// </summary>
+        /// <param name="assetGuidId">Asset to get history for</param>
+        /// <param name="pricingProviderType">The provider used to import</param>
+        /// <param name="baseAssetGuidId">The base asset</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Price history</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets price history paged
+        /// </summary>
+        /// <param name="assetGuidId">Asset to get history for</param>
+        /// <param name="pricingProviderType">The provider used to import</param>
+        /// <param name="baseAssetGuidId">The base asset</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Price history</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -786,6 +815,134 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<PriceDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PricingApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Gets price history paged
+        /// </summary>
+        /// <param name="assetGuidId">Asset to get history for</param>
+        /// <param name="pricingProviderType">The provider used to import</param>
+        /// <param name="baseAssetGuidId">The base asset</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Price history</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage)
+        {
+            return GetPriceHistoryAsync(assetGuidId, pricingProviderType, baseAssetGuidId, orderProperty, order, pageNumber, perPage, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Gets price history paged
+        /// </summary>
+        /// <param name="assetGuidId">Asset to get history for</param>
+        /// <param name="pricingProviderType">The provider used to import</param>
+        /// <param name="baseAssetGuidId">The base asset</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Price history</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/prices/history"
+                    urlBuilder_.Append("api/v1/prices/history");
+                    urlBuilder_.Append('?');
+                    if (assetGuidId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("assetGuidId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(assetGuidId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pricingProviderType != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("pricingProviderType")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pricingProviderType, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (baseAssetGuidId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("baseAssetGuidId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(baseAssetGuidId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (orderProperty != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("orderProperty")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(orderProperty, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (order != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("order")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(order, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageNumber != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("pageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (perPage != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("perPage")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(perPage, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfPriceHistoryDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1807,6 +1964,288 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<PriceDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PageResultDtoOfPriceHistoryDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private int _pageNumber;
+        private int _perPage;
+        private int _totalResults;
+        private Order _order;
+        private string _propertyName;
+        private System.Collections.ObjectModel.ObservableCollection<PriceHistoryDto> _results;
+
+        [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
+        public int PageNumber
+        {
+            get { return _pageNumber; }
+
+            set
+            {
+                if (_pageNumber != value)
+                {
+                    _pageNumber = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("perPage", Required = Newtonsoft.Json.Required.Always)]
+        public int PerPage
+        {
+            get { return _perPage; }
+
+            set
+            {
+                if (_perPage != value)
+                {
+                    _perPage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("totalResults", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalResults
+        {
+            get { return _totalResults; }
+
+            set
+            {
+                if (_totalResults != value)
+                {
+                    _totalResults = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("order", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public Order Order
+        {
+            get { return _order; }
+
+            set
+            {
+                if (_order != value)
+                {
+                    _order = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("propertyName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PropertyName
+        {
+            get { return _propertyName; }
+
+            set
+            {
+                if (_propertyName != value)
+                {
+                    _propertyName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<PriceHistoryDto> Results
+        {
+            get { return _results; }
+
+            set
+            {
+                if (_results != value)
+                {
+                    _results = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static PageResultDtoOfPriceHistoryDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfPriceHistoryDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PriceHistoryDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private decimal _oldPrice;
+        private decimal? _oldMarketCap;
+        private decimal? _oldVolume;
+        private decimal _newPrice;
+        private decimal? _newMarketCap;
+        private decimal? _newVolume;
+        private AssetDto _baseAsset = new AssetDto();
+        private AssetDto _asset = new AssetDto();
+
+        [Newtonsoft.Json.JsonProperty("oldPrice", Required = Newtonsoft.Json.Required.Always)]
+        public decimal OldPrice
+        {
+            get { return _oldPrice; }
+
+            set
+            {
+                if (_oldPrice != value)
+                {
+                    _oldPrice = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("oldMarketCap", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public decimal? OldMarketCap
+        {
+            get { return _oldMarketCap; }
+
+            set
+            {
+                if (_oldMarketCap != value)
+                {
+                    _oldMarketCap = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("oldVolume", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public decimal? OldVolume
+        {
+            get { return _oldVolume; }
+
+            set
+            {
+                if (_oldVolume != value)
+                {
+                    _oldVolume = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("newPrice", Required = Newtonsoft.Json.Required.Always)]
+        public decimal NewPrice
+        {
+            get { return _newPrice; }
+
+            set
+            {
+                if (_newPrice != value)
+                {
+                    _newPrice = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("newMarketCap", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public decimal? NewMarketCap
+        {
+            get { return _newMarketCap; }
+
+            set
+            {
+                if (_newMarketCap != value)
+                {
+                    _newMarketCap = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("newVolume", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public decimal? NewVolume
+        {
+            get { return _newVolume; }
+
+            set
+            {
+                if (_newVolume != value)
+                {
+                    _newVolume = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("baseAsset", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public AssetDto BaseAsset
+        {
+            get { return _baseAsset; }
+
+            set
+            {
+                if (_baseAsset != value)
+                {
+                    _baseAsset = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("asset", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public AssetDto Asset
+        {
+            get { return _asset; }
+
+            set
+            {
+                if (_asset != value)
+                {
+                    _asset = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static PriceHistoryDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PriceHistoryDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

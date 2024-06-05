@@ -230,7 +230,8 @@
             builder.Services.AddTransient<ICreateLocalizationService, CreateLocalizationService>();
             builder.Services.AddTransient<IQueryAssetService, QueryAssetService>();
             builder.Services.AddTransient<IQueryPricesService, QueryPricesService>();
-            
+            builder.Services.AddTransient<IQueryPriceHistoryService, QueryPriceHistoryService>();
+
             // Setup the Http services
             builder.Services.AddTransient<IDomainUserClient, DomainUserClient>(s =>
                 new DomainUserClient(builder.Configuration.GetValue<string>("DomainApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("DomainApi"), s.GetService<IHttpContextAccessor>())

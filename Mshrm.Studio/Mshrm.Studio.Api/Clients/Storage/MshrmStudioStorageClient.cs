@@ -79,7 +79,7 @@ namespace Mshrm.Studio.Api.Clients.Storage
         /// <param name="fileName">The file name to download as</param>
         /// <returns>The file</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FileResponse> GetPublicFileAsync(System.Guid resourceId, string fileName);
+        System.Threading.Tasks.Task<FileResponse> GetFileAsync(System.Guid resourceId, string fileName);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -89,7 +89,7 @@ namespace Mshrm.Studio.Api.Clients.Storage
         /// <param name="fileName">The file name to download as</param>
         /// <returns>The file</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<FileResponse> GetPublicFileAsync(System.Guid resourceId, string fileName, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<FileResponse> GetFileAsync(System.Guid resourceId, string fileName, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -430,9 +430,9 @@ namespace Mshrm.Studio.Api.Clients.Storage
         /// <param name="fileName">The file name to download as</param>
         /// <returns>The file</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<FileResponse> GetPublicFileAsync(System.Guid resourceId, string fileName)
+        public virtual System.Threading.Tasks.Task<FileResponse> GetFileAsync(System.Guid resourceId, string fileName)
         {
-            return GetPublicFileAsync(resourceId, fileName, System.Threading.CancellationToken.None);
+            return GetFileAsync(resourceId, fileName, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -443,7 +443,7 @@ namespace Mshrm.Studio.Api.Clients.Storage
         /// <param name="fileName">The file name to download as</param>
         /// <returns>The file</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<FileResponse> GetPublicFileAsync(System.Guid resourceId, string fileName, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<FileResponse> GetFileAsync(System.Guid resourceId, string fileName, System.Threading.CancellationToken cancellationToken)
         {
             if (resourceId == null)
                 throw new System.ArgumentNullException("resourceId");

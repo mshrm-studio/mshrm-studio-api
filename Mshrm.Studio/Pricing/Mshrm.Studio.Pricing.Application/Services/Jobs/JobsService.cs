@@ -10,6 +10,7 @@ using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Api.Services.Jobs.Interfaces;
 using Mshrm.Studio.Pricing.Api.Services.Providers;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
+using Mshrm.Studio.Shared.Models.Pagination;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -52,8 +53,8 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
                 var provider = _assetPriceServiceResolver(type);
 
                 // Get assets that use the prices
-                var providerAssets = await _mediator.Send<List<Asset>>(new GetAssetsQuery() { PricingProviderType = type });
-                var providerCurrencySymbols = providerAssets.Select(y => y.Symbol).ToList();
+                var providerAssets = await _mediator.Send<PagedResult<Asset>>(new GetPagedAssetsQuery() { PricingProviderType = type, PageNumber=0, PerPage=999999 });
+                var providerCurrencySymbols = providerAssets.Results.Select(y => y.Symbol).ToList();
 
                 _logger.LogInformation($"Getting prices for {string.Join(',', providerCurrencySymbols)} at {DateTime.UtcNow}");
 

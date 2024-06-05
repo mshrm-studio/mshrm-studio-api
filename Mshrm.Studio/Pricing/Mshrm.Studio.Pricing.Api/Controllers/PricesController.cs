@@ -80,18 +80,27 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <param name="pricingProviderType">The provider used to import</param>
         /// <param name="baseAssetGuidId">The base asset</param>
         /// <param name="assetGuidId">Asset to get history for</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
         /// <returns>Price history</returns>
         [HttpGet]
         [ProducesResponseType(typeof(PageResultDto<PriceHistoryDto>), StatusCodes.Status200OK)]
         [Route("history")]
-        public async Task<ActionResult<List<PriceDto>>> GetLatestPricesAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType, 
-            [FromQuery] string baseAssetGuidId)
+        public async Task<ActionResult<List<PriceDto>>> GetPriceHistoryAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType, 
+            [FromQuery] string baseAssetGuidId, [FromQuery] string orderProperty = "createdDate", [FromQuery] Order order = Order.Descending, [FromQuery] uint pageNumber = 1,
+             [FromQuery] uint perPage = 30)
         {
             var prices = await _mediator.Send<PagedResult<ExchangePricingPairHistory>>(new GetPagedPriceHistoryQuery()
             {
                 BaseAssetGuidId = assetGuidId,
                 AssetGuidId = assetGuidId,
-                PricingProviderType = pricingProviderType
+                PricingProviderType = pricingProviderType,
+                OrderProperty = orderProperty,
+                Order = order,
+                PageNumber = pageNumber,
+                PerPage = perPage
             });
 
             return Ok(_mapper.Map<PageResultDto<PriceHistoryDto>>(prices));

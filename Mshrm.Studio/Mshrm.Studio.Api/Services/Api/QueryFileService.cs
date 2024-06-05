@@ -22,9 +22,7 @@ namespace Mshrm.Studio.Api.Services.Api
         public async Task<Stream> StreamFileAsync(Guid key, CancellationToken cancellationToken)
         {
             // Get file
-            var file = await _fileClient.GetPublicFileAsync(key, null, cancellationToken);
-
-            //var contentType = file.Headers["Content-Type"].FirstOrDefault();
+            var file = await _fileClient.GetFileAsync(key, null, cancellationToken);
 
             return file.Stream;
         }
