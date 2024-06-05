@@ -1,5 +1,6 @@
 ﻿using Mshrm.Studio.Storage.Api.Models.Entities;
 using Mshrm.Studio.Storage.Api.Models.Enums;
+using Mshrm.Studio.Storage.Domain.Files;
 
 namespace Mshrm.Studio.Storage.Api.Repositories.Interfaces
 {
@@ -16,6 +17,15 @@ namespace Mshrm.Studio.Storage.Api.Repositories.Interfaces
         /// <param name="cancellationToken">The stopping token</param>
         /// <returns>The new resource</returns>
         public Task<Resource> CreateResourceAsync(string key, string fileName, string extension, AssetType assetType, bool isPrivate, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Create new resources
+        /// </summary>
+        /// <param name="files">Files to add resources for</param>
+        /// <param name="isPrivate">If resource is only accessable with auth</param>
+        /// <param name="cancellationToken">Stopping token</param>
+        /// <returns>Resources added</returns>
+        Task<List<Resource>> CreateResourcesAsync(List<MshrmStudioFile> files, bool isPrivate, CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a resource

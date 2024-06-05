@@ -42,7 +42,7 @@ namespace Mshrm.Studio.Api.Services.Api
             // Create logo
             ResourceDto? persistedLogo = null;
             if (logo != null)
-                persistedLogo = await _fileClient.SaveTemporaryFileAsync(logo.TemporaryKey, logo.FileName, false, cancellationToken);
+                persistedLogo = await _fileClient.SaveTemporaryFileAsync(new SaveTemporaryFileDto() { Key = logo.TemporaryKey, FileName = logo.FileName, IsPrivate = false }, cancellationToken);
 
             // Update the tool
             return await _domainToolsClient.UpdateToolAsync(toolGuidId, new UpdateToolDto()

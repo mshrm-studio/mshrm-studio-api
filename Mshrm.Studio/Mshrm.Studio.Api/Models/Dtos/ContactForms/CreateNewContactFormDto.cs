@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Mshrm.Studio.Api.Models.Dtos.Files;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Api.Models.Dtos.ContactForm
@@ -41,7 +42,7 @@ namespace Mshrm.Studio.Api.Models.Dtos.ContactForm
         /// <summary>
         /// Any contact form attachments ids
         /// </summary>
-        [JsonProperty("temporaryAttachmentIds")]
-        public List<string> TemporaryAttachmentIds { get; set; } = new List<string>();
+        [JsonProperty("temporaryAttachmentKeys")]
+        public List<TemporaryFileDto> TemporaryAttachmentKeys { get; set; } = new List<TemporaryFileDto>();
     }
 }

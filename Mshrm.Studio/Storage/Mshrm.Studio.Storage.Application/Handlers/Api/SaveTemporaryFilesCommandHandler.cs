@@ -16,7 +16,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
     /// <summary>
     /// Create a resource
     /// </summary>
-    public class SaveTemporaryFileCommandHandler : IRequestHandler<SaveTemporaryFileCommand, Resource>
+    public class SaveTemporaryFilesCommandHandler : IRequestHandler<SaveTemporaryFilesCommand, List<Resource>>
     {
         private readonly IResourceRepository _resourceRepository;
         private readonly ISpacesService _spacesService;
@@ -28,7 +28,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         /// <param name="resourceRepository"></param>
         /// <param name="spacesService"></param>
         /// <param name="tracer"></param>
-        public SaveTemporaryFileCommandHandler(IResourceRepository resourceRepository, ISpacesService spacesService, ITracer tracer)
+        public SaveTemporaryFilesCommandHandler(IResourceRepository resourceRepository, ISpacesService spacesService, ITracer tracer)
         {
             _resourceRepository = resourceRepository;
             _spacesService = spacesService;
@@ -42,22 +42,27 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         /// <param name="command">The command</param>
         /// <param name="cancellationToken">The stopping token</param>
         /// <returns>The saved resource</returns>
-        public async Task<Resource> Handle(SaveTemporaryFileCommand command, CancellationToken cancellationToken)
+        public async Task<List<Resource>> Handle(SaveTemporaryFilesCommand command, CancellationToken cancellationToken)
         {
-            using (var scope = _tracer.BuildSpan("SaveTemporaryFileAsync_CreateResourceService").StartActive(true))
+            using (var scope = _tracer.BuildSpan("SaveTemporaryFilesAsync_CreateResourcesService").StartActive(true))
             {
-                // Move from temp to perm
-                var permKey = await _spacesService.MoveTemporaryFileAsync(command.Key, command.DirectoryType.ToString().ToLower());
+                var allFilesAdded = new List<MshrmStudioFile>();
 
-                // Check move was successful
-                if (string.IsNullOrEmpty(permKey))
-                    throw new NotFoundException("Temporary file not found", FailureCode.TemporaryFileNotFound);
+                foreach (var fileCommand in command.SaveTemporaryFilesCommands)
+                {
+                    // Move from temp to perm
+                    var permKey = await _spacesService.MoveTemporaryFileAsync(fileCommand.Key, fileCommand.DirectoryType.ToString().ToLower());
 
-                // Get file meta data
-                var metaData = new MshrmStudioFile(permKey, command.FileName).GetFileMetaData();
+                    // Check move was successful
+                    if (string.IsNullOrEmpty(permKey))
+                        throw new NotFoundException("Temporary file not found", FailureCode.TemporaryFileNotFound);
+
+                    // Get file meta data
+                    var metaData = new MshrmStudioFile(permKey, fileCommand.FileName).GetFileMetaData();
+                }          
 
                 // Create resource
-                return await _resourceRepository.CreateResourceAsync(permKey, metaData.FileName, metaData.Extension, metaData.AssetType, command.IsPrivate, cancellationToken);
+                return await _resourceRepository.CreateResourcesAsync(allFilesAdded, true, cancellationToken);
             }
         }
     }

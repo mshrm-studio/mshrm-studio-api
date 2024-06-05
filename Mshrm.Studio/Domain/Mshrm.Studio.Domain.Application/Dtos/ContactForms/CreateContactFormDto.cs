@@ -39,9 +39,9 @@ namespace Mshrm.Studio.Domain.Api.Models.Dtos.ContactForms
         public string? WebsiteUrl { get; set; }
 
         /// <summary>
-        /// Any contact form attachments ids
+        /// Any contact form attachments keys
         /// </summary>
-        [JsonProperty("temporaryAttachmentIds")]
-        public List<string>? TemporaryAttachmentIds { get; set; }
+        [JsonProperty("attachmentKeys")]
+        public List<string>? AttachmentKeys { get; set; }
     }
 }

@@ -13,6 +13,6 @@ namespace Mshrm.Studio.Domain.Api.Models.CQRS.ContactForms.Commands
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? WebsiteUrl { get; set; }
-        public List<string> TemporaryAttachmentIds { get; set; } = new List<string>();
+        public List<string> AttachmentKeys { get; set; } = new List<string>();
     }
 }

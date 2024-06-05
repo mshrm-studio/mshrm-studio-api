@@ -67,12 +67,28 @@ namespace Mshrm.Studio.Storage.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResourceDto), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<ResourceDto>> SaveTemporaryFileAsync([FromForm] SaveTemporaryFileDto model)
+        public async Task<ActionResult<ResourceDto>> SaveTemporaryFileAsync([FromBody] SaveTemporaryFileDto model)
         {
             var savedResource = await _mediator.Send<Resource>(_mapper.Map<SaveTemporaryFileCommand>(model), Request.HttpContext.RequestAborted);
 
             // Upload the new resource and return
             return Ok(_mapper.Map<ResourceDto>(savedResource));
+        }
+
+        /// <summary>
+        /// Saves temporary file/s
+        /// </summary>
+        /// <param name="model">The file/s to persist</param>
+        /// <returns>The resource/s saved</returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(List<ResourceDto>), StatusCodes.Status200OK)]
+        [Route("multi")]
+        public async Task<ActionResult<List<ResourceDto>>> SaveTemporaryFilesAsync([FromBody] SaveTemporaryFilesDto model)
+        {
+            var savedResources = await _mediator.Send<List<Resource>>(_mapper.Map<SaveTemporaryFilesCommand>(model), Request.HttpContext.RequestAborted);
+
+            // Upload the new resources and return
+            return Ok(_mapper.Map<List<ResourceDto>>(savedResources));
         }
 
         /// <summary>

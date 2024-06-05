@@ -42,8 +42,7 @@ namespace Mshrm.Studio.Domain.Api.Handlers.Request.ContactForms
         {
             using (var scope = _tracer.BuildSpan("CreateContactFormAsync_CreateContactFormService").StartActive(true))
             {
-                // TODO: upload files and get guid ids
-                var attachmentGuidIds = new List<Guid>();
+                var attachmentGuidIds = command.AttachmentKeys.Select(x => Guid.Parse(x)).ToList();
 
                 // Create form
                 return await _contactFormRepository.CreateContactFormAsync(

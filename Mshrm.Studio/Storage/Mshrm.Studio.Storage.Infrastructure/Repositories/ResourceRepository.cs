@@ -4,6 +4,7 @@ using Mshrm.Studio.Storage.Api.Contexts;
 using Mshrm.Studio.Storage.Api.Models.Entities;
 using Mshrm.Studio.Storage.Api.Models.Enums;
 using Mshrm.Studio.Storage.Api.Repositories.Interfaces;
+using Mshrm.Studio.Storage.Domain.Files;
 using Mshrm.Studio.Storage.Domain.Resources;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -44,6 +45,33 @@ namespace Mshrm.Studio.Storage.Api.Repositories
             await SaveAsync(cancellationToken);
 
             return resource;
+        }
+
+        /// <summary>
+        /// Create new resources
+        /// </summary>
+        /// <param name="files">Files to add resources for</param>
+        /// <param name="isPrivate">If resource is only accessable with auth</param>
+        /// <param name="cancellationToken">Stopping token</param>
+        /// <returns>Resources added</returns>
+        public async Task<List<Resource>> CreateResourcesAsync(List<MshrmStudioFile> files, bool isPrivate, CancellationToken cancellationToken)
+        {
+            var resources = new List<Resource>();
+
+            foreach (var file in files)
+            {
+                var fileMetaData = file.GetFileMetaData();
+
+                // Build new resource to save
+                var resource = _resourceFactory.CreateResource(file.Key, file.FileName, fileMetaData.Extension, fileMetaData.AssetType, isPrivate);
+
+                resources.Add(resource);    
+            }
+
+            AddRange(resources);
+            await SaveAsync(cancellationToken);
+
+            return resources;
         }
 
         /// <summary>

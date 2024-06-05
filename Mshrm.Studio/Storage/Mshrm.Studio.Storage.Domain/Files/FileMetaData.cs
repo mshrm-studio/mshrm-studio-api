@@ -10,6 +10,7 @@ namespace Mshrm.Studio.Storage.Domain.Files
     public class FileMetaData
     {
         public AssetType AssetType { get; set; }
+        public string Key { get; set; }
         public string FileName { get; set; }
         public string Extension { get; set; }
         public string ContentType { get; set; }

@@ -41,17 +41,36 @@ namespace Mshrm.Studio.Api.Clients.Storage
         /// <summary>
         /// Saves a temporary file
         /// </summary>
+        /// <param name="model">The file to persist</param>
         /// <returns>The resource saved</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(string key, string fileName, bool? isPrivate);
+        System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(SaveTemporaryFileDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Saves a temporary file
         /// </summary>
+        /// <param name="model">The file to persist</param>
         /// <returns>The resource saved</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(string key, string fileName, bool? isPrivate, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(SaveTemporaryFileDto model, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Saves temporary file/s
+        /// </summary>
+        /// <param name="model">The file/s to persist</param>
+        /// <returns>The resource/s saved</returns>
+        /// <exception cref="StorageApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ResourceDto>> SaveTemporaryFilesAsync(SaveTemporaryFilesDto model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Saves temporary file/s
+        /// </summary>
+        /// <param name="model">The file/s to persist</param>
+        /// <returns>The resource/s saved</returns>
+        /// <exception cref="StorageApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ResourceDto>> SaveTemporaryFilesAsync(SaveTemporaryFilesDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a file
@@ -221,52 +240,35 @@ namespace Mshrm.Studio.Api.Clients.Storage
         /// <summary>
         /// Saves a temporary file
         /// </summary>
+        /// <param name="model">The file to persist</param>
         /// <returns>The resource saved</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(string key, string fileName, bool? isPrivate)
+        public virtual System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(SaveTemporaryFileDto model)
         {
-            return SaveTemporaryFileAsync(key, fileName, isPrivate, System.Threading.CancellationToken.None);
+            return SaveTemporaryFileAsync(model, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
         /// Saves a temporary file
         /// </summary>
+        /// <param name="model">The file to persist</param>
         /// <returns>The resource saved</returns>
         /// <exception cref="StorageApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(string key, string fileName, bool? isPrivate, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ResourceDto> SaveTemporaryFileAsync(SaveTemporaryFileDto model, System.Threading.CancellationToken cancellationToken)
         {
+            if (model == null)
+                throw new System.ArgumentNullException("model");
+
             var client_ = _httpClient;
             var disposeClient_ = false;
             try
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-
-                    if (key == null)
-                        throw new System.ArgumentNullException("key");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(key, System.Globalization.CultureInfo.InvariantCulture)), "Key");
-                    }
-
-                    if (fileName == null)
-                        throw new System.ArgumentNullException("fileName");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(fileName, System.Globalization.CultureInfo.InvariantCulture)), "FileName");
-                    }
-
-                    if (isPrivate == null)
-                        throw new System.ArgumentNullException("isPrivate");
-                    else
-                    {
-                        content_.Add(new System.Net.Http.StringContent(ConvertToString(isPrivate, System.Globalization.CultureInfo.InvariantCulture)), "IsPrivate");
-                    }
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -302,6 +304,99 @@ namespace Mshrm.Studio.Api.Clients.Storage
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ResourceDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new StorageApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new StorageApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Saves temporary file/s
+        /// </summary>
+        /// <param name="model">The file/s to persist</param>
+        /// <returns>The resource/s saved</returns>
+        /// <exception cref="StorageApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ResourceDto>> SaveTemporaryFilesAsync(SaveTemporaryFilesDto model)
+        {
+            return SaveTemporaryFilesAsync(model, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Saves temporary file/s
+        /// </summary>
+        /// <param name="model">The file/s to persist</param>
+        /// <returns>The resource/s saved</returns>
+        /// <exception cref="StorageApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ResourceDto>> SaveTemporaryFilesAsync(SaveTemporaryFilesDto model, System.Threading.CancellationToken cancellationToken)
+        {
+            if (model == null)
+                throw new System.ArgumentNullException("model");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/files/multi"
+                    urlBuilder_.Append("api/v1/files/multi");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<ResourceDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new StorageApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -740,6 +835,127 @@ namespace Mshrm.Studio.Api.Clients.Storage
         [System.Runtime.Serialization.EnumMember(Value = @"Document")]
         Document = 2,
 
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SaveTemporaryFileDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _key;
+        private string _fileName;
+        private bool _isPrivate;
+
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Key
+        {
+            get { return _key; }
+
+            set
+            {
+                if (_key != value)
+                {
+                    _key = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("fileName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string FileName
+        {
+            get { return _fileName; }
+
+            set
+            {
+                if (_fileName != value)
+                {
+                    _fileName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("isPrivate", Required = Newtonsoft.Json.Required.Always)]
+        public bool IsPrivate
+        {
+            get { return _isPrivate; }
+
+            set
+            {
+                if (_isPrivate != value)
+                {
+                    _isPrivate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static SaveTemporaryFileDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<SaveTemporaryFileDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class SaveTemporaryFilesDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private System.Collections.ObjectModel.ObservableCollection<SaveTemporaryFileDto> _temporaryFileKeys = new System.Collections.ObjectModel.Collection<SaveTemporaryFileDto>();
+
+        [Newtonsoft.Json.JsonProperty("temporaryFileKeys", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<SaveTemporaryFileDto> TemporaryFileKeys
+        {
+            get { return _temporaryFileKeys; }
+
+            set
+            {
+                if (_temporaryFileKeys != value)
+                {
+                    _temporaryFileKeys = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static SaveTemporaryFilesDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<SaveTemporaryFilesDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]

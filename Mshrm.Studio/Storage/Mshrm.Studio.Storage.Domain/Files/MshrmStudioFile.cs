@@ -9,11 +9,13 @@ namespace Mshrm.Studio.Storage.Domain.Files
 {
     public class MshrmStudioFile
     {
+        public string Key { get; private set; }
         public string FileName { get; private set; }
 
-        public MshrmStudioFile(string fileName)
+        public MshrmStudioFile(string key, string fileName)
         {
             FileName = fileName;
+            Key = key;
         }
 
         /// <summary>
@@ -82,6 +84,7 @@ namespace Mshrm.Studio.Storage.Domain.Files
                 AssetType = assetType,
                 Extension = extension,
                 FileName = FileName,
+                Key = Key,
             };
         }
     }

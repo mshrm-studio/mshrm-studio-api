@@ -45,7 +45,7 @@ namespace Mshrm.Studio.Storage.Api.Models.Entities
         /// <returns>The files content type</returns>
         public string? GetContentType()
         {
-            return new MshrmStudioFile(FileName).GetFileMetaData()?.ContentType;
+            return new MshrmStudioFile(Key, FileName).GetFileMetaData()?.ContentType;
         }
     }
 }

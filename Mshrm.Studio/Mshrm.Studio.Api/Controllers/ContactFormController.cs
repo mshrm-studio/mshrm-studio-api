@@ -102,7 +102,8 @@ namespace Mshrm.Studio.Api.Controllers
         public async Task<ActionResult<ContactFormResponseDto>> CreateContactFormAsync([FromBody] CreateNewContactFormDto dto)
         {
             // Create contact form
-            var contactForm = await _createContactFormService.CreateContactFormAsync(dto.Message, dto.ContactEmail, HttpContext.RequestAborted);
+            var contactForm = await _createContactFormService.CreateContactFormAsync(dto.Message, dto.ContactEmail, dto.FirstName, dto.LastName, dto.WebsiteUrl,
+                dto.TemporaryAttachmentKeys, HttpContext.RequestAborted);
 
             // Map and return
             return Ok(_mapper.Map<ContactFormResponseDto>(contactForm));

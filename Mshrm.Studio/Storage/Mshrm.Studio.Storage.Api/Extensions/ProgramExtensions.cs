@@ -243,6 +243,7 @@ namespace Mshrm.Studio.Storage.Api.Extensions
 
             builder.Services.AddScoped<IRequestHandler<GetResourceStreamQuery, ResourceStream>, GetResourceStreamQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<SaveTemporaryFileCommand, Resource>, SaveTemporaryFileCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<SaveTemporaryFilesCommand, List<Resource>>, SaveTemporaryFilesCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<UploadTemporaryFileCommand, TemporaryFileUpload>, UploadTemporaryFileCommandHandler>();
 
             return builder;

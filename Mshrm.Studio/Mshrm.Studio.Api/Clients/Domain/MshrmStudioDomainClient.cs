@@ -2315,7 +2315,7 @@ namespace Mshrm.Studio.Api.Clients.Domain
         private string _firstName;
         private string _lastName;
         private string _websiteUrl;
-        private System.Collections.ObjectModel.ObservableCollection<string> _temporaryAttachmentIds;
+        private System.Collections.ObjectModel.ObservableCollection<string> _attachmentKeys;
 
         [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2397,16 +2397,16 @@ namespace Mshrm.Studio.Api.Clients.Domain
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("temporaryAttachmentIds", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<string> TemporaryAttachmentIds
+        [Newtonsoft.Json.JsonProperty("attachmentKeys", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<string> AttachmentKeys
         {
-            get { return _temporaryAttachmentIds; }
+            get { return _attachmentKeys; }
 
             set
             {
-                if (_temporaryAttachmentIds != value)
+                if (_attachmentKeys != value)
                 {
-                    _temporaryAttachmentIds = value;
+                    _attachmentKeys = value;
                     RaisePropertyChanged();
                 }
             }

@@ -35,6 +35,7 @@ namespace Mshrm.Studio.Storage.Api.Mapping
 
             CreateMap<TemporaryFileUpload, TemporaryFileUploadDto>().ReverseMap();
             CreateMap<SaveTemporaryFileDto, SaveTemporaryFileCommand>().ReverseMap();
+            CreateMap<SaveTemporaryFilesDto, SaveTemporaryFilesCommand>().ReverseMap();
 
             #endregion
         }

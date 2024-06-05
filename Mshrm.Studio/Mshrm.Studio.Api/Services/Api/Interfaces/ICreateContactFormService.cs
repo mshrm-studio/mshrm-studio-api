@@ -1,6 +1,7 @@
 ﻿
 using Mshrm.Studio.Api.Clients;
 using Mshrm.Studio.Api.Clients.Domain;
+using Mshrm.Studio.Api.Models.Dtos.Files;
 
 namespace Mshrm.Studio.Api.Services.Api.Interfaces
 {
@@ -11,8 +12,13 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// </summary>
         /// <param name="message">The message sent</param>
         /// <param name="contactEmail">A contact email for the message</param>
+        /// <param name="firstName">User creating first name</param>
+        /// <param name="lastName">User creating last name</param>
+        /// <param name="websiteUrl">A linked website</param>
+        /// <param name="temporaryAttachmentKeys">Attachments</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new contact form</returns>
-        Task<ContactFormDto> CreateContactFormAsync(string message, string contactEmail, CancellationToken cancellationToken);
+        Task<ContactFormDto> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<TemporaryFileDto>? temporaryAttachmentKeys,
+            CancellationToken cancellationToken);
     }
 }
