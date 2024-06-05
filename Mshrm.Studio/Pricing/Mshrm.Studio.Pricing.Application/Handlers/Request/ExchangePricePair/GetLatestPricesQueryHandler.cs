@@ -47,7 +47,13 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
                 // Get base asset
                 var baseAsset = (await _assetRepository.GetAssetsReadOnlyAsync(null, null, true, new List<string>() { query.BaseAssetSymbol })).FirstOrDefault();
                 if (baseAsset == null)
-                    throw new UnprocessableEntityException("The base asset symbol provided is not supported", FailureCode.BaseAssetNotSupported);
+                    throw new UnprocessableEntityException("The asset symbol to return price in provided is not supported anymore", FailureCode.BaseAssetNotSupported);
+
+                // Check is currency
+                if (baseAsset.AssetType != AssetType.Fiat && baseAsset.AssetType != AssetType.Crypto)
+                {
+                    throw new UnprocessableEntityException("The asset to return price in must be of asset type fiat or crypto", FailureCode.AssetPriceMustBeACurrency);
+                }
 
                 // Get the OLD base asset price
                 var oldBaseAsset = (await _assetRepository.GetAssetsReadOnlyAsync(null, null, true, new List<string>() { "USD" })).FirstOrDefault();
@@ -56,7 +62,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair
                 // Get NEW base asset price
                 var newBaseAssetPrice = (await _exchangePricingPairRepository.GetLatestExchangePricingPairsReadOnlyAsync(new List<int>() { baseAsset.Id }, null, null, cancellationToken)).FirstOrDefault();
                 if (newBaseAssetPrice == null)
-                    throw new UnprocessableEntityException("The base asset symbols price doesn't exist", FailureCode.BaseAssetPriceDoesntExist);
+                    throw new UnprocessableEntityException("The asset symbol to return price in doesn't exist", FailureCode.BaseAssetPriceDoesntExist);
 
                 // Get assets
                 var assets = await _assetRepository.GetAssetsReadOnlyAsync(query.AssetType, query.PricingProviderType, true, query.Symbols);

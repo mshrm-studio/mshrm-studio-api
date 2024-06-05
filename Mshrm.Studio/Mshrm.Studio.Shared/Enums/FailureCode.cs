@@ -44,5 +44,6 @@ namespace Mshrm.Studio.Shared.Enums
         LocalizationResourceAlreadyExists = 33,
         LocalizationResourceDoesntExist = 34,
         PricingStructureDoesntExist = 35,
+        AssetPriceMustBeACurrency = 36
     }
 }

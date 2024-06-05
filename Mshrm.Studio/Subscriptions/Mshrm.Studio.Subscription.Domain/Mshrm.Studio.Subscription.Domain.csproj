@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.1" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.2" />
   </ItemGroup>
 
 </Project>
