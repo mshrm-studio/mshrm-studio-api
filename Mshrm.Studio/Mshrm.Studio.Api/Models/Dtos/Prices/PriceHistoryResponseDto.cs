@@ -22,11 +22,5 @@ namespace Mshrm.Studio.Api.Models.Dtos.Prices
 
         [JsonProperty("newVolume")]
         public decimal? NewVolume { get; set; }
-
-        [JsonProperty("baseAsset")]
-        public AssetResponseDto BaseAsset { get; set; }
-
-        [JsonProperty("asset")]
-        public AssetResponseDto Asset { get; set; }
     }
 }
