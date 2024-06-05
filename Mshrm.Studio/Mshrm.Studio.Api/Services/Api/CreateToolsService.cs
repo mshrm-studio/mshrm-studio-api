@@ -30,7 +30,7 @@ namespace Mshrm.Studio.Api.Services.Api
         public async Task<ToolDto> CreateToolAsync(TemporaryFileDto logo, string name, string? description, string link, int rank, ToolType toolType, CancellationToken cancellationToken)
         {
             // Create logo
-            var persistedLogo = await _fileClient.SaveTemporaryFileAsync(logo.TemporaryKey, logo.FileName, false, cancellationToken);
+            var persistedLogo = await _fileClient.SaveTemporaryFileAsync(new SaveTemporaryFileDto() { Key = logo.TemporaryKey, FileName = logo.FileName, IsPrivate = false }, cancellationToken);
 
             // Create a new tool
             return await _domainToolsClient.CreateToolAsync(new CreateToolDto()

@@ -917,10 +917,9 @@ namespace Mshrm.Studio.Api.Clients.Storage
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class SaveTemporaryFilesDto : System.ComponentModel.INotifyPropertyChanged
     {
-        private System.Collections.ObjectModel.ObservableCollection<SaveTemporaryFileDto> _temporaryFileKeys = new System.Collections.ObjectModel.Collection<SaveTemporaryFileDto>();
+        private System.Collections.ObjectModel.ObservableCollection<SaveTemporaryFileDto> _temporaryFileKeys;
 
-        [Newtonsoft.Json.JsonProperty("temporaryFileKeys", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [Newtonsoft.Json.JsonProperty("temporaryFileKeys", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.ObjectModel.ObservableCollection<SaveTemporaryFileDto> TemporaryFileKeys
         {
             get { return _temporaryFileKeys; }

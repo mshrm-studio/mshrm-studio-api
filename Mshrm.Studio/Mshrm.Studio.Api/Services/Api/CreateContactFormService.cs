@@ -37,13 +37,12 @@ namespace Mshrm.Studio.Api.Services.Api
                 FileName = x.FileName,
                 IsPrivate = true,
                 Key = x.TemporaryKey,
-            });
+            }).ToList();
 
             // Save the temp files
-            var savedKeys = (attachments?.Any() ?? false) ? (await _fileClient.SaveTemporaryFilesAsync(attachments)).Select(x => x.GuidId.ToString()) : new List<string>();
-
-            var castKeys = (ObservableCollection<string>)savedKeys;
-            var convertedKeys = new ObservableCollection<string>(savedKeys);
+            var savedKeys = (attachments?.Any() ?? false) ? 
+                (await _fileClient.SaveTemporaryFilesAsync(new SaveTemporaryFilesDto() { TemporaryFileKeys = new ObservableCollection<SaveTemporaryFileDto>(attachments) })).Select(x => x.GuidId.ToString()) : 
+                new List<string>();
 
             // Create the contact form
             return await _contactFormClient.CreateContactFormAsync(new CreateContactFormDto()
@@ -53,7 +52,7 @@ namespace Mshrm.Studio.Api.Services.Api
                 FirstName = firstName,
                 LastName = lastName,
                 WebsiteUrl = websiteUrl,
-                AttachmentKeys = convertedKeys
+                AttachmentKeys = new ObservableCollection<string>(savedKeys)
             });
         }
     }
