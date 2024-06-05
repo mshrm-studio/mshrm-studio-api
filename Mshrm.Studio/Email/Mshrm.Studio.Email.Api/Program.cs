@@ -77,8 +77,9 @@ if (app.Environment.IsDevelopment())
         c.ConfigObject.AdditionalItems.Add("syntaxHighlight", false); //Turns off syntax highlight which causing performance issues...
         c.ConfigObject.AdditionalItems.Add("theme", "agate"); //Reverts Swagger UI 2.x  theme which is simpler not much performance benefit...
     });
-    app.UseDeveloperExceptionPage();
 }
+
+app.UseExceptionHandler();
 
 // Global cors policy - handle this in Azure
 app.UseCors(x => x.AllowAnyMethod()
