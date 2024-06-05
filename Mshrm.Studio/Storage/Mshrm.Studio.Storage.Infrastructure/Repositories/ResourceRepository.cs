@@ -68,7 +68,7 @@ namespace Mshrm.Studio.Storage.Api.Repositories
                 resources.Add(resource);    
             }
 
-            AddRange(resources);
+            _context.Resources.AddRange(resources);
             await SaveAsync(cancellationToken);
 
             return resources;

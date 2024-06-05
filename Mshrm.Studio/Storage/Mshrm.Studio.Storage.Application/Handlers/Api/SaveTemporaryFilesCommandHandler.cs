@@ -58,7 +58,10 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
                         throw new NotFoundException("Temporary file not found", FailureCode.TemporaryFileNotFound);
 
                     // Get file meta data
-                    var metaData = new MshrmStudioFile(permKey, fileCommand.FileName).GetFileMetaData();
+                    var file = new MshrmStudioFile(permKey, fileCommand.FileName);
+                    var metaData = file.GetFileMetaData();
+
+                    allFilesAdded.Add(file);
                 }          
 
                 // Create resource
