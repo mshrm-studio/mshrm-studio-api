@@ -92,6 +92,23 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken);
 
+        /// <summary>
+        /// Get all symbols for a provider
+        /// </summary>
+        /// <param name="providerType">The pricing provider</param>
+        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get all symbols for a provider
+        /// </summary>
+        /// <param name="providerType">The pricing provider</param>
+        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType, System.Threading.CancellationToken cancellationToken);
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -491,6 +508,97 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<AssetDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new PricingApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get all symbols for a provider
+        /// </summary>
+        /// <param name="providerType">The pricing provider</param>
+        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType)
+        {
+            return GetProvidersAssetSymbolsAsync(providerType, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get all symbols for a provider
+        /// </summary>
+        /// <param name="providerType">The pricing provider</param>
+        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <exception cref="PricingApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType, System.Threading.CancellationToken cancellationToken)
+        {
+            if (providerType == null)
+                throw new System.ArgumentNullException("providerType");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/assets/provider/{providerType}"
+                    urlBuilder_.Append("api/v1/assets/provider/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(providerType, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<string>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
