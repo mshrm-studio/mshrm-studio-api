@@ -44,7 +44,7 @@ namespace Mshrm.Studio.Api.Mapping
 
             CreateMap<PageResultDtoOfContactFormDto, PageResultDto<ContactFormDto>>().ReverseMap();
             CreateMap<PageResultDtoOfContactFormDto, PageResultDto<ContactFormResponseDto>>().ReverseMap();
-            CreateMap<ContactFormDto, ContactFormResponseDto>().ReverseMap();
+            CreateMap<ContactFormDto, ContactFormResponseDto>().ConvertUsing<ContactFormConverter>();
 
             #endregion
 
