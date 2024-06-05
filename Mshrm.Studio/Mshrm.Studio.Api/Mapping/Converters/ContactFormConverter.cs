@@ -38,7 +38,7 @@ namespace Mshrm.Studio.Api.Mapping.Converters
             target = new ContactFormResponseDto() { Message = string.Empty };
 
             // Build the urls
-            var urls = (parent.AttachmentGuidIds?.Any() ?? false) ? parent.AttachmentGuidIds.Select(x => $"https://{_httpContextAccessor.HttpContext?.Request.Host}/api/v1/files/{x}").ToList() : null;
+            var urls = (parent.AttachmentGuidIds?.Any() ?? false) ? parent.AttachmentGuidIds.Select(x => $"https://{_httpContextAccessor.HttpContext?.Request.Host}/api/v1/files/guid/{x}").ToList() : null;
 
             // Set the rest of the properties
             target.GuidId = parent.GuidId;

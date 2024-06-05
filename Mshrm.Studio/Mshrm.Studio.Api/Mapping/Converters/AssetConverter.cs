@@ -36,7 +36,7 @@ namespace Mshrm.Studio.Api.Mapping.Converters
             target = new AssetResponseDto();
 
             // Build the url
-            var url = (parent.LogoGuidId.HasValue) ? $"https://{_httpContextAccessor.HttpContext?.Request.Host}/api/v1/files/{parent.LogoGuidId}" : null;
+            var url = (parent.LogoGuidId.HasValue) ? $"https://{_httpContextAccessor.HttpContext?.Request.Host}/api/v1/files/guid/{parent.LogoGuidId}" : null;
 
             // Set the rest of the properties
             target.CreatedDate = parent.CreatedDate;
