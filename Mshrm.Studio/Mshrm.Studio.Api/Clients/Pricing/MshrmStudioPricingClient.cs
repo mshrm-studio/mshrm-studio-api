@@ -2111,8 +2111,6 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private decimal _newPrice;
         private decimal? _newMarketCap;
         private decimal? _newVolume;
-        private AssetDto _baseAsset = new AssetDto();
-        private AssetDto _asset = new AssetDto();
 
         [Newtonsoft.Json.JsonProperty("oldPrice", Required = Newtonsoft.Json.Required.Always)]
         public decimal OldPrice
@@ -2199,38 +2197,6 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                 if (_newVolume != value)
                 {
                     _newVolume = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        [Newtonsoft.Json.JsonProperty("baseAsset", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public AssetDto BaseAsset
-        {
-            get { return _baseAsset; }
-
-            set
-            {
-                if (_baseAsset != value)
-                {
-                    _baseAsset = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        [Newtonsoft.Json.JsonProperty("asset", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public AssetDto Asset
-        {
-            get { return _asset; }
-
-            set
-            {
-                if (_asset != value)
-                {
-                    _asset = value;
                     RaisePropertyChanged();
                 }
             }
