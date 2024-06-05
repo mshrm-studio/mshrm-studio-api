@@ -55,6 +55,8 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
                 var providerAssets = await _mediator.Send<List<Asset>>(new GetAssetsQuery() { PricingProviderType = type });
                 var providerCurrencySymbols = providerAssets.Select(y => y.Symbol).ToList();
 
+                _logger.LogInformation($"Getting prices for {string.Join(',', providerCurrencySymbols)} at {DateTime.UtcNow}");
+
                 // TODO: Use mediatr here (getting prices from resolver)
                 // Get prices
                 var prices = await provider.GetPricesAsync(providerCurrencySymbols);

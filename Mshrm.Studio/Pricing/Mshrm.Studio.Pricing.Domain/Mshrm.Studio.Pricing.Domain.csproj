@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ExchangePricingPairHistories\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>

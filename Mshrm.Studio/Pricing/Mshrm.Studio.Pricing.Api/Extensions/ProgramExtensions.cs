@@ -60,6 +60,7 @@ using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Queries;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.Assets;
 using Mshrm.Studio.Pricing.Domain.Assets;
 using Mshrm.Studio.Pricing.Application.Services.Background;
+using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories.Queries;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -351,7 +352,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<CreateOrReplacePricingPairsCommand, List<ExchangePricingPair>>, CreateOrReplacePricingPairsCommandHandler>();
 
             builder.Services.AddScoped<IRequestHandler<CreateExchangePricingPairHistoryCommand, ExchangePricingPairHistory>, CreateExchangePricingPairHistoryCommandHandler>();
-
+            builder.Services.AddScoped<IRequestHandler<GetPagedPriceHistoryQuery, PagedResult<ExchangePricingPairHistory>>, GetPagedPriceHistoryQueryHandler>();
+            
             return builder;
         }
 

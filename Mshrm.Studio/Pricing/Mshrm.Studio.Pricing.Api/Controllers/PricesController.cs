@@ -11,6 +11,8 @@ using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
 using Mshrm.Studio.Pricing.Api.Services.Providers;
+using Mshrm.Studio.Pricing.Application.Dtos.Prices;
+using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories.Queries;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
@@ -70,6 +72,29 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
             });
 
             return Ok(_mapper.Map<List<PriceDto>>(prices));
+        }
+
+        /// <summary>
+        /// Gets price history paged
+        /// </summary>
+        /// <param name="pricingProviderType">The provider used to import</param>
+        /// <param name="baseAssetGuidId">The base asset</param>
+        /// <param name="assetGuidId">Asset to get history for</param>
+        /// <returns>Price history</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(PageResultDto<PriceHistoryDto>), StatusCodes.Status200OK)]
+        [Route("history")]
+        public async Task<ActionResult<List<PriceDto>>> GetLatestPricesAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType, 
+            [FromQuery] string baseAssetGuidId)
+        {
+            var prices = await _mediator.Send<PagedResult<ExchangePricingPairHistory>>(new GetPagedPriceHistoryQuery()
+            {
+                BaseAssetGuidId = assetGuidId,
+                AssetGuidId = assetGuidId,
+                PricingProviderType = pricingProviderType
+            });
+
+            return Ok(_mapper.Map<PageResultDto<PriceHistoryDto>>(prices));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Mshrm.Studio.Pricing.Application.Services.Background
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var timeSpan = new TimeSpan(0,1,0); //30
+            var timeSpan = new TimeSpan(0,30,0); //30
 
             // Every day at 8am local time
             using var timer = new PeriodicTimer(timeSpan);

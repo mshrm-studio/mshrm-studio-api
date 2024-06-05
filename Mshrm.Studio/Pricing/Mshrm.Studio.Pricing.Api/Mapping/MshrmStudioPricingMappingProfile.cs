@@ -5,6 +5,7 @@ using Mshrm.Studio.Pricing.Api.Models.Dtos.Asset;
 using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Events;
+using Mshrm.Studio.Pricing.Application.Dtos.Prices;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
 
@@ -45,6 +46,13 @@ namespace Mshrm.Studio.Pricing.Api.Mapping
             #region Prices
 
             CreateMap<PagedResult<ExchangePricingPair>, PageResultDto<PriceDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
+                .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
+                .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
+                .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName))
+                .ReverseMap();
+
+            CreateMap<PagedResult<ExchangePricingPairHistory>, PageResultDto<PriceHistoryDto>>()
                 .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
                 .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
                 .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))

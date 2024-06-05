@@ -1,5 +1,6 @@
 ﻿using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
+using Mshrm.Studio.Shared.Models.Pagination;
 
 namespace Mshrm.Studio.Pricing.Api.Repositories.Interfaces
 {
@@ -21,5 +22,17 @@ namespace Mshrm.Studio.Pricing.Api.Repositories.Interfaces
         public Task<ExchangePricingPairHistory> AddHistoryAsync(int exchangePricingPairId, decimal oldPrice, decimal newPrice,
             decimal? oldMarketCap, decimal? newMarketCap, decimal? oldVolume, decimal? newVolume, PricingProviderType pricingProviderType,
             CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get the paged history prices
+        /// </summary>
+        /// <param name="assetId">The asset the history is for</param>
+        /// <param name="pricingProviderType">The provider updating price (creating row)</param>
+        /// <param name="page">The page</param>
+        /// <param name="sortOrder">The sort order</param>
+        /// <param name="cancellationToken">A stopping token</param>
+        /// <returns>Page of price history</returns>
+        public Task<PagedResult<ExchangePricingPairHistory>> GetPagedHistory(int assetId, PricingProviderType? pricingProviderType,
+             Page page, SortOrder sortOrder, CancellationToken cancellationToken);
     }
 }
