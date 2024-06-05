@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Amazon.Runtime.Internal.Util;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Exceptions;
 using Mshrm.Studio.Shared.Exceptions.HttpAction;
@@ -21,6 +23,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         private readonly IResourceRepository _resourceRepository;
         private readonly ISpacesService _spacesService;
         private readonly ITracer _tracer;
+        private readonly ILogger<SaveTemporaryFileCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveTemporaryFileCommandHandler"/> class.
@@ -28,12 +31,14 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         /// <param name="resourceRepository"></param>
         /// <param name="spacesService"></param>
         /// <param name="tracer"></param>
-        public SaveTemporaryFileCommandHandler(IResourceRepository resourceRepository, ISpacesService spacesService, ITracer tracer)
+        public SaveTemporaryFileCommandHandler(IResourceRepository resourceRepository, ISpacesService spacesService, ITracer tracer,
+            ILogger<SaveTemporaryFileCommandHandler> logger)
         {
             _resourceRepository = resourceRepository;
             _spacesService = spacesService;
 
             _tracer = tracer;
+            _logger = logger;
         }
 
         /// <summary>
@@ -46,6 +51,17 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         {
             using (var scope = _tracer.BuildSpan("SaveTemporaryFileAsync_CreateResourceService").StartActive(true))
             {
+                try
+                {
+                    var file = await _spacesService.GetFileAsync(command.Key, "temp");
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex.StackTrace);
+
+                    throw new NotFoundException("Temporary file not found", FailureCode.TemporaryFileNotFound);
+                }
+
                 // Move from temp to perm
                 var permKey = await _spacesService.MoveFileAsync(command.Key, "temp");
 
