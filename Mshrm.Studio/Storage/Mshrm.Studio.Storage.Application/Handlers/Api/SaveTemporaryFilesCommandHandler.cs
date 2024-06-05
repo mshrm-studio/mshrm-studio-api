@@ -56,7 +56,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
                 {
                     try
                     {
-                        var file = await _spacesService.GetFileAsync(fileCommand.Key, fileCommand.DirectoryType.ToString().ToLower());
+                        var file = await _spacesService.GetFileAsync(fileCommand.Key, "temp");
                     }
                     catch (Exception ex)
                     {
@@ -71,7 +71,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
                 foreach (var fileCommand in command.SaveTemporaryFilesCommands)
                 {
                     // Move from temp to perm
-                    var permKey = await _spacesService.MoveTemporaryFileAsync(fileCommand.Key, fileCommand.DirectoryType.ToString().ToLower());
+                    var permKey = await _spacesService.MoveFileAsync(fileCommand.Key, "temp");
 
                     // Check move was successful
                     if (string.IsNullOrEmpty(permKey))

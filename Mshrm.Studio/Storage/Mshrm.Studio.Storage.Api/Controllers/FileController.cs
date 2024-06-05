@@ -1,5 +1,6 @@
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mshrm.Studio.Shared.Exceptions;
 using Mshrm.Studio.Storage.Api.Models.CQRS.Files.Commands;
@@ -100,7 +101,7 @@ namespace Mshrm.Studio.Storage.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(FileStreamResult), StatusCodes.Status200OK)]
         [Route("{resourceId}")]
-        public async Task<FileStreamResult> GetPublicFileAsync([FromRoute] Guid resourceId, [FromQuery] string? fileName)
+        public async Task<FileStreamResult> GetFileAsync([FromRoute] Guid resourceId, [FromQuery] string? fileName)
         {
             // Get the file
             var resourceStream = await _mediator.Send<ResourceStream>(new GetResourceStreamQuery() { ResourceId = resourceId }, Request.HttpContext.RequestAborted);

@@ -19,7 +19,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="key">The key for the file</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>A file stream</returns>
-        public async Task<Stream> StreamPublicFileAsync(Guid key, CancellationToken cancellationToken)
+        public async Task<Stream> StreamFileAsync(Guid key, CancellationToken cancellationToken)
         {
             // Get file
             var file = await _fileClient.GetPublicFileAsync(key, null, cancellationToken);

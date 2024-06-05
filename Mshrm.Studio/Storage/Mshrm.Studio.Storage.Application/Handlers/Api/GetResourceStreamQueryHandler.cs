@@ -49,12 +49,8 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
                 if (resource == null)
                     throw new NotFoundException("Resource doesn't exist", FailureCode.ResourceDoesntExist);
 
-                // Check if is a private resource (requires authentication)
-                if (!query.IsPrivate && resource.IsPrivate)
-                    throw new ForbidException("Cannot view this resource unauthenticated", FailureCode.ResourceIsPrivate);
-
                 // Get the stream
-                var stream = await _spacesService.GetFileAsync(resource.Key);
+                var stream = await _spacesService.GetFileAsync(resource.Key, "perm");
                 if (stream == null)
                     throw new NotFoundException("File doesn't exist", FailureCode.ResourceDoesntExist);
 

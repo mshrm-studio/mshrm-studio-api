@@ -8,6 +8,6 @@
         /// <param name="key">The key for the file</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>A file stream</returns>
-        public Task<Stream> StreamPublicFileAsync(Guid key, CancellationToken cancellationToken);
+        public Task<Stream> StreamFileAsync(Guid key, CancellationToken cancellationToken);
     }
 }

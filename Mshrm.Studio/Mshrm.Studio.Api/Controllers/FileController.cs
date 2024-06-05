@@ -51,10 +51,12 @@ namespace Mshrm.Studio.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(Stream), StatusCodes.Status200OK)]
         [Route("guid/{guid}")]
-        public async Task<ActionResult<Stream>> GetPublicFileByGuidAsync([FromRoute] Guid guid)
+        public async Task<ActionResult<Stream>> GetFileByGuidAsync([FromRoute] Guid guid)
         {
+            var u = HttpContext.User;
+
             // Get stream
-            var fileStream = await _queryFileService.StreamPublicFileAsync(guid, Request.HttpContext.RequestAborted);
+            var fileStream = await _queryFileService.StreamFileAsync(guid, Request.HttpContext.RequestAborted);
 
             return Ok(fileStream);
         }

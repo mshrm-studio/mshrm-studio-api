@@ -28,11 +28,11 @@
         public Task<Stream?> GetFileAsync(string key, string? filePath = null);
 
         /// <summary>
-        /// Move a file from temporary folder into permanent folder
+        /// Move a file from folder into another folder
         /// </summary>
         /// <param name="key">The temp key</param>
-        /// <param name="filePath">A sub-folder path to get from</param>
+        /// <param name="fromFilePath">A sub-folder path to get from</param>
         /// <returns>The files final location key</returns>
-        Task<string?> MoveTemporaryFileAsync(string key, string? filePath = null);
+        Task<string?> MoveFileAsync(string key, string? filePath = null);
     }
 }

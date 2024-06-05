@@ -47,7 +47,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
             using (var scope = _tracer.BuildSpan("SaveTemporaryFileAsync_CreateResourceService").StartActive(true))
             {
                 // Move from temp to perm
-                var permKey = await _spacesService.MoveTemporaryFileAsync(command.Key, command.DirectoryType.ToString().ToLower());
+                var permKey = await _spacesService.MoveFileAsync(command.Key, "temp");
 
                 // Check move was successful
                 if (string.IsNullOrEmpty(permKey))
