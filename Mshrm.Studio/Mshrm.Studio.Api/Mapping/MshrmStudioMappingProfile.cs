@@ -82,6 +82,7 @@ namespace Mshrm.Studio.Api.Mapping
             CreateMap<PageResultDtoOfContactFormDto, PageResultDto<PriceResponseDto>>().ReverseMap();
             CreateMap<PriceDto, PriceResponseDto>().ReverseMap();
             CreateMap<PageResultDtoOfPriceHistoryDto, PageResultDto<PriceHistoryResponseDto>>().ReverseMap();
+            CreateMap<PriceHistoryDto, PriceHistoryResponseDto>().ReverseMap();
 
             #endregion
         }

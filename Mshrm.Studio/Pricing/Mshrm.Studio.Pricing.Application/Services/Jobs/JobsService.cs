@@ -53,7 +53,7 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
                 var provider = _assetPriceServiceResolver(type);
 
                 // Get assets that use the prices
-                var providerAssets = await _mediator.Send<PagedResult<Asset>>(new GetPagedAssetsQuery() { PricingProviderType = type, PageNumber=0, PerPage=999999 });
+                var providerAssets = await _mediator.Send<PagedResult<Asset>>(new GetPagedAssetsQuery() { PricingProviderType = type, PageNumber=0, PerPage=999999, OrderProperty="CreatedDate", Order = Shared.Enums.Order.Descending });
                 var providerCurrencySymbols = providerAssets.Results.Select(y => y.Symbol).ToList();
 
                 _logger.LogInformation($"Getting prices for {string.Join(',', providerCurrencySymbols)} at {DateTime.UtcNow}");

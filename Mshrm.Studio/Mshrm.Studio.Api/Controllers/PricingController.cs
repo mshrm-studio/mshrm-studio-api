@@ -27,11 +27,16 @@ namespace Mshrm.Studio.Api.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="PricingController"/> class.
         /// </summary>
+        /// <param name="domainUserClient"></param>
+        /// <param name="queryPricesService"></param>
+        /// <param name="queryPriceHistoryService"></param>
         /// <param name="contextAccessor"></param>
         /// <param name="mapper"></param>
-        public PricingController(IDomainUserClient domainUserClient, IQueryPricesService queryPricesService, IHttpContextAccessor contextAccessor, IMapper mapper) : base(domainUserClient, contextAccessor)
+        public PricingController(IDomainUserClient domainUserClient, IQueryPricesService queryPricesService, IQueryPriceHistoryService queryPriceHistoryService,
+            IHttpContextAccessor contextAccessor, IMapper mapper) : base(domainUserClient, contextAccessor)
         {
             _queryPricesService = queryPricesService;
+            _queryPriceHistoryService = queryPriceHistoryService;
 
             _mapper = mapper;
         }
@@ -73,7 +78,7 @@ namespace Mshrm.Studio.Api.Controllers
             [FromQuery] string baseAssetGuidId, [FromQuery] string orderProperty = "createdDate", [FromQuery] Order order = Order.Descending, [FromQuery] uint pageNumber = 1,
              [FromQuery] uint perPage = 30)
         {
-            var priceHistory = _queryPriceHistoryService.GetPagedPriceHistoryAsync(assetGuidId, baseAssetGuidId, pricingProviderType, orderProperty, order, pageNumber, perPage, Request.HttpContext.RequestAborted);
+            var priceHistory = await _queryPriceHistoryService.GetPagedPriceHistoryAsync(assetGuidId, baseAssetGuidId, pricingProviderType, orderProperty, order, pageNumber, perPage, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<PageResultDto<PriceHistoryResponseDto>>(priceHistory));
         }
