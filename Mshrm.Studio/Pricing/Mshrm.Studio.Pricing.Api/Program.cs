@@ -106,8 +106,6 @@ app.UseRouting();
 
 app.UseHangfireDashboard();
 
-app.ConfigureHangfireCronJobs();
-
 //app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

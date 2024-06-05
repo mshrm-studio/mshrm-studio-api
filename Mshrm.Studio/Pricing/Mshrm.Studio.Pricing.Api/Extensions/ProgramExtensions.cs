@@ -59,6 +59,7 @@ using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Queries;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.Assets;
 using Mshrm.Studio.Pricing.Domain.Assets;
+using Mshrm.Studio.Pricing.Application.Services.Background;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -421,11 +422,10 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
         /// <returns>The api builder</returns>
         public static WebApplicationBuilder ConfigureHostedServices(this WebApplicationBuilder builder)
         {
-            // Hosted services
-            if (builder.Configuration.GetValue<bool>("HostedServiceOptions:Enabled"))
-            {
-                //builder.Services.AddHostedService<MonthlyRewardInstructionIssuerHostedService>();
-            }
+            builder.Services.AddHostedService<MobulaCronJob>();
+            builder.Services.AddHostedService<FreeCurrencyCronJob>();
+            builder.Services.AddHostedService<PolygonIOCronJob>();
+            builder.Services.AddHostedService<MetalsDevCronJob>();
 
             return builder;
         }
@@ -618,7 +618,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
                 x.CustomizeProblemDetails = ctx =>
                 {
                     var logger = ctx.HttpContext.RequestServices.GetService<ILogger<Program>>();
-     
+
                     var exception = ctx.HttpContext.Features.Get<IExceptionHandlerPathFeature>()?.Error;
                     if (exception != null && exception is HttpActionValidationException)
                     {
