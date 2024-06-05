@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Amazon.Runtime.Internal.Util;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Exceptions;
 using Mshrm.Studio.Shared.Exceptions.HttpAction;
@@ -21,6 +23,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         private readonly IResourceRepository _resourceRepository;
         private readonly ISpacesService _spacesService;
         private readonly ITracer _tracer;
+        private readonly ILogger<SaveTemporaryFilesCommandHandler> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SaveTemporaryFileCommandHandler"/> class.
@@ -28,12 +31,14 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         /// <param name="resourceRepository"></param>
         /// <param name="spacesService"></param>
         /// <param name="tracer"></param>
-        public SaveTemporaryFilesCommandHandler(IResourceRepository resourceRepository, ISpacesService spacesService, ITracer tracer)
+        public SaveTemporaryFilesCommandHandler(IResourceRepository resourceRepository, ISpacesService spacesService, ITracer tracer,
+            ILogger<SaveTemporaryFilesCommandHandler> logger)
         {
             _resourceRepository = resourceRepository;
             _spacesService = spacesService;
 
             _tracer = tracer;
+            _logger = logger;
         }
 
         /// <summary>
@@ -46,8 +51,23 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
         {
             using (var scope = _tracer.BuildSpan("SaveTemporaryFilesAsync_CreateResourcesService").StartActive(true))
             {
-                var allFilesAdded = new List<MshrmStudioFile>();
+                // Validate all exist first
+                foreach (var fileCommand in command.SaveTemporaryFilesCommands)
+                {
+                    try
+                    {
+                        var file = await _spacesService.GetFileAsync(fileCommand.Key, fileCommand.DirectoryType.ToString().ToLower());
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex.StackTrace);
 
+                        throw new NotFoundException("Temporary file not found", FailureCode.TemporaryFileNotFound);
+                    }
+                }
+
+                // Add all files
+                var allFilesAdded = new List<MshrmStudioFile>();
                 foreach (var fileCommand in command.SaveTemporaryFilesCommands)
                 {
                     // Move from temp to perm
@@ -62,7 +82,7 @@ namespace Mshrm.Studio.Storage.Api.Handlers.Api
                     var metaData = file.GetFileMetaData();
 
                     allFilesAdded.Add(file);
-                }          
+                }
 
                 // Create resource
                 return await _resourceRepository.CreateResourcesAsync(allFilesAdded, true, cancellationToken);
