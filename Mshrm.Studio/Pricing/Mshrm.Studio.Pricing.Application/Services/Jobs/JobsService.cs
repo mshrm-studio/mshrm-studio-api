@@ -45,13 +45,17 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
         {
             try
             {
+                _logger.LogInformation($"Running import for {type.ToString()} at {DateTime.UtcNow}");
+
+                // TODO: Use mediatr here (getting prices from resolver)
                 // Get provider
                 var provider = _assetPriceServiceResolver(type);
 
                 // Get assets that use the prices
-                var providerCurrencies = await _mediator.Send<List<Asset>>(new GetAssetsQuery() { PricingProviderType = type });
-                var providerCurrencySymbols = providerCurrencies.Select(y => y.Symbol).ToList();
+                var providerAssets = await _mediator.Send<List<Asset>>(new GetAssetsQuery() { PricingProviderType = type });
+                var providerCurrencySymbols = providerAssets.Select(y => y.Symbol).ToList();
 
+                // TODO: Use mediatr here (getting prices from resolver)
                 // Get prices
                 var prices = await provider.GetPricesAsync(providerCurrencySymbols);
 
@@ -61,6 +65,8 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
                     Prices = prices,
                     PricingProviderType = type
                 }, CancellationToken.None);
+
+                _logger.LogInformation($"Finishing import for {type.ToString()} at {DateTime.UtcNow}");
             }
             catch (Exception ex)
             {
