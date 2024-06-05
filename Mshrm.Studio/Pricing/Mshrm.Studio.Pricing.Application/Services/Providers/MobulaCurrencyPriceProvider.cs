@@ -26,11 +26,11 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         /// Get all assets
         /// </summary>
         /// <returns>Assets</returns>
-        public async Task<List<PricingCurrency>> GetAssetsAsync()
+        public async Task<List<ProviderAsset>> GetAssetsAsync()
         {
             var currencies = await _mobulaService.GetCurrenciesAsync(null);
 
-            return currencies.Currencies.Select(x => new PricingCurrency() 
+            return currencies.Currencies.Select(x => new ProviderAsset() 
             { 
                 Symbol = x.Symbol?.ToUpper()?.Trim(), 
                 MoneySign = x.Symbol?.ToUpper()?.Trim(), 

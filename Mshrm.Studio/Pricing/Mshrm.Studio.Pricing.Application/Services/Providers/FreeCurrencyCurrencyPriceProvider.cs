@@ -47,12 +47,12 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         /// Get all assets
         /// </summary>
         /// <returns>Assets</returns>
-        public async Task<List<PricingCurrency>> GetAssetsAsync()
+        public async Task<List<ProviderAsset>> GetAssetsAsync()
         {
             // Get raw currencies
             var currencies = await _freeCurrencyService.GetCurrenciesAsync();
 
-            return currencies.Select(x => new PricingCurrency()
+            return currencies.Select(x => new ProviderAsset()
             {
                 MoneySign = x.MoneySign,
                 Name = x.Name,

@@ -12,6 +12,7 @@ using Mshrm.Studio.Pricing.Api.Models.Dtos.Asset;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
 using Mshrm.Studio.Pricing.Api.Services.Providers;
+using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
@@ -86,6 +87,22 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
             var updatedAsset = await _mediator.Send<Asset>(command, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<AssetDto>(updatedAsset));
+        }
+
+        /// <summary>
+        /// Get all symbols for a provider
+        /// </summary>
+        /// <param name="providerType">The pricing provider</param>
+        /// <returns>The supported symbols for a pricing provider</returns>
+        [HttpPatch]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Route("provider/{providerType}")]
+        public async Task<ActionResult<List<string>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
+        {
+            var symbols = await _mediator.Send<List<string>>(new GetProviderAssetsQuery() { ProviderType = providerType }, Request.HttpContext.RequestAborted);
+
+            return Ok(symbols);
         }
 
         /// <summary>

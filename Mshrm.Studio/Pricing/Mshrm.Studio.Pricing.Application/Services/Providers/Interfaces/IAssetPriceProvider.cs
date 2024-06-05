@@ -19,7 +19,7 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers.Interfaces
         /// Get all assets
         /// </summary>
         /// <returns>Assets</returns>
-        public Task<List<PricingCurrency>> GetAssetsAsync();
+        public Task<List<ProviderAsset>> GetAssetsAsync();
 
         /// <summary>
         /// Check if the provider supports the asset

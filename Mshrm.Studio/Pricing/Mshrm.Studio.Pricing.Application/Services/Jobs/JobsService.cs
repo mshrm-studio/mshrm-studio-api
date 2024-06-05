@@ -10,6 +10,7 @@ using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Api.Services.Jobs.Interfaces;
 using Mshrm.Studio.Pricing.Api.Services.Providers;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
+using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Shared.Models.Pagination;
 using Newtonsoft.Json;
 using System.Text;
@@ -18,20 +19,16 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
 {
     public class JobsService : IJobsService
     {
-        private readonly AssetPriceServiceResolver _assetPriceServiceResolver;
         private readonly IDistributedCache _distributedCache;
         private readonly IMediator _mediator;
 
         private readonly ILogger<JobsService> _logger;
 
-        public JobsService(IMediator mediator, AssetPriceServiceResolver assetPriceServiceResolver, IDistributedCache distributedCache,
+        public JobsService(IMediator mediator, IDistributedCache distributedCache,
             ILogger<JobsService> logger)
         {
             _mediator = mediator;
-
-            _assetPriceServiceResolver = assetPriceServiceResolver;
             _distributedCache = distributedCache;
-
             _logger = logger;
         }
 
@@ -48,19 +45,13 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
             {
                 _logger.LogInformation($"Running import for {type.ToString()} at {DateTime.UtcNow}");
 
-                // TODO: Use mediatr here (getting prices from resolver)
-                // Get provider
-                var provider = _assetPriceServiceResolver(type);
-
                 // Get assets that use the prices
                 var providerAssets = await _mediator.Send<PagedResult<Asset>>(new GetPagedAssetsQuery() { PricingProviderType = type, PageNumber=0, PerPage=999999, OrderProperty="CreatedDate", Order = Shared.Enums.Order.Descending });
                 var providerCurrencySymbols = providerAssets.Results.Select(y => y.Symbol).ToList();
 
                 _logger.LogInformation($"Getting prices for {string.Join(',', providerCurrencySymbols)} at {DateTime.UtcNow}");
 
-                // TODO: Use mediatr here (getting prices from resolver)
-                // Get prices
-                var prices = await provider.GetPricesAsync(providerCurrencySymbols);
+                var prices = await _mediator.Send<List<PricePair>>(new GetProviderPricesQuery() { ProviderCurrencySymbols = providerCurrencySymbols, ProviderType = type });
 
                 // Add to database
                 await _mediator.Send<List<ExchangePricingPair>>(new CreateOrReplacePricingPairsCommand()

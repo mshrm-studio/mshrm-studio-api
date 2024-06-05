@@ -25,11 +25,11 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         /// Get all assets
         /// </summary>
         /// <returns>Assets</returns>
-        public async Task<List<PricingCurrency>> GetAssetsAsync()
+        public async Task<List<ProviderAsset>> GetAssetsAsync()
         {
             var assets = await _metalsDevService.GetAssestAsync();
 
-            return assets.Select(x => new PricingCurrency()
+            return assets.Select(x => new ProviderAsset()
             {
                 Symbol = x.Symbol?.ToUpper()?.Trim(),
                 MoneySign = x.Symbol?.ToUpper()?.Trim(),

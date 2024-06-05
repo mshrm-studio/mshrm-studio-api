@@ -49,16 +49,16 @@ namespace Mshrm.Studio.Pricing.Api.Services.Providers
         /// Get all assets
         /// </summary>
         /// <returns>Assets</returns>
-        public async Task<List<PricingCurrency>> GetAssetsAsync()
+        public async Task<List<ProviderAsset>> GetAssetsAsync()
         {
             var currencies = await _polygonIOService.GetCurrenciesAsync(null);
 
-            return currencies?.Currencies.Select(x => new PricingCurrency()
+            return currencies?.Currencies.Select(x => new ProviderAsset()
             {
                 MoneySign = x.Ticker,
                 Name = x.Name,
                 Symbol = x.Ticker
-            }).ToList() ?? new List<PricingCurrency>();
+            }).ToList() ?? new List<ProviderAsset>();
         }
 
         /// <summary>
