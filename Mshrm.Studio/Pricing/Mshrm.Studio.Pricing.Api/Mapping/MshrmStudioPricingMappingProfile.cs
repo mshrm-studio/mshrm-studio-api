@@ -59,6 +59,9 @@ namespace Mshrm.Studio.Pricing.Api.Mapping
                 .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName))
                 .ReverseMap();
 
+            CreateMap<ExchangePricingPairHistory, PriceHistoryDto>()
+                .ReverseMap();
+
             CreateMap<ExchangePricingPair, PriceDto>().ReverseMap();
 
             CreateMap<ExchangePricePairUpdatedEvent, CreateExchangePricingPairHistoryCommand>()
