@@ -2045,6 +2045,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private AssetDto _baseAsset = new AssetDto();
         private AssetDto _asset = new AssetDto();
         private System.DateTime _createdDate;
+        private System.DateTime? _updatedDate;
 
         [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.Always)]
         public decimal Price
@@ -2134,6 +2135,21 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                 if (_createdDate != value)
                 {
                     _createdDate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("updatedDate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime? UpdatedDate
+        {
+            get { return _updatedDate; }
+
+            set
+            {
+                if (_updatedDate != value)
+                {
+                    _updatedDate = value;
                     RaisePropertyChanged();
                 }
             }

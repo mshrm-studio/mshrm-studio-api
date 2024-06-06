@@ -22,5 +22,8 @@ namespace Mshrm.Studio.Pricing.Api.Models.Dtos.Prices
 
         [JsonProperty("createdDate")]
         public DateTime CreatedDate { get; set; }
+
+        [JsonProperty("updatedDate")]
+        public DateTime? UpdatedDate { get; set; }
     }
 }
