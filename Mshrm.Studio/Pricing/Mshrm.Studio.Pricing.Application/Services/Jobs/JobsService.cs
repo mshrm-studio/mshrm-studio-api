@@ -19,16 +19,12 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
 {
     public class JobsService : IJobsService
     {
-        private readonly IDistributedCache _distributedCache;
         private readonly IMediator _mediator;
-
         private readonly ILogger<JobsService> _logger;
 
-        public JobsService(IMediator mediator, IDistributedCache distributedCache,
-            ILogger<JobsService> logger)
+        public JobsService(IMediator mediator, ILogger<JobsService> logger)
         {
             _mediator = mediator;
-            _distributedCache = distributedCache;
             _logger = logger;
         }
 

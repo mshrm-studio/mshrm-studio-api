@@ -30,21 +30,18 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
     {
         private readonly ILogger<PricesController> _logger;
         private readonly IMediator _mediator;
-        private readonly IDistributedCache _cache;
         private readonly IMapper _mapper;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PricesController"/> class.
         /// </summary>
         /// <param name="mediator"></param>
-        /// <param name="cache"></param>
         /// <param name="logger"></param>
         /// <param name="mapper"></param>
-        public PricesController(IMediator mediator, IDistributedCache cache, ILogger<PricesController> logger, IMapper mapper)
+        public PricesController(IMediator mediator, ILogger<PricesController> logger, IMapper mapper)
         {
             _mediator = mediator;
 
-            _cache = cache;
             _logger = logger;
             _mapper = mapper;
         }

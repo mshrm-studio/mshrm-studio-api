@@ -6,6 +6,7 @@ using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Application.Services.Http.HttpService;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
 using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
+using Mshrm.Studio.Shared.Services.Interfaces;
 using OpenTracing;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
     public class GetProviderAssetsQuerysHandler : IRequestHandler<GetProviderAssetsQuery, List<string>>
     {
         private readonly AssetPriceServiceResolver _assetPriceServiceResolver;
+        private readonly ICacheService _cacheService;
         private readonly ITracer _tracer;
 
         /// <summary>
@@ -25,10 +27,10 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
         /// </summary>
         /// <param name="exchangePricingPairRepository"></param>
         /// <param name="assetRepository"></param>
-        public GetProviderAssetsQuerysHandler(AssetPriceServiceResolver assetPriceServiceResolver, ITracer tracer)
+        public GetProviderAssetsQuerysHandler(AssetPriceServiceResolver assetPriceServiceResolver, ICacheService cacheService, ITracer tracer)
         {
             _assetPriceServiceResolver = assetPriceServiceResolver;
-
+            _cacheService = cacheService;
             _tracer = tracer;
         }
 
@@ -45,8 +47,13 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
                 // Get provider
                 var provider = _assetPriceServiceResolver(query.ProviderType);
 
-                // Get assset
-                var assets = await provider.GetAssetsAsync();
+                // Get assets
+                var assets = await _cacheService.GetOrSetItemAsync<List<ProviderAsset>>(
+                    $"Provider_{query.ProviderType}_assets", 
+                    async () => await provider.GetAssetsAsync(),
+                    cancellationToken,
+                    44640
+                );
 
                 // Return symbols
                 return assets.Select(x => x.Symbol).ToList();

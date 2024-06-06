@@ -44,10 +44,10 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
             using (var scope = _tracer.BuildSpan("GetLocalizationResourcesAsync_QueryLocalizationService").StartActive(true))
             {
                 var resources = await _cacheService.GetOrSetItemAsync<List<LocalizationResource>>(
-                $"{MshrmStudioLocalizationConstants.LocalizationResourcesKey}_{query.Area}_{query.Culture}_{query.Name}",
-                async () => await _localizationRepository.GetLocalizationResourcesReadOnlyAsync(query.Area, query.Culture, query.Name, cancellationToken),
-                cancellationToken,
-                20
+                    $"{MshrmStudioLocalizationConstants.LocalizationResourcesKey}_{query.Area}_{query.Culture}_{query.Name}",
+                    async () => await _localizationRepository.GetLocalizationResourcesReadOnlyAsync(query.Area, query.Culture, query.Name, cancellationToken),
+                    cancellationToken,
+                    20
                 );
 
                 return resources;
