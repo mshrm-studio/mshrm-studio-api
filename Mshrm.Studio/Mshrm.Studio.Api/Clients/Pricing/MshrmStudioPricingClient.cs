@@ -93,7 +93,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get all symbols for a provider
+        /// Get all symbols supported by a provider (list of symbols)
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
         /// <returns>The supported symbols for a pricing provider</returns>
@@ -102,7 +102,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get all symbols for a provider
+        /// Get all symbols supported by a provider (list of symbols)
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
         /// <returns>The supported symbols for a pricing provider</returns>
@@ -535,7 +535,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         }
 
         /// <summary>
-        /// Get all symbols for a provider
+        /// Get all symbols supported by a provider (list of symbols)
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
         /// <returns>The supported symbols for a pricing provider</returns>
@@ -547,7 +547,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get all symbols for a provider
+        /// Get all symbols supported by a provider (list of symbols)
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
         /// <returns>The supported symbols for a pricing provider</returns>
@@ -563,8 +563,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
-                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
 
                     var urlBuilder_ = new System.Text.StringBuilder();
