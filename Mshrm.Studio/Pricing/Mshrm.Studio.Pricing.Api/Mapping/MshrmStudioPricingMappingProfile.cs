@@ -6,6 +6,8 @@ using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Events;
 using Mshrm.Studio.Pricing.Application.Dtos.Prices;
+using Mshrm.Studio.Pricing.Application.Dtos.Providers;
+using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
 
@@ -40,6 +42,7 @@ namespace Mshrm.Studio.Pricing.Api.Mapping
                 .ReverseMap();
             CreateMap<UpdateSupportedAssetDto, UpdateSupportedAssetCommand>().ReverseMap();
             CreateMap<CreateSupportedAssetDto, CreateSupportedAssetCommand>().ReverseMap();
+            CreateMap<ProviderAsset, ProviderAssetDto>().ReverseMap();
 
             #endregion
 

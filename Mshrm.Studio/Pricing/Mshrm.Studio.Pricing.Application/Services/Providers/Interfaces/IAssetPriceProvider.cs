@@ -1,7 +1,7 @@
 ﻿using Mshrm.Studio.Pricing.Api.Models.Cache;
 using Mshrm.Studio.Pricing.Api.Models.HttpService.Mobula;
 using Mshrm.Studio.Pricing.Api.Models.Provider;
-using Mshrm.Studio.Pricing.Application.Services.Http.HttpService;
+using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 
 namespace Mshrm.Studio.Pricing.Api.Services.Providers.Interfaces
 {

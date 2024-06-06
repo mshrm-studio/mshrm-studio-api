@@ -6,7 +6,7 @@ using Mshrm.Studio.Pricing.Api.Models.Provider;
 using Mshrm.Studio.Pricing.Api.Services.Http.Bases;
 using Mshrm.Studio.Pricing.Api.Services.Http.Interfaces;
 using Mshrm.Studio.Pricing.Api.Services.Providers.Interfaces;
-using Mshrm.Studio.Pricing.Application.Services.Http.HttpService;
+using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 using Mshrm.Studio.Shared.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

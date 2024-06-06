@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries
+namespace Mshrm.Studio.Pricing.Domain.ProviderAssets.Queries
 {
-    public class GetProviderAssetsQuery : IRequest<List<string>>
+    public class GetProviderAssetsQuery : IRequest<List<ProviderAsset>>
     {
         public PricingProviderType ProviderType { get; set; }
     }

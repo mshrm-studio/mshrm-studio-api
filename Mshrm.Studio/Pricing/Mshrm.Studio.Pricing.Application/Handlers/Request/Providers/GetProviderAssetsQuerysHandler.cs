@@ -3,9 +3,9 @@ using Mshrm.Studio.Pricing.Api.Models.Cache;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
-using Mshrm.Studio.Pricing.Application.Services.Http.HttpService;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
+using Mshrm.Studio.Pricing.Domain.ProviderAssets;
+using Mshrm.Studio.Pricing.Domain.ProviderAssets.Queries;
 using Mshrm.Studio.Shared.Services.Interfaces;
 using OpenTracing;
 using System;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
 {
-    public class GetProviderAssetsQuerysHandler : IRequestHandler<GetProviderAssetsQuery, List<string>>
+    public class GetProviderAssetsQuerysHandler : IRequestHandler<GetProviderAssetsQuery, List<ProviderAsset>>
     {
         private readonly AssetPriceServiceResolver _assetPriceServiceResolver;
         private readonly ICacheService _cacheService;
@@ -40,7 +40,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
         /// <param name="query">The query</param>
         /// <param name="cancellationToken">The stopping token</param>
         /// <returns>Latest prices</returns>
-        public async Task<List<string>> Handle(GetProviderAssetsQuery query, CancellationToken cancellationToken)
+        public async Task<List<ProviderAsset>> Handle(GetProviderAssetsQuery query, CancellationToken cancellationToken)
         {
             using (var scope = _tracer.BuildSpan("GetProviderAssetsAsync_GetProviderAssetsQuerysHandler").StartActive(true))
             {
@@ -56,7 +56,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
                 );
 
                 // Return symbols
-                return assets.Select(x => x.Symbol).ToList();
+                return assets;
             }
         }
     }
