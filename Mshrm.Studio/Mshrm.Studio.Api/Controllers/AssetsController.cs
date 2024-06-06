@@ -30,6 +30,7 @@ namespace Mshrm.Studio.Api.Controllers
         private readonly ICreateAssetService _createAssetService;
         private readonly IUpdateAssetsService _updateAssetService;
         private readonly IQueryAssetService _queryAssetService;
+        private readonly IQueryProviderAssetsService _queryProviderAssetsService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetsController"/> class.
@@ -40,11 +41,14 @@ namespace Mshrm.Studio.Api.Controllers
         /// <param name="contextAccessor"></param>
         /// <param name="mapper"></param>
         public AssetsController(IDomainUserClient domainUserClient, ICreateAssetService createAssetService, IUpdateAssetsService updateAssetService,
-            IQueryAssetService queryAssetService, IHttpContextAccessor contextAccessor, IMapper mapper) : base(domainUserClient, contextAccessor)
+            IQueryAssetService queryAssetService, IQueryProviderAssetsService queryProviderAssetsService, IHttpContextAccessor contextAccessor, 
+            IMapper mapper) : base(domainUserClient, contextAccessor)
         {
             _createAssetService = createAssetService;
             _updateAssetService = updateAssetService;
             _queryAssetService = queryAssetService;
+
+            _queryProviderAssetsService = queryProviderAssetsService;
 
             _mapper = mapper;
         }
@@ -75,7 +79,7 @@ namespace Mshrm.Studio.Api.Controllers
         /// <returns>The updated asset</returns>
         [HttpPatch]
         [ProducesResponseType(typeof(AssetResponseDto), StatusCodes.Status200OK)]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("{assetId}")]
         public async Task<ActionResult<AssetResponseDto>> UpdateAssetAsync([FromRoute] Guid assetId, [FromBody] UpdateAssetDto model)
         {
@@ -125,6 +129,22 @@ namespace Mshrm.Studio.Api.Controllers
             var asset = await _queryAssetService.GetAssetByGuidAsync(guid, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<AssetResponseDto>(asset));
+        }
+
+        /// <summary>
+        /// Get all symbols supported by a provider (list of symbols)
+        /// </summary>
+        /// <param name="providerType">The pricing provider</param>
+        /// <returns>The supported symbols for a pricing provider</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Route("provider/{providerType}")]
+        public async Task<ActionResult<List<string>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
+        {
+            var symbols = await _queryProviderAssetsService.GetProvidersAssetSymbolsAsync(providerType);
+
+            return Ok(symbols);
         }
     }
 }

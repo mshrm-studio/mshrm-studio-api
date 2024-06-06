@@ -90,11 +90,11 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         }
 
         /// <summary>
-        /// Get all symbols for a provider
+        /// Get all symbols supported by a provider (list of symbols)
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
         /// <returns>The supported symbols for a pricing provider</returns>
-        [HttpPatch]
+        [HttpGet]
         [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("provider/{providerType}")]
