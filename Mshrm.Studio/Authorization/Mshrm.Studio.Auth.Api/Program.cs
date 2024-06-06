@@ -47,7 +47,7 @@ builder.Services.AddSwaggerDocument(settings =>
     settings.PostProcess = document =>
     {
         document.Info.Version = "v1";
-        document.Info.Title = "Mshrm.Studio Login API";
+        document.Info.Title = "Mshrm.Studio Auth API";
         document.Info.Description = "REST API";
     };
 });
