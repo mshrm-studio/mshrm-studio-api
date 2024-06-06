@@ -231,6 +231,7 @@
             builder.Services.AddTransient<IQueryAssetService, QueryAssetService>();
             builder.Services.AddTransient<IQueryPricesService, QueryPricesService>();
             builder.Services.AddTransient<IQueryPriceHistoryService, QueryPriceHistoryService>();
+            builder.Services.AddTransient<IQueryProviderAssetsService, QueryProviderAssetsService>();
 
             // Setup the Http services
             builder.Services.AddTransient<IDomainUserClient, DomainUserClient>(s =>
