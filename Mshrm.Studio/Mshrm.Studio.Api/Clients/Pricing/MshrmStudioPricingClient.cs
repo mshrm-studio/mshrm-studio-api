@@ -93,21 +93,21 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         System.Threading.Tasks.Task<AssetDto> UpdateSupportedAssetAsync(System.Guid assetId, UpdateSupportedAssetDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all symbols supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <returns>The supported assets for a pricing provider</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ProviderAssetDto>> GetProvidersAssetsAsync(PricingProviderType providerType);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all symbols supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <returns>The supported assets for a pricing provider</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ProviderAssetDto>> GetProvidersAssetsAsync(PricingProviderType providerType, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -535,24 +535,24 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         }
 
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all symbols supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <returns>The supported assets for a pricing provider</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ProviderAssetDto>> GetProvidersAssetsAsync(PricingProviderType providerType)
         {
-            return GetProvidersAssetSymbolsAsync(providerType, System.Threading.CancellationToken.None);
+            return GetProvidersAssetsAsync(providerType, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all symbols supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <returns>The supported assets for a pricing provider</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<ProviderAssetDto>> GetProvidersAssetsAsync(PricingProviderType providerType, System.Threading.CancellationToken cancellationToken)
         {
             if (providerType == null)
                 throw new System.ArgumentNullException("providerType");
@@ -597,7 +597,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<string>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<ProviderAssetDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1825,6 +1825,67 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateSupportedAssetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ProviderAssetDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _symbol;
+        private string _name;
+
+        [Newtonsoft.Json.JsonProperty("symbol", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Symbol
+        {
+            get { return _symbol; }
+
+            set
+            {
+                if (_symbol != value)
+                {
+                    _symbol = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Name
+        {
+            get { return _name; }
+
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static ProviderAssetDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ProviderAssetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

@@ -17,13 +17,13 @@ namespace Mshrm.Studio.Api.Services.Api
         }
 
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all assets supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
-        public async Task<List<string>> GetProvidersAssetSymbolsAsync(PricingProviderType providerType)
+        /// <returns>The supported assets for a pricing provider</returns>
+        public async Task<List<ProviderAssetDto>> GetProvidersAssetsAsync(PricingProviderType providerType)
         {
-            return (await _assetsClient.GetProvidersAssetSymbolsAsync(providerType))?.ToList();
+            return (await _assetsClient.GetProvidersAssetsAsync(providerType))?.ToList();
         }
     }
 }

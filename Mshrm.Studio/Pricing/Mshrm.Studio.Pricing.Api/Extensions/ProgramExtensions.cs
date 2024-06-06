@@ -66,6 +66,8 @@ using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.Providers;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets.Queries;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets;
+using Mshrm.Studio.Shared.Services.Interfaces;
+using Mshrm.Studio.Shared.Services;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -262,6 +264,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             builder.Services.AddTransient<MobulaCurrencyPriceProvider>();
             builder.Services.AddTransient<PolygonIOCurrencyPriceProvider>();
             builder.Services.AddTransient<MetalsDevCurrencyPriceProvider>();
+
+            //TODO: remove the delegate definition and move to resolver class
             builder.Services.AddTransient<AssetPriceServiceResolver>(serviceProvider => pricingProviderType =>
             {
                 switch (pricingProviderType)
@@ -319,6 +323,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             // Setup event handlers
             builder.Services.AddScoped<INotificationHandler<ExchangePricePairCreatedEvent>, ExchangePricePairCreatedEventHandler>();
             builder.Services.AddScoped<INotificationHandler<ExchangePricePairUpdatedEvent>, ExchangePricePairUpdatedEventHandler>();
+
+            builder.Services.AddSingleton<ICacheService, CacheService>();
 
             // Misc
             builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();

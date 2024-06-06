@@ -93,19 +93,19 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         }
 
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all symbols supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <returns>The supported assets for a pricing provider</returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<ProviderAssetDto>), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("provider/{providerType}")]
-        public async Task<ActionResult<List<string>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
+        public async Task<ActionResult<List<ProviderAssetDto>>> GetProvidersAssetsAsync([FromRoute] PricingProviderType providerType)
         {
-            var symbols = await _mediator.Send<List<ProviderAsset>>(new GetProviderAssetsQuery() { ProviderType = providerType }, Request.HttpContext.RequestAborted);
+            var providersAssets = await _mediator.Send<List<ProviderAsset>>(new GetProviderAssetsQuery() { ProviderType = providerType }, Request.HttpContext.RequestAborted);
 
-            return Ok(_mapper.Map<ProviderAssetDto>(symbols));
+            return Ok(_mapper.Map<List<ProviderAssetDto>>(providersAssets));
         }
 
         /// <summary>

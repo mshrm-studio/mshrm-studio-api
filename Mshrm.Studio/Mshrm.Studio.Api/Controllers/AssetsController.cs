@@ -132,19 +132,19 @@ namespace Mshrm.Studio.Api.Controllers
         }
 
         /// <summary>
-        /// Get all symbols supported by a provider (list of symbols)
+        /// Get all assets supported by a provider
         /// </summary>
         /// <param name="providerType">The pricing provider</param>
-        /// <returns>The supported symbols for a pricing provider</returns>
+        /// <returns>The supported assets for a pricing provider</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ProviderAssetDto>), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("provider/{providerType}")]
-        public async Task<ActionResult<List<string>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
+        public async Task<ActionResult<List<ProviderAssetDto>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
         {
-            var symbols = await _queryProviderAssetsService.GetProvidersAssetSymbolsAsync(providerType);
+            var assets = await _queryProviderAssetsService.GetProvidersAssetsAsync(providerType);
 
-            return Ok(symbols);
+            return Ok(assets);
         }
     }
 }
