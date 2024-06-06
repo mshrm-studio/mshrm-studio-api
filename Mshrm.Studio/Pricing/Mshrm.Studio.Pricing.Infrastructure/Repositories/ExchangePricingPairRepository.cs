@@ -60,7 +60,7 @@ namespace Mshrm.Studio.Pricing.Api.Repositories
         /// <returns>The added pairs</returns>
         public async Task<List<ExchangePricingPair>> CreateExchangePricingPairsAsync(List<ExchangePricingPair> allPairsToAdd, CancellationToken cancellationToken)
         {
-            AddRange(allPairsToAdd);
+            _context.ExchangePricingPairs.AddRange(allPairsToAdd);
             await SaveAsync(cancellationToken);
 
             return allPairsToAdd;

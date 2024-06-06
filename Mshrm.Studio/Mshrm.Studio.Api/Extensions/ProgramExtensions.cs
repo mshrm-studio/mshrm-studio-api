@@ -504,134 +504,162 @@
                     if (exception != null && exception is HttpActionValidationException)
                     {
                         var httpActionValidationException = exception as HttpActionValidationException;
-                   
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Api";
-                        ctx.ProblemDetails.Title = httpActionValidationException.StatusCode.ToString();
-                        ctx.ProblemDetails.Status = (int)httpActionValidationException.StatusCode;
-                        ctx.ProblemDetails.Detail = strLocalizer[httpActionValidationException.FailureCode.ToString()]; // httpActionValidationException.FailedReason;
-                        ctx.HttpContext.Response.StatusCode = (int)httpActionValidationException.StatusCode;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", httpActionValidationException.FailureCode);
 
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", httpActionValidationException.StackTrace);
+                        if (httpActionValidationException != null)
+                        {
+                            CreateHttpValidationProblemDetails(httpActionValidationException, ctx, strLocalizer);
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null && exception is LoginApiException)
                     {
                         var loginApiException = exception as LoginApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(loginApiException.Response);
-                   
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Auth.Api";
-                        ctx.ProblemDetails.Title = propegatedProblemDetail.Title;
-                        ctx.ProblemDetails.Status = propegatedProblemDetail.Status;
-                        ctx.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
-                        ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
+                        if (propegatedProblemDetail != null)
+                        {
+                            CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Auth.Api");
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null && exception is DomainApiException)
                     {
                         var domainApiException = exception as DomainApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(domainApiException.Response);
-      
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Domain.Api";
-                        ctx.ProblemDetails.Title = propegatedProblemDetail.Title;
-                        ctx.ProblemDetails.Status = propegatedProblemDetail.Status;
-                        ctx.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
-                        ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        //}
+                        if (propegatedProblemDetail != null)
+                        {
+                            CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Domain.Api");
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null && exception is EmailApiException)
                     {
                         var emailApiException = exception as EmailApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(emailApiException.Response);
-   
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Email.Api";
-                        ctx.ProblemDetails.Title = propegatedProblemDetail.Title;
-                        ctx.ProblemDetails.Status = propegatedProblemDetail.Status;
-                        ctx.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
-                        ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
 
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        //}
+                        if (propegatedProblemDetail != null)
+                        {
+                            CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Email.Api");
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null && exception is PricingApiException)
                     {
                         var pricingApiException = exception as PricingApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(pricingApiException.Response);
 
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Pricing.Api";
-                        ctx.ProblemDetails.Title = propegatedProblemDetail.Title;
-                        ctx.ProblemDetails.Status = propegatedProblemDetail.Status;
-                        ctx.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
-                        ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
-
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        //}
+                        if (propegatedProblemDetail != null)
+                        {
+                            CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Pricing.Api");
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null && exception is StorageApiException)
                     {
                         var storageApiException = exception as StorageApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(storageApiException.Response);
     
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Storage.Api";
-                        ctx.ProblemDetails.Title = propegatedProblemDetail.Title;
-                        ctx.ProblemDetails.Status = propegatedProblemDetail.Status;
-                        ctx.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
-                        ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
-
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", $"{propegatedProblemDetail.Detail} {propegatedProblemDetail.StackTrace}");
-                        //}
+                         if(propegatedProblemDetail != null)
+                        {
+                            CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Storage.Api");
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null && exception is LocalizationApiException)
                     {
                         var localizationApiException = exception as LocalizationApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(localizationApiException.Response);
 
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Localization.Api";
-                        ctx.ProblemDetails.Title = propegatedProblemDetail.Title;
-                        ctx.ProblemDetails.Status = propegatedProblemDetail.Status;
-                        ctx.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
-                        ctx.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
-
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
-                        //}
+                        if(propegatedProblemDetail != null)
+                        {
+                            CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Localization.Api");
+                        }
+                        else
+                        {
+                            Create500ProblemDetails(exception, ctx, strLocalizer);
+                        }
                     }
                     else if (exception != null)
                     {
-                        ctx.ProblemDetails.Instance = "Mshrm.Studio.Api";
-                        ctx.ProblemDetails.Title = "Internal Server Error";
-                        ctx.ProblemDetails.Detail = exception.Message;
-                        ctx.ProblemDetails.Status = 500;
-                        ctx.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
-
-                        //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
-                        //{
-                            ctx.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
-                        //}
+                        Create500ProblemDetails(exception, ctx, strLocalizer);
                     }
                 };
             });
 
             return builder;
         }
+
+        #region Helpers
+
+        private static ProblemDetailsContext CreateHttpClientProblemDetails(MshrmStudioProblemDetails propegatedProblemDetail, ProblemDetailsContext context, IStringLocalizer strLocalizer, string instance)
+        {
+            context.ProblemDetails.Instance = instance;
+            context.ProblemDetails.Title = propegatedProblemDetail.Title;
+            context.ProblemDetails.Status = propegatedProblemDetail.Status;
+            context.ProblemDetails.Detail = strLocalizer[propegatedProblemDetail.FailureCode.ToString()]; //propegatedProblemDetail.Detail;
+            context.ProblemDetails.Extensions.Add("FailureCode", propegatedProblemDetail.FailureCode);
+            context.HttpContext.Response.StatusCode = propegatedProblemDetail.Status.Value;
+
+            //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+            //{
+            context.ProblemDetails.Extensions.Add("StackTrace", propegatedProblemDetail.StackTrace);
+            //}
+
+            return context;
+        }
+
+        private static ProblemDetailsContext CreateHttpValidationProblemDetails(HttpActionValidationException httpActionValidationException, ProblemDetailsContext context, IStringLocalizer strLocalizer)
+        {
+            context.ProblemDetails.Instance = "Mshrm.Studio.Api";
+            context.ProblemDetails.Title = httpActionValidationException.StatusCode.ToString();
+            context.ProblemDetails.Status = (int)httpActionValidationException.StatusCode;
+            context.ProblemDetails.Detail = strLocalizer[httpActionValidationException.FailureCode.ToString()]; // httpActionValidationException.FailedReason;
+            context.HttpContext.Response.StatusCode = (int)httpActionValidationException.StatusCode;
+            context.ProblemDetails.Extensions.Add("FailureCode", httpActionValidationException.FailureCode);
+
+            //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+            //{
+            context.ProblemDetails.Extensions.Add("StackTrace", httpActionValidationException.StackTrace);
+            //}
+
+            return context;
+        }
+
+        private static ProblemDetailsContext Create500ProblemDetails(Exception exception, ProblemDetailsContext context, IStringLocalizer strLocalizer)
+        {
+            context.ProblemDetails.Instance = "Mshrm.Studio.Api";
+            context.ProblemDetails.Title = "Internal Server Error";
+            context.ProblemDetails.Detail = exception.Message;
+            context.ProblemDetails.Status = 500;
+            context.ProblemDetails.Extensions.Add("FailureCode", FailureCode.SystemError);
+
+            //if (builder.Environment.IsDevelopment() || builder.Environment.IsStaging())
+            //{
+            context.ProblemDetails.Extensions.Add("StackTrace", exception.StackTrace);
+            //}
+
+            return context;
+        }
+
+        #endregion
     }
 }
