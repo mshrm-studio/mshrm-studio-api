@@ -68,6 +68,7 @@ using Mshrm.Studio.Pricing.Domain.ProviderAssets.Queries;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 using Mshrm.Studio.Shared.Services.Interfaces;
 using Mshrm.Studio.Shared.Services;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -198,11 +199,13 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
         /// <returns>The api builder</returns>
         public static WebApplicationBuilder ConfigureCache(this WebApplicationBuilder builder)
         {
-            builder.Services.AddStackExchangeRedisCache(options =>
+            /*builder.Services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = builder.Configuration.GetConnectionString("Redis");
                 options.InstanceName = "PricingCache";
-            });
+            });*/
+
+            builder.Services.AddTransient<IDistributedCache, InMemoryCache>();
 
             return builder;
         }

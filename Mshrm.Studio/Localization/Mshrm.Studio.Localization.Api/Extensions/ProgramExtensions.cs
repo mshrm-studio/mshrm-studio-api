@@ -37,7 +37,6 @@ using Mshrm.Studio.Localization.Domain.LocalizationResources;
 using Mshrm.Studio.Localization.Infrastructure.Factories;
 using Mshrm.Studio.Shared.Enums;
 using Microsoft.Extensions.Caching.Distributed;
-using Mshrm.Studio.Localization.Application.Services;
 
 namespace Mshrm.Studio.Localization.Api.Extensions
 {
@@ -152,7 +151,6 @@ namespace Mshrm.Studio.Localization.Api.Extensions
 
             // Workaround to not use Redis for now
             builder.Services.AddTransient<IDistributedCache, InMemoryCache>();
-
 
             return builder;
         }

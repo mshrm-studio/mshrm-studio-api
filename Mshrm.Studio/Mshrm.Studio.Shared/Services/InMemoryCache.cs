@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mshrm.Studio.Localization.Application.Services
+namespace Mshrm.Studio.Shared.Services
 {
     public class InMemoryCache : IDistributedCache
     {
