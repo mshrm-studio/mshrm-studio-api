@@ -19,5 +19,8 @@ namespace Mshrm.Studio.Api.Models.Dtos.Prices
 
         [JsonProperty("asset")]
         public AssetResponseDto Asset { get; set; }
+
+        [JsonProperty("createdDate")]
+        public DateTime CreatedDate { get; set; }
     }
 }

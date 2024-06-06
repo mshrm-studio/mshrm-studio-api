@@ -206,6 +206,7 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             });*/
 
             builder.Services.AddTransient<IDistributedCache, InMemoryCache>();
+            builder.Services.AddSingleton<ICacheService, CacheService>();
 
             return builder;
         }
@@ -326,8 +327,6 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             // Setup event handlers
             builder.Services.AddScoped<INotificationHandler<ExchangePricePairCreatedEvent>, ExchangePricePairCreatedEventHandler>();
             builder.Services.AddScoped<INotificationHandler<ExchangePricePairUpdatedEvent>, ExchangePricePairUpdatedEventHandler>();
-
-            builder.Services.AddSingleton<ICacheService, CacheService>();
 
             // Misc
             builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();

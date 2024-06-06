@@ -19,7 +19,7 @@ builder.ConfigureControllers();
 builder.ConfigureMVC();
 builder.ConfigureWebServer();
 builder.ConfigureRateLimiting();
-//builder.ConfigureCache();
+builder.ConfigureCache();
 builder.ConfigureHttpClients();
 builder.ConfigureOptions();
 builder.ConfigureServices();

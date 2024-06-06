@@ -151,6 +151,7 @@ namespace Mshrm.Studio.Localization.Api.Extensions
 
             // Workaround to not use Redis for now
             builder.Services.AddTransient<IDistributedCache, InMemoryCache>();
+            builder.Services.AddSingleton<ICacheService, CacheService>();
 
             return builder;
         }
@@ -230,8 +231,6 @@ namespace Mshrm.Studio.Localization.Api.Extensions
 
             // Misc
             builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
-
-            builder.Services.AddSingleton<ICacheService, CacheService>();
 
             return builder;
         }

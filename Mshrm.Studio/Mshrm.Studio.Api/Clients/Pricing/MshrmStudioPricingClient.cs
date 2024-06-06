@@ -2044,6 +2044,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private decimal? _volume;
         private AssetDto _baseAsset = new AssetDto();
         private AssetDto _asset = new AssetDto();
+        private System.DateTime _createdDate;
 
         [Newtonsoft.Json.JsonProperty("price", Required = Newtonsoft.Json.Required.Always)]
         public decimal Price
@@ -2117,6 +2118,22 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                 if (_asset != value)
                 {
                     _asset = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("createdDate", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime CreatedDate
+        {
+            get { return _createdDate; }
+
+            set
+            {
+                if (_createdDate != value)
+                {
+                    _createdDate = value;
                     RaisePropertyChanged();
                 }
             }
@@ -2279,6 +2296,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private decimal _newPrice;
         private decimal? _newMarketCap;
         private decimal? _newVolume;
+        private System.DateTime _createdDate;
 
         [Newtonsoft.Json.JsonProperty("oldPrice", Required = Newtonsoft.Json.Required.Always)]
         public decimal OldPrice
@@ -2365,6 +2383,22 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                 if (_newVolume != value)
                 {
                     _newVolume = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("createdDate", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime CreatedDate
+        {
+            get { return _createdDate; }
+
+            set
+            {
+                if (_createdDate != value)
+                {
+                    _createdDate = value;
                     RaisePropertyChanged();
                 }
             }
