@@ -27,5 +27,8 @@ namespace Mshrm.Studio.Pricing.Application.Dtos.Prices
 
         [JsonProperty("newVolume")]
         public decimal? NewVolume { get; set; }
+
+        [JsonProperty("createdDate")]
+        public DateTime CreatedDate { get; set; }
     }
 }
