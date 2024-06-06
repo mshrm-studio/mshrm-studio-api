@@ -126,28 +126,28 @@
   },
   {
     "Id": 26,
-    "Name": "CurrencyAlreadyExists",
-    "Value": "The currency already exists"
+    "Name": "AssetAlreadyExists",
+    "Value": "The asset already exists"
   },
   {
     "Id": 27,
-    "Name": "CurrencyNotSupported",
-    "Value": "Currency is not supported by the provider"
+    "Name": "AssetNotSupported",
+    "Value": "Asset is not supported by the provider"
   },
   {
     "Id": 28,
-    "Name": "BaseCurrencyNotSupported",
-    "Value": "The base currency symbol provided is not supported"
+    "Name": "BaseAssetNotSupported",
+    "Value": "The base asset symbol provided is not supported"
   },
   {
     "Id": 29,
-    "Name": "BaseCurrencyPriceDoesntExist",
-    "Value": "The base currency symbols price doesn't exist"
+    "Name": "BaseAssetPriceDoesntExist",
+    "Value": "The base asset symbols price doesn't exist"
   },
   {
     "Id": 30,
-    "Name": "CurrencyDoesntExist",
-    "Value": "The currency doesn't exists"
+    "Name": "AssetDoesntExist",
+    "Value": "The asset doesn't exists"
   },
   {
     "Id": 31,
@@ -173,5 +173,20 @@
     "Id": 35,
     "Name": "ResourceIsPrivate",
     "Value": "Cannot view this resource unauthenticated"
+  },
+  {
+    "Id": 36,
+    "Name": "SystemError",
+    "Value": "System error, please contact admin"
+  },
+  {
+    "Id": 37,
+    "Name": "PricingStructureDoesntExist",
+    "Value": "The pricing structure doesn't exist"
+  },
+  {
+    "Id": 38,
+    "Name": "AssetPriceMustBeACurrency",
+    "Value": "The asset price must be a currency"
   }
 ]
