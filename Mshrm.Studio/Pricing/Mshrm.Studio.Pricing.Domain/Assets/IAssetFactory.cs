@@ -20,7 +20,8 @@ namespace Mshrm.Studio.Pricing.Domain.Assets
         /// <param name="symbolNative">The display symbol ie. $ for US dollars</param>
         /// <param name="description">A description</param>
         /// <param name="logoGuidId">A logo</param>
+        /// <param name="decimalPlaces">The number of decimal places to display in</param>
         /// <returns>A new asset</returns>
-        Asset CreateAsset(PricingProviderType providerType, AssetType assetType, string name, string symbol, string symbolNative, string? description, Guid? logoGuidId);
+        Asset CreateAsset(PricingProviderType providerType, AssetType assetType, string name, string symbol, string symbolNative, string? description, Guid? logoGuidId, int decimalPlaces);
     }
 }

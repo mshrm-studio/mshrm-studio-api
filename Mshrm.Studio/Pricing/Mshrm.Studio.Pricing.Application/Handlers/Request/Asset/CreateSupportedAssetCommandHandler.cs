@@ -57,7 +57,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Assets
 
                 // Create
                 return await _assetRepository.CreateAssetAsync(command.Name, command.Description, command.ProviderType, command.AssetType, command.Symbol,
-                    command.SymbolNative, command.LogoGuidId, cancellationToken);
+                    command.SymbolNative, command.LogoGuidId, command.DecimalPlaces, cancellationToken);
             }
         }
     }

@@ -42,5 +42,10 @@ namespace Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands
         /// The asset to update
         /// </summary>
         public Guid AssetId { get; set; }
+
+        /// <summary>
+        /// The number of decimal places displayed
+        /// </summary>
+        public int DecimalPlaces { get; set; }
     }
 }

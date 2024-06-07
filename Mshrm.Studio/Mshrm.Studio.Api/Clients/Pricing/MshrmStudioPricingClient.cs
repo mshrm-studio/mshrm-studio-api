@@ -1201,6 +1201,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private AssetType _assetType;
         private System.DateTime _createdDate;
         private System.Guid? _logoGuidId;
+        private int _decimalPlaces;
 
         [Newtonsoft.Json.JsonProperty("guidId", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -1356,6 +1357,21 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                 if (_logoGuidId != value)
                 {
                     _logoGuidId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("decimalPlaces", Required = Newtonsoft.Json.Required.Always)]
+        public int DecimalPlaces
+        {
+            get { return _decimalPlaces; }
+
+            set
+            {
+                if (_decimalPlaces != value)
+                {
+                    _decimalPlaces = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1566,6 +1582,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private PricingProviderType _providerType;
         private AssetType _assetType;
         private System.Guid? _logoGuidId;
+        private int _decimalPlaces;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -1683,6 +1700,21 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             }
         }
 
+        [Newtonsoft.Json.JsonProperty("decimalPlaces", Required = Newtonsoft.Json.Required.Always)]
+        public int DecimalPlaces
+        {
+            get { return _decimalPlaces; }
+
+            set
+            {
+                if (_decimalPlaces != value)
+                {
+                    _decimalPlaces = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         public string ToJson()
         {
 
@@ -1715,6 +1747,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         private PricingProviderType _providerType;
         private AssetType _assetType;
         private System.Guid? _logoGuidId;
+        private int _decimalPlaces;
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -1810,6 +1843,21 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                 if (_logoGuidId != value)
                 {
                     _logoGuidId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("decimalPlaces", Required = Newtonsoft.Json.Required.Always)]
+        public int DecimalPlaces
+        {
+            get { return _decimalPlaces; }
+
+            set
+            {
+                if (_decimalPlaces != value)
+                {
+                    _decimalPlaces = value;
                     RaisePropertyChanged();
                 }
             }

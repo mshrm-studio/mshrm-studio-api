@@ -33,6 +33,9 @@ namespace Mshrm.Studio.Pricing.Api.Models.Dtos.Asset
         public DateTime CreatedDate { get; set; }
 
         [JsonProperty("logoGuidId")]
-        public Guid? LogoGuidId { get; private set; }
+        public Guid? LogoGuidId { get; set; }
+
+        [JsonProperty("decimalPlaces")]
+        public int DecimalPlaces { get; set; }
     }
 }

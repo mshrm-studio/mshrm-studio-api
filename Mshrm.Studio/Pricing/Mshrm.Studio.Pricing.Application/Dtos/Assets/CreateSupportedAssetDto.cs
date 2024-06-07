@@ -30,5 +30,8 @@ namespace Mshrm.Studio.Pricing.Api.Models.Dtos.Asset
 
         [JsonProperty("logoGuidId")]
         public Guid? LogoGuidId { get; set; }
+
+        [JsonProperty("decimalPlaces")]
+        public int DecimalPlaces { get; set; }
     }
 }

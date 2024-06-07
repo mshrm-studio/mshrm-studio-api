@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mshrm.Studio.Pricing.Api.Context;
 
@@ -11,9 +12,11 @@ using Mshrm.Studio.Pricing.Api.Context;
 namespace Mshrm.Studio.Pricing.Api.Migrations
 {
     [DbContext(typeof(MshrmStudioPricingDbContext))]
-    partial class MshrmStudioPricingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240607021746_AddedDecimalPlacesToAsset")]
+    partial class AddedDecimalPlacesToAsset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

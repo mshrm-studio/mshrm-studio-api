@@ -21,10 +21,11 @@ namespace Mshrm.Studio.Pricing.Infrastructure.Factories
         /// <param name="symbolNative">The display symbol ie. $ for US dollars</param>
         /// <param name="description">A description</param>
         /// <param name="logoGuidId">A logo</param>
+        /// <param name="decimalPlaces">The number of decimal places to display in</param>
         /// <returns>A new asset</returns>
-        public Asset CreateAsset(PricingProviderType providerType, AssetType assetType, string name, string symbol, string symbolNative, string? description, Guid? logoGuidId)
+        public Asset CreateAsset(PricingProviderType providerType, AssetType assetType, string name, string symbol, string symbolNative, string? description, Guid? logoGuidId, int decimalPlaces)
         {
-            return new Asset(providerType, assetType, name, symbol, symbolNative, description, logoGuidId);
+            return new Asset(providerType, assetType, name, symbol, symbolNative, description, logoGuidId, decimalPlaces);
         }
     }
 }

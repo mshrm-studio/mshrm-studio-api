@@ -35,10 +35,10 @@ namespace Mshrm.Studio.Api.Models.Dtos.Assets
         [JsonProperty("LogoUrl")]
         public string? LogoUrl { get; set; }
 
-        /// <summary>
-        /// Logo GUID
-        /// </summary>
         [JsonProperty("logoGuidId")]
         public Guid? logoGuidId { get; set; }
+
+        [JsonProperty("decimalPlaces")]
+        public int DecimalPlaces { get; set; }
     }
 }

@@ -33,6 +33,8 @@ namespace Mshrm.Studio.Pricing.Api.Models.Maps
 
             entityTypeBuilder.Property(e => e.ProviderType).HasConversion(new EnumToStringConverter<PricingProviderType>());
             entityTypeBuilder.Property(e => e.AssetType).HasConversion(new EnumToStringConverter<AssetType>());
+
+            entityTypeBuilder.Property(e => e.DecimalPlaces).HasDefaultValue(3);
         }
     }
 }

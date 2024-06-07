@@ -68,6 +68,11 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
         public new DateTime CreatedDate { get; private set; }
 
         /// <summary>
+        /// The decimal places to display 
+        /// </summary>
+        public int DecimalPlaces { get; private set; }
+
+        /// <summary>
         /// All base prices the asset is used for
         /// </summary>
         public List<ExchangePricingPair> BasePricingPairs { get; private set; } = new List<ExchangePricingPair>();
@@ -87,7 +92,7 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
         /// <param name="symbolNative"></param>
         /// <param name="description"></param>
         /// <param name="logoGuidId"></param>
-        public Asset(PricingProviderType providerType, AssetType assetType, string name, string symbol, string symbolNative, string? description, Guid? logoGuidId)
+        public Asset(PricingProviderType providerType, AssetType assetType, string name, string symbol, string symbolNative, string? description, Guid? logoGuidId, int decimalPlaces)
         {
             Active = true;
             ProviderType = providerType;
@@ -98,6 +103,7 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
             Description = description;
             CreatedDate = DateTime.UtcNow;
             LogoGuidId = logoGuidId;
+            DecimalPlaces = decimalPlaces;
         }
 
         /// <summary>
@@ -132,6 +138,11 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
         public void SetLogo(Guid? logoGuidId)
         {
             LogoGuidId = logoGuidId;
+        }
+
+        public void SetDecimalPlaces(int decimalPlaces)
+        {
+            DecimalPlaces = decimalPlaces;
         }
     }
 }

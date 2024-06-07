@@ -46,12 +46,13 @@ namespace Mshrm.Studio.Pricing.Api.Repositories
         /// <param name="symbol">The symbol</param>
         /// <param name="symbolNative">The native symbol ie. $</param>
         /// <param name="logoGuidId">The logos guid id</param>
+        /// <param name="decimalPlaces">The number of decimal places to display in</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new asset</returns>
-        public async Task<Asset> CreateAssetAsync(string name, string? description, PricingProviderType providerType,
-            AssetType assetType, string symbol, string symbolNative, Guid? logoGuidId, CancellationToken cancellationToken)
+        public async Task<Asset> CreateAssetAsync(string name, string? description, PricingProviderType providerType, AssetType assetType, string symbol, string symbolNative, 
+            Guid? logoGuidId, int decimalPlaces, CancellationToken cancellationToken)
         {
-            var newAsset = _assetFactory.CreateAsset(providerType, assetType, name, symbol, symbolNative, description, logoGuidId);
+            var newAsset = _assetFactory.CreateAsset(providerType, assetType, name, symbol, symbolNative, description, logoGuidId, decimalPlaces);
 
             Add(newAsset);
             await SaveAsync(cancellationToken);
@@ -212,10 +213,11 @@ namespace Mshrm.Studio.Pricing.Api.Repositories
         /// <param name="providerType">The provider to import price from</param>
         /// <param name="assetType">The type of asset</param>
         /// <param name="logoGuidId">A logo</param>
+        /// <param name="decimalPlaces">The number of decimal places to display in</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The updated asset</returns>
         public async Task<Asset?> UpdateAssetAsync(Guid assetId, string name, string? description, PricingProviderType providerType, AssetType assetType, string symbolNative,
-            Guid? logoGuidId, CancellationToken cancellationToken)
+            Guid? logoGuidId, int decimalPlaces, CancellationToken cancellationToken)
         {
             var existing = GetAll().FirstOrDefault(x => x.GuidId == assetId);
             if (existing != null)
@@ -225,6 +227,7 @@ namespace Mshrm.Studio.Pricing.Api.Repositories
                 existing.SetProviderType(providerType);
                 existing.SetAssetType(assetType);
                 existing.SetSymbolNative(symbolNative);
+                existing.SetDecimalPlaces(decimalPlaces);
 
                 if (logoGuidId.HasValue)
                     existing.SetLogo(logoGuidId);

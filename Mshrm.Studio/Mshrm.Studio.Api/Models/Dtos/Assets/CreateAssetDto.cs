@@ -24,6 +24,9 @@ namespace Mshrm.Studio.Api.Models.Dtos.Assets
         [JsonProperty("assetType")]
         public AssetType AssetType { get; set; }
 
+        [JsonProperty("decimalPlaces")]
+        public int DecimalPlaces { get; set; }
+
         [JsonProperty("logo")]
         public TemporaryFileDto? Logo {  get; set; } 
     }

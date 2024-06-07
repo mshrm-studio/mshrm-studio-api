@@ -16,10 +16,11 @@ namespace Mshrm.Studio.Pricing.Api.Repositories.Interfaces
         /// <param name="symbol">The symbol</param>
         /// <param name="symbolNative">The native symbol ie. $</param>
         /// <param name="logoGuidId">The logos guid id</param>
+        /// <param name="decimalPlaces">The number of decimal places to display in</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new asset</returns>
-        public Task<Asset> CreateAssetAsync(string name, string? description, PricingProviderType providerType,
-            AssetType assetType, string symbol, string symbolNative, Guid? logoGuidId, CancellationToken cancellationToken);
+        public Task<Asset> CreateAssetAsync(string name, string? description, PricingProviderType providerType, AssetType assetType, string symbol, string symbolNative, Guid? logoGuidId, 
+            int decimalPlaces, CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a page of assets
@@ -75,9 +76,10 @@ namespace Mshrm.Studio.Pricing.Api.Repositories.Interfaces
         /// <param name="providerType">The provider to import price from</param>
         /// <param name="assetType">The type of asset</param>
         /// <param name="logoGuidId">A logo</param>
+        /// <param name="decimalPlaces">The number of decimal places to display in</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The updated asset</returns>
         public Task<Asset?> UpdateAssetAsync(Guid assetId, string name, string? description, PricingProviderType providerType, AssetType assetType, string symbolNative,
-            Guid? logoGuidId, CancellationToken cancellationToken);
+            Guid? logoGuidId, int decimalPlaces, CancellationToken cancellationToken);
     }
 }

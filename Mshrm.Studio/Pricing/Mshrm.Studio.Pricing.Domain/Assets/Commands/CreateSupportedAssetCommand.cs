@@ -13,5 +13,6 @@ namespace Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands
         public PricingProviderType ProviderType { get; set; }
         public AssetType AssetType { get; set; }
         public Guid? LogoGuidId { get; set; }
+        public int DecimalPlaces { get; set; }
     }
 }
