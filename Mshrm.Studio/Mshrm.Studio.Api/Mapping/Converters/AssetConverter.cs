@@ -50,6 +50,7 @@ namespace Mshrm.Studio.Api.Mapping.Converters
             target.SymbolNative = parent.SymbolNative;
             target.logoGuidId = parent.LogoGuidId;
             target.LogoUrl = url;
+            target.DecimalPlaces = parent.DecimalPlaces;
 
             // Return mapped target
             return target;
