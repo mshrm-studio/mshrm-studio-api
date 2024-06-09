@@ -8,15 +8,15 @@ metadata:
     io.kompose.service: mshrm-studio-api
   name: mshrm-studio-api
 spec:
-  type: NodePort 
+  #type: NodePort 
   ports:
-    - name: "30230"
+    - name: "https"
       port: 8081
       targetPort: 8081
-      nodePort: 30230
-    - name: "30250"
+      #nodePort: 30230
+    - name: "http"
       port: 8080
       targetPort: 8080
-      nodePort: 30250
+      #nodePort: 30250
   selector:
     io.kompose.service: mshrm-studio-api
