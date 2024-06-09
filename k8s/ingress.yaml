@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-api-ingress
+  io.kompose.service: app-api-ingress
   labels:
-    name: app-api-ingress
+    io.kompose.service: app-api-ingress
 spec:
   ingressClassName: nginx
   rules:
@@ -14,13 +14,13 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: mshrm-studio-auth-api
+            io.kompose.service: mshrm-studio-auth-api
             port:
               number: 8080
       - path: /aggregator
         pathType: Prefix
         backend:
           service:
-            name: mshrm-studio-api
+            io.kompose.service: mshrm-studio-api
             port:
               number: 8080
