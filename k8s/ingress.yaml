@@ -6,15 +6,6 @@ metadata:
   labels:
     io.kompose.service: app-api-ingress
   annotations:
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: "2dae283e-953c-45b2-be6e-73382ffa48f8"
-    service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-port: "80"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-protocol: "http"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-path: "/health"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-check-interval-seconds: "3"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-response-timeout-seconds: "5"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-unhealthy-threshold: "3"
-    service.beta.kubernetes.io/do-loadbalancer-healthcheck-healthy-threshold: "5"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
