@@ -36,6 +36,6 @@ spec:
           name: mshrm-studio-api
           ports:
             - containerPort: 8080
-              hostPort: 8080
+              hostPort: 1250
               protocol: TCP
       restartPolicy: Always

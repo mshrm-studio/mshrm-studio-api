@@ -39,6 +39,6 @@ spec:
           name: mshrm-studio-auth-api
           ports:
             - containerPort: 8080
-              hostPort: 8080
+              hostPort: 1251
               protocol: TCP
       restartPolicy: Always
