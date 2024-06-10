@@ -22,4 +22,4 @@ spec:
             # Must be in the same namespace as the Issuer CRD.
             tokenSecretRef:
               name: digitalocean-dns
-              key: access-token
+              key: %DIGITAL_OCEAN_ACCESS_TOKEN%

@@ -141,14 +141,6 @@ jobs:
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         
-    #- name: Add Cert
-    #  run: |
-    #    doctl compute certificate create --type lets_encrypt --name mshrmstudioapicert --dns-names api.mshrm.studio
-        
-    #- name: List Cert/s
-    #  run: |
-    #    doctl compute certificate list --format ID,Name,DNSNames
-    
     #- name: Install Cert Manager
     #  run: |
     #    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
@@ -157,6 +149,11 @@ jobs:
     #  run: |
     #    kubectl create secret generic "digitalocean-dns" \
     #        --from-literal=access-token="${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
+    
+    - name: Add Access Token To Certificate Issuer
+      run: find . -name "*" -type f -exec sed -i -e 's/%DIGITAL_OCEAN_ACCESS_TOKEN%/${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}/g' {} \;
+      
+    access-token
 
     - name: Set up Kubectl
       uses: azure/setup-kubectl@v3
