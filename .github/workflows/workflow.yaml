@@ -152,8 +152,6 @@ jobs:
     
     - name: Add Access Token To Certificate Issuer
       run: find . -name "*" -type f -exec sed -i -e 's/%DIGITAL_OCEAN_ACCESS_TOKEN%/${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}/g' {} \;
-      
-    access-token
 
     - name: Set up Kubectl
       uses: azure/setup-kubectl@v3
