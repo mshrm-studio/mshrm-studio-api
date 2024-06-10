@@ -440,10 +440,12 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
         /// <returns>The api builder</returns>
         public static WebApplicationBuilder ConfigureHostedServices(this WebApplicationBuilder builder)
         {
+            /*
             builder.Services.AddHostedService<MobulaCronJob>();
             builder.Services.AddHostedService<FreeCurrencyCronJob>();
             builder.Services.AddHostedService<PolygonIOCronJob>();
             builder.Services.AddHostedService<MetalsDevCronJob>();
+            */
 
             return builder;
         }
