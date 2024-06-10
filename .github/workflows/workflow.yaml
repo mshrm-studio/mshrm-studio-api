@@ -29,105 +29,105 @@ jobs:
     - name: Replace Github Password In Nuget.Config
       run: find . -name "nuget.config*" -type f -exec sed -i -e 's/%NUGETPASSWORD%/${{ secrets.NUGETPASSWORD }}/g' {} \;
             
-    - name: Build and push Auth API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Authorization
-        file: Mshrm.Studio/Authorization/Mshrm.Studio.Auth.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioauthapi
-        build-args: |
-           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+    #- name: Build and push Auth API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Authorization
+    #    file: Mshrm.Studio/Authorization/Mshrm.Studio.Auth.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioauthapi
+    #    build-args: |
+    #       "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
         
-    - name: Build and push Storage API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Storage
-        file: Mshrm.Studio/Storage/Mshrm.Studio.Storage.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiostorageapi
-        build-args: |
-           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "DigitalOceanSpacesKey=${{ secrets.DIGITALOCEANSPACES_KEY }}"
-           "DigitalOceanSpacesAccessToken=${{ secrets.DIGITALOCEANSPACES__ACCESS_TOKEN }}"
+    #- name: Build and push Storage API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Storage
+    #    file: Mshrm.Studio/Storage/Mshrm.Studio.Storage.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiostorageapi
+    #    build-args: |
+    #       "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "DigitalOceanSpacesKey=${{ secrets.DIGITALOCEANSPACES_KEY }}"
+    #       "DigitalOceanSpacesAccessToken=${{ secrets.DIGITALOCEANSPACES__ACCESS_TOKEN }}"
 
-    - name: Build and push Pricing API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Pricing
-        file: Mshrm.Studio/Pricing/Mshrm.Studio.Pricing.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiopricingapi
-        build-args: |
-           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "FreeCurrencyServiceApiKey=${{ secrets.FREE_CURRENCY_SERVICE_API_KEY }}"
-           "MetalsDevServiceApiKey=${{ secrets.METALS_DEV_SERVICE_API_KEY }}"
-           "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}"
-           "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
-           "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+    #- name: Build and push Pricing API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Pricing
+    #    file: Mshrm.Studio/Pricing/Mshrm.Studio.Pricing.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiopricingapi
+    #    build-args: |
+    #       "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "FreeCurrencyServiceApiKey=${{ secrets.FREE_CURRENCY_SERVICE_API_KEY }}"
+    #       "MetalsDevServiceApiKey=${{ secrets.METALS_DEV_SERVICE_API_KEY }}"
+    #       "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}"
+    #       "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
+    #       "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
+    #       "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
 
-    - name: Build and push Localization API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Localization
-        file: Mshrm.Studio/Localization/Mshrm.Studio.Localization.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiolocalizationapi
-        build-args: |
-           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+    #- name: Build and push Localization API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Localization
+    #    file: Mshrm.Studio/Localization/Mshrm.Studio.Localization.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiolocalizationapi
+    #    build-args: |
+    #       "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
 
-    - name: Build and push Domain API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Domain
-        file: Mshrm.Studio/Domain/Mshrm.Studio.Domain.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiodomainapi
-        build-args: |
-           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+    #- name: Build and push Domain API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Domain
+    #    file: Mshrm.Studio/Domain/Mshrm.Studio.Domain.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudiodomainapi
+    #    build-args: |
+    #       "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
                
-    - name: Build and push Email API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Email
-        file: Mshrm.Studio/Email/Mshrm.Studio.Email.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioemailapi
-        build-args: |
-           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
-           "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "CompanyEmail=${{ secrets.COMPANY_EMAIL }}"
-           "CompanyEmailPassword=${{ secrets.COMPANY_EMAIL_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+    #- name: Build and push Email API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Email
+    #    file: Mshrm.Studio/Email/Mshrm.Studio.Email.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioemailapi
+    #    build-args: |
+    #       "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+    #       "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+    #       "CompanyEmail=${{ secrets.COMPANY_EMAIL }}"
+    #       "CompanyEmailPassword=${{ secrets.COMPANY_EMAIL_PASSWORD }}"
+    #       "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
            
-    - name: Build and push Aggregator API Docker image
-      uses: docker/build-push-action@v2
-      with:
-        context: Mshrm.Studio/Mshrm.Studio.Api
-        file: Mshrm.Studio/Mshrm.Studio.Api/Dockerfile
-        push: true
-        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioapi
-        build-args: |
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
+    #- name: Build and push Aggregator API Docker image
+    #  uses: docker/build-push-action@v2
+    #  with:
+    #    context: Mshrm.Studio/Mshrm.Studio.Api
+    #    file: Mshrm.Studio/Mshrm.Studio.Api/Dockerfile
+    #    push: true
+    #    tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioapi
+    #    build-args: |
+    #       "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
            
   deploy:
     needs: build-and-push
@@ -135,6 +135,16 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
+      
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        
+    - name: Add Cert
+      run: |
+        doctl compute certificate create --type lets_encrypt --name mshrmstudioapicert --dns-names api.mshrm.studio
+        doctl compute certificate list --format ID,Name,DNSNames
 
     - name: Set up Kubectl
       uses: azure/setup-kubectl@v3
