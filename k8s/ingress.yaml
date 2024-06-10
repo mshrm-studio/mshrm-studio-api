@@ -12,7 +12,7 @@ spec:
   tls:
     - hosts:
         - "*.api.mshrm.studio"
-    secretName: api-mshrm-studio-secret
+      secretName: api-mshrm-studio-secret
   rules:
   - host: api.mshrm.studio
     http:
