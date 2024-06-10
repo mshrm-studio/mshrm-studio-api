@@ -141,9 +141,12 @@ jobs:
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
         
-    - name: Add Cert
+    #- name: Add Cert
+    #  run: |
+    #    doctl compute certificate create --type lets_encrypt --name mshrmstudioapicert --dns-names api.mshrm.studio
+        
+    - name: List Cert/s
       run: |
-        doctl compute certificate create --type lets_encrypt --name mshrmstudioapicert --dns-names api.mshrm.studio
         doctl compute certificate list --format ID,Name,DNSNames
 
     - name: Set up Kubectl
