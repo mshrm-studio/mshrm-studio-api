@@ -15,6 +15,7 @@ metadata:
     service.beta.kubernetes.io/do-loadbalancer-healthcheck-response-timeout-seconds: "5"
     service.beta.kubernetes.io/do-loadbalancer-healthcheck-unhealthy-threshold: "3"
     service.beta.kubernetes.io/do-loadbalancer-healthcheck-healthy-threshold: "5"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
   rules:
@@ -27,11 +28,11 @@ spec:
           service:
             name: mshrm-studio-auth-api
             port:
-              number: 1251
+              number: 8080
       - path: /aggregator(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: mshrm-studio-api
             port:
-              number: 1250
+              number: 8080
