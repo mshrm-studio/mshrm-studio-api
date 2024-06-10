@@ -134,6 +134,7 @@
             {
                 options.Limits.MaxRequestBodySize = null;
                 options.AllowSynchronousIO = true;
+                options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(30);
                 options.ConfigureHttpsDefaults(co =>
                 {
                     co.SslProtocols = SslProtocols.Tls12;

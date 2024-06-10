@@ -47,7 +47,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <summary>
         /// Returns a new JWT bearer token which can be used to make authenticated calls. 
         /// </summary>
-        /// <param name="model">Login data</param>
+        /// <param name="model">Login data - username and password</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         [HttpPost]
         [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
@@ -62,7 +62,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         }
 
         /// <summary>
-        /// Returns a new JWT bearer token in exchnage for a valid refresh token + old JWT
+        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
         /// </summary>
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
