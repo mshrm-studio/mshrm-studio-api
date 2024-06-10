@@ -38,10 +38,7 @@ spec:
             timeoutSeconds: 30
           name: mshrm-studio-auth-api
           ports:
-            - containerPort: 8081
-              hostPort: 1231
-              protocol: TCP
             - containerPort: 8080
-              hostPort: 1251
+              hostPort: 8080
               protocol: TCP
       restartPolicy: Always
