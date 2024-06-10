@@ -9,6 +9,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - "*.api.mshrm.studio"
+    secretName: api-mshrm-studio-secret
   rules:
   - host: api.mshrm.studio
     http:

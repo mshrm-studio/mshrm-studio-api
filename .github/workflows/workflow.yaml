@@ -149,14 +149,14 @@ jobs:
     #  run: |
     #    doctl compute certificate list --format ID,Name,DNSNames
     
-    - name: Install Cert Manager
-      run: |
-        kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
+    #- name: Install Cert Manager
+    #  run: |
+    #    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.0/cert-manager.yaml
         
-    - name: Setup
-      run: |
-        kubectl create secret generic "digitalocean-dns" \
-            --from-literal=access-token="${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
+    #- name: Setup
+    #  run: |
+    #    kubectl create secret generic "digitalocean-dns" \
+    #        --from-literal=access-token="${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
 
     - name: Set up Kubectl
       uses: azure/setup-kubectl@v3
