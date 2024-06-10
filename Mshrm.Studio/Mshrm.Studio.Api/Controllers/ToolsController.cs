@@ -100,7 +100,7 @@ namespace Mshrm.Studio.Api.Controllers
         [ProducesResponseType(typeof(ToolResponseDto), StatusCodes.Status201Created)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("")]
-        public async Task<ActionResult<ToolResponseDto>> CreateToolAsync([FromBody] CreateNewToolDto model)
+        public async Task<ActionResult<ToolResponseDto>> CreateToolAsync([FromBody] CreateNewToolRequestDto model)
         {
             // Create tool
             var tool = await _createToolsService.CreateToolAsync(model.Logo, model.Name, model.Description, model.Link, model.Rank,
@@ -120,7 +120,7 @@ namespace Mshrm.Studio.Api.Controllers
         [ProducesResponseType(typeof(ToolResponseDto), StatusCodes.Status201Created)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("{toolGuidId}")]
-        public async Task<ActionResult<ToolResponseDto>> UpdateToolAsync([FromRoute] Guid toolGuidId, [FromBody] UpdateExistingToolDto model)
+        public async Task<ActionResult<ToolResponseDto>> UpdateToolAsync([FromRoute] Guid toolGuidId, [FromBody] UpdateExistingToolRequestDto model)
         {
             // Update tool
             var updatedTool = await _updateToolsService.UpdateToolAsync(toolGuidId, model.Logo, model.Name, model.Description, model.Link, model.Rank,

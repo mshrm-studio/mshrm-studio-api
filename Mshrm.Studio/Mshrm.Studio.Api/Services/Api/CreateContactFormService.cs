@@ -29,7 +29,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="temporaryAttachmentKeys">Attachments</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new contact form</returns>
-        public async Task<ContactFormDto> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<TemporaryFileDto>? temporaryAttachmentKeys,
+        public async Task<ContactFormDto> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<TemporaryFileRequestDto>? temporaryAttachmentKeys,
             CancellationToken cancellationToken)
         {
             var attachments = temporaryAttachmentKeys?.Select(x => new SaveTemporaryFileDto()

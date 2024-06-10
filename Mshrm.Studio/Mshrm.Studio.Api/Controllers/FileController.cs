@@ -69,7 +69,7 @@ namespace Mshrm.Studio.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(TemporaryFileUploadResponseDto), StatusCodes.Status200OK)]
         [Route("temporary")]
-        public async Task<ActionResult<TemporaryFileUploadResponseDto>> UploadTemporaryFileAsync([FromForm] UploadTemporaryFileDto model)
+        public async Task<ActionResult<TemporaryFileUploadResponseDto>> UploadTemporaryFileAsync([FromForm] UploadTemporaryFileRequestDto model)
         {
             // Open read
             using var fileStream = model.File.OpenReadStream();

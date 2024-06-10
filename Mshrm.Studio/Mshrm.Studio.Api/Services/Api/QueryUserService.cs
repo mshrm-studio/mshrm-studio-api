@@ -41,7 +41,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="callersRole">The requesting users role</param>
         /// <param name="stoppingToken">The request token</param>
         /// <returns>A user</returns>
-        public async Task<MshrmStudioUserDto> GetUserAsync(Guid guid, string callersEmail, RoleType callersRole, CancellationToken stoppingToken)
+        public async Task<MshrmStudioUserResponseDto> GetUserAsync(Guid guid, string callersEmail, RoleType callersRole, CancellationToken stoppingToken)
         {
             // Get the user
             var user = await _domainUserClient.GetUserByGuidAsync(guid, stoppingToken);
@@ -56,7 +56,7 @@ namespace Mshrm.Studio.Api.Services.Api
                 // get the identity user to aggregate
                 var identityUser = await _identityUserClient.GetIdentityUserAsync(user.Email);
 
-                return new MshrmStudioUserDto()
+                return new MshrmStudioUserResponseDto()
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -77,7 +77,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="email">The email to try get the user by</param>
         /// <param name="stoppingToken">The request token</param>
         /// <returns>A user</returns>
-        public async Task<MshrmStudioUserDto> GetUserByEmailAsync(string? email, CancellationToken stoppingToken)
+        public async Task<MshrmStudioUserResponseDto> GetUserByEmailAsync(string? email, CancellationToken stoppingToken)
         {
             // Check we have an email
             if (string.IsNullOrEmpty(email))
@@ -90,7 +90,7 @@ namespace Mshrm.Studio.Api.Services.Api
                 // get the identity user to aggregate
                 var identityUser = await _identityUserClient.GetIdentityUserAsync(user.Email);
 
-                return new MshrmStudioUserDto()
+                return new MshrmStudioUserResponseDto()
                 {
                     FirstName = user.FirstName,
                     LastName = user.LastName,

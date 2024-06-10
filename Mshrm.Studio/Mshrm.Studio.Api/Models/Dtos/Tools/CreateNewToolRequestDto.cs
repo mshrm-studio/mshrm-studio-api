@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Mshrm.Studio.Api.Models.Dtos.Tools
 {
-    public class CreateNewToolDto
+    public class CreateNewToolRequestDto
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -22,6 +22,6 @@ namespace Mshrm.Studio.Api.Models.Dtos.Tools
         public string Link { get; set; }
 
         [JsonProperty("logo")]
-        public TemporaryFileDto Logo { get; set; }
+        public TemporaryFileRequestDto Logo { get; set; }
     }
 }

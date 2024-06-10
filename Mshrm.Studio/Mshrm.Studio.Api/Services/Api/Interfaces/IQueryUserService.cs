@@ -15,7 +15,7 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="callersRole">The requesting users role</param>
         /// <param name="requestAborted">The request token</param>
         /// <returns>A user</returns>
-        Task<MshrmStudioUserDto> GetUserAsync(Guid guid, string callersEmail, RoleType callersRole, CancellationToken requestAborted);
+        Task<MshrmStudioUserResponseDto> GetUserAsync(Guid guid, string callersEmail, RoleType callersRole, CancellationToken requestAborted);
 
         /// <summary>
         /// Get a user using the email from SSO token. Do NOT call this if the emaail is taken from endpoint (security issue)
@@ -23,6 +23,6 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="email">The email to try get the user by</param>
         /// <param name="requestAborted">The request token</param>
         /// <returns>A user</returns>
-        Task<MshrmStudioUserDto> GetUserByEmailAsync(string? email, CancellationToken requestAborted);
+        Task<MshrmStudioUserResponseDto> GetUserByEmailAsync(string? email, CancellationToken requestAborted);
     }
 }

@@ -52,15 +52,15 @@ namespace Mshrm.Studio.Api.Controllers
         /// <returns>A file if exists</returns>
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        [ProducesResponseType(typeof(LocalizationResourceDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(LocalizationResourceResponseDto), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<Stream>> CreateLocalizationResourceAsync([FromBody] CreateLocalizationResourceDto model)
+        public async Task<ActionResult<LocalizationResourceResponseDto>> CreateLocalizationResourceAsync([FromBody] CreateLocalizationResourceRequestDto model)
         {
             // Create localization
             var localization = await _createLocalizationService.CreateLocalizationResourceAsync(model.LocalizationArea, model.Culture, model.Name, model.Value, model.Comment,
                 Request.HttpContext.RequestAborted);
 
-            return Ok(localization);
+            return Ok(_mapper.Map< LocalizationResourceResponseDto>(localization));
         }
 
         /// <summary>

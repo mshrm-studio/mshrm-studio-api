@@ -30,7 +30,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The updated asset</returns>
         public async Task<AssetDto> UpdateAssetAsync(Guid assetGuidId, string name, string? description, string symbolNative, PricingProviderType providerType,
-            Clients.Pricing.AssetType assetType, TemporaryFileDto? logo, CancellationToken cancellationToken)
+            Clients.Pricing.AssetType assetType, TemporaryFileRequestDto? logo, CancellationToken cancellationToken)
         {
             // Create logo
             ResourceDto? persistedLogo = null;

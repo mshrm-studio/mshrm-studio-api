@@ -99,7 +99,7 @@ namespace Mshrm.Studio.Api.Controllers
         [ProducesResponseType(typeof(ContactFormResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ContactFormResponseDto), StatusCodes.Status201Created)]
         [Route("")]
-        public async Task<ActionResult<ContactFormResponseDto>> CreateContactFormAsync([FromBody] CreateNewContactFormDto dto)
+        public async Task<ActionResult<ContactFormResponseDto>> CreateContactFormAsync([FromBody] CreateNewContactFormRequestDto dto)
         {
             // Create contact form
             var contactForm = await _createContactFormService.CreateContactFormAsync(dto.Message, dto.ContactEmail, dto.FirstName, dto.LastName, dto.WebsiteUrl,

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Api.Models.Dtos.ContactForm
 {
-    public class CreateNewContactFormDto
+    public class CreateNewContactFormRequestDto
     {
         /// <summary>
         /// The message sent
@@ -43,6 +43,6 @@ namespace Mshrm.Studio.Api.Models.Dtos.ContactForm
         /// Any contact form attachments ids
         /// </summary>
         [JsonProperty("temporaryAttachmentKeys")]
-        public List<TemporaryFileDto> TemporaryAttachmentKeys { get; set; } = new List<TemporaryFileDto>();
+        public List<TemporaryFileRequestDto> TemporaryAttachmentKeys { get; set; } = new List<TemporaryFileRequestDto>();
     }
 }

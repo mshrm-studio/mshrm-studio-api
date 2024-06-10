@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Mshrm.Studio.Api.Models.Dtos.Assets
 {
-    public class CreateAssetDto
+    public class CreateAssetRequestDto
     {
         [JsonProperty("name")]
         public string Name {  get; set; }
@@ -28,6 +28,6 @@ namespace Mshrm.Studio.Api.Models.Dtos.Assets
         public int DecimalPlaces { get; set; }
 
         [JsonProperty("logo")]
-        public TemporaryFileDto? Logo {  get; set; } 
+        public TemporaryFileRequestDto? Logo {  get; set; } 
     }
 }

@@ -30,7 +30,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="providerType">The provider to import asset price</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new asset</returns>
-        public async Task<AssetDto> CreateAssetAsync(TemporaryFileDto? logo, string name, string symbol, string symbolNative, string description, AssetType assetType,
+        public async Task<AssetDto> CreateAssetAsync(TemporaryFileRequestDto? logo, string name, string symbol, string symbolNative, string description, AssetType assetType,
             PricingProviderType providerType, CancellationToken cancellationToken)
         {
             // Create logo

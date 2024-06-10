@@ -36,7 +36,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="toolType">The new tool type</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The updated token</returns>
-        public async Task<ToolDto> UpdateToolAsync(Guid toolGuidId, TemporaryFileDto? logo, string name, string? description, string link, int rank,
+        public async Task<ToolDto> UpdateToolAsync(Guid toolGuidId, TemporaryFileRequestDto? logo, string name, string? description, string link, int rank,
             ToolType toolType, CancellationToken cancellationToken)
         {
             // Create logo

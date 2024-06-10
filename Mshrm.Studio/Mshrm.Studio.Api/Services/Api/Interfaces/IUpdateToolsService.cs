@@ -17,7 +17,7 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="toolType">The new tool type</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The updated token</returns>
-        Task<ToolDto> UpdateToolAsync(Guid toolGuidId, TemporaryFileDto? logo, string name, string? description, string link, int rank, 
+        Task<ToolDto> UpdateToolAsync(Guid toolGuidId, TemporaryFileRequestDto? logo, string name, string? description, string link, int rank, 
             ToolType toolType, CancellationToken cancellationToken);
     }
 }

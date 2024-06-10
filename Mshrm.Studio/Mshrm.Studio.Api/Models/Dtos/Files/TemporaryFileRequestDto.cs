@@ -5,7 +5,7 @@ namespace Mshrm.Studio.Api.Models.Dtos.Files
     /// <summary>
     /// A temporary file
     /// </summary>
-    public class TemporaryFileDto
+    public class TemporaryFileRequestDto
     {
         /// <summary>
         /// The temp key

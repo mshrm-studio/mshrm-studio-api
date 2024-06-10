@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Mshrm.Studio.Api.Models.Dtos.Files
 {
-    public class UploadTemporaryFileDto
+    public class UploadTemporaryFileRequestDto
     {
         /// <summary>
         /// User profile picture

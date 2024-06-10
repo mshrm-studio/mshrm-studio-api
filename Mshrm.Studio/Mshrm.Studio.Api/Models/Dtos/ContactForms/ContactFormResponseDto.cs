@@ -57,6 +57,6 @@ namespace Mshrm.Studio.Api.Models.Dtos.ContactForms
         /// The user who created the form
         /// </summary>
         [JsonProperty("user", NullValueHandling = NullValueHandling.Ignore)]
-        public MshrmStudioUserDto? User { get; set; }
+        public MshrmStudioUserResponseDto? User { get; set; }
     }
 }

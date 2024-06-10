@@ -16,6 +16,6 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="toolType">The type of tool</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The tool</returns>
-        Task<ToolDto> CreateToolAsync(TemporaryFileDto logo, string name, string? description, string link, int rank, ToolType toolType, CancellationToken cancellationToken);
+        Task<ToolDto> CreateToolAsync(TemporaryFileRequestDto logo, string name, string? description, string link, int rank, ToolType toolType, CancellationToken cancellationToken);
     }
 }

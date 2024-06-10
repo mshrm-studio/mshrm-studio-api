@@ -36,7 +36,7 @@ namespace Mshrm.Studio.Api.Mapping
         {
             #region Users
 
-            CreateMap<DomainUserDto, MshrmStudioUserDto>().ReverseMap();
+            CreateMap<DomainUserDto, MshrmStudioUserResponseDto>().ReverseMap();
 
             #endregion
 
@@ -48,10 +48,11 @@ namespace Mshrm.Studio.Api.Mapping
 
             #endregion
 
-            #region Assey
+            #region Assets
 
             CreateMap<AssetDto, AssetResponseDto>().ConvertUsing<AssetConverter>();
             CreateMap<PageResultDtoOfAssetDto, PageResultDto<AssetResponseDto>>().ReverseMap();
+            CreateMap<ProviderAssetDto, ProviderAssetResponseDto>().ReverseMap();
 
             #endregion
 

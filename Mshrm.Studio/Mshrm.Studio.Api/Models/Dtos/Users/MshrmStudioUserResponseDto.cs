@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Mshrm.Studio.Api.Models.Dtos.User
 {
-    public class MshrmStudioUserDto
+    public class MshrmStudioUserResponseDto
     {
         /// <summary>
         /// A guid version of the integer ID

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Api.Models.Dtos.Assets
 {
-    public class UpdateAssetDto
+    public class UpdateAssetRequestDto
     {
         [JsonProperty("name")]
         [StringLength(256, ErrorMessage = "{0} must have less than {1} characters")]
@@ -29,6 +29,6 @@ namespace Mshrm.Studio.Api.Models.Dtos.Assets
         public int DecimalPlaces { get; set; }
 
         [JsonProperty("logo")]
-        public TemporaryFileDto? Logo { get; set; }
+        public TemporaryFileRequestDto? Logo { get; set; }
     }
 }

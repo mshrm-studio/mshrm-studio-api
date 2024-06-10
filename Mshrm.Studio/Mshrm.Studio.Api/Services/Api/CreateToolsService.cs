@@ -27,7 +27,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="toolType">The type of tool</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The tool</returns>
-        public async Task<ToolDto> CreateToolAsync(TemporaryFileDto logo, string name, string? description, string link, int rank, ToolType toolType, CancellationToken cancellationToken)
+        public async Task<ToolDto> CreateToolAsync(TemporaryFileRequestDto logo, string name, string? description, string link, int rank, ToolType toolType, CancellationToken cancellationToken)
         {
             // Create logo
             var persistedLogo = await _fileClient.SaveTemporaryFileAsync(new SaveTemporaryFileDto() { Key = logo.TemporaryKey, FileName = logo.FileName, IsPrivate = false }, cancellationToken);

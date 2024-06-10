@@ -18,7 +18,7 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="temporaryAttachmentKeys">Attachments</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The new contact form</returns>
-        Task<ContactFormDto> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<TemporaryFileDto>? temporaryAttachmentKeys,
+        Task<ContactFormDto> CreateContactFormAsync(string message, string contactEmail, string? firstName, string? lastName, string? websiteUrl, List<TemporaryFileRequestDto>? temporaryAttachmentKeys,
             CancellationToken cancellationToken);
     }
 }

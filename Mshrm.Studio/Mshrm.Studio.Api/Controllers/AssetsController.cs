@@ -62,7 +62,7 @@ namespace Mshrm.Studio.Api.Controllers
         [ProducesResponseType(typeof(AssetResponseDto), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
         [Route("")]
-        public async Task<ActionResult<AssetResponseDto>> CreateAssetAsync([FromBody] CreateAssetDto model)
+        public async Task<ActionResult<AssetResponseDto>> CreateAssetAsync([FromBody] CreateAssetRequestDto model)
         {
             // Create the new asset
             var newAsset = await _createAssetService.CreateAssetAsync(model.Logo, model.Name, model.Symbol, model.SymbolNative, model.Description, model.AssetType, 
@@ -81,7 +81,7 @@ namespace Mshrm.Studio.Api.Controllers
         [ProducesResponseType(typeof(AssetResponseDto), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("{assetId}")]
-        public async Task<ActionResult<AssetResponseDto>> UpdateAssetAsync([FromRoute] Guid assetId, [FromBody] UpdateAssetDto model)
+        public async Task<ActionResult<AssetResponseDto>> UpdateAssetAsync([FromRoute] Guid assetId, [FromBody] UpdateAssetRequestDto model)
         {
             // Update
             var updatedAsset = await _updateAssetService.UpdateAssetAsync(assetId, model.Name, model.Description, model.SymbolNative,
@@ -137,14 +137,14 @@ namespace Mshrm.Studio.Api.Controllers
         /// <param name="providerType">The pricing provider</param>
         /// <returns>The supported assets for a pricing provider</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(List<ProviderAssetDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<ProviderAssetResponseDto>), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("provider/{providerType}")]
-        public async Task<ActionResult<List<ProviderAssetDto>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
+        public async Task<ActionResult<List<ProviderAssetResponseDto>>> GetProvidersAssetSymbolsAsync([FromRoute] PricingProviderType providerType)
         {
             var assets = await _queryProviderAssetsService.GetProvidersAssetsAsync(providerType);
 
-            return Ok(assets);
+            return Ok(_mapper.Map<List<ProviderAssetResponseDto>>(assets));
         }
     }
 }
