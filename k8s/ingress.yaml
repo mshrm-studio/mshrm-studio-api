@@ -27,11 +27,11 @@ spec:
           service:
             name: mshrm-studio-auth-api
             port:
-              number: 8080
+              number: 1251
       - path: /aggregator(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: mshrm-studio-api
             port:
-              number: 8080
+              number: 1250
