@@ -21,15 +21,15 @@ spec:
   - host: api.mshrm.studio
     http:
       paths:
-      - path: /auth
-        pathType: Prefix
+      - path: /auth(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: mshrm-studio-auth-api
             port:
               number: 8080
-      - path: /aggregator
-        pathType: Prefix
+      - path: /aggregator(/|$)(.*)
+        pathType: ImplementationSpecific
         backend:
           service:
             name: mshrm-studio-api
