@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
-    public class ResendConfirmationDto
+    public class ResendConfirmationRequestDto
     {
         /// <summary>
         /// The user to registered email address this cannot be updated (used for identification). 

@@ -215,7 +215,6 @@
         {
             // Setup the data services
             builder.Services.AddTransient<IQueryUserService, QueryUserService>();
-            builder.Services.AddTransient<IUserAuthorizationService, UserAuthorizationService>();
             builder.Services.AddTransient<IQueryContactFormService, QueryContactFormService>();
             builder.Services.AddTransient<ICreateContactFormService, CreateContactFormService>();
             builder.Services.AddTransient<IQueryFileService, QueryFileService>();

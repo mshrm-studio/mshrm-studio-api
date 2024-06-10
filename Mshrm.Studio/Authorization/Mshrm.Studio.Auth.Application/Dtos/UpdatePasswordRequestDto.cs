@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
-    public class UpdatePasswordDto
+    public class UpdatePasswordRequestDto
     {
         /// <summary>
         /// The password to set for new user. 

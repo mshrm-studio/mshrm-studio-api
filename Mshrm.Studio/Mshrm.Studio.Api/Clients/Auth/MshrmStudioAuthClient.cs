@@ -29,7 +29,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenDto> GenerateTokenAsync(LoginDto model);
+        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -38,7 +38,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenDto> GenerateTokenAsync(LoginDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Returns a new JWT bearer token in exchnage for a valid refresh token + old JWT
@@ -46,7 +46,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenDto model);
+        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -55,7 +55,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Updates a users password using the existing one
@@ -63,7 +63,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Password update method</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordDto model);
+        System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -72,7 +72,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Password update method</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Request a reset token for resetting a users password
@@ -97,7 +97,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The reset data</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetDto model);
+        System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -106,7 +106,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The reset data</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Validates a confirmation token for a new user and returns a login token if valid
@@ -114,7 +114,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenDto> ValidateConfirmationTokenAsync(ValidateConfirmationDto model);
+        System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -123,7 +123,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenDto> ValidateConfirmationTokenAsync(ValidateConfirmationDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Resends confirmation token
@@ -131,7 +131,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email</param>
         /// <returns>If the confirmation code was resent</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationDto model);
+        System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -140,7 +140,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email</param>
         /// <returns>If the confirmation code was resent</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -195,7 +195,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenDto> GenerateTokenAsync(LoginDto model)
+        public virtual System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model)
         {
             return GenerateTokenAsync(model, System.Threading.CancellationToken.None);
         }
@@ -207,7 +207,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenDto> GenerateTokenAsync(LoginDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -255,7 +255,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -288,7 +288,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenDto model)
+        public virtual System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model)
         {
             return GenerateTokenFromRefreshTokenAsync(model, System.Threading.CancellationToken.None);
         }
@@ -300,7 +300,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -348,7 +348,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -381,7 +381,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Password update method</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordDto model)
+        public virtual System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordRequestDto model)
         {
             return UpdatePasswordAsync(model, System.Threading.CancellationToken.None);
         }
@@ -393,7 +393,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">Password update method</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task UpdatePasswordAsync(UpdatePasswordRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -555,7 +555,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The reset data</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetDto model)
+        public virtual System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetRequestDto model)
         {
             return ResetPasswordAsync(model, System.Threading.CancellationToken.None);
         }
@@ -567,7 +567,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The reset data</param>
         /// <returns>Ok</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<bool> ResetPasswordAsync(PasswordResetRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -648,7 +648,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenDto> ValidateConfirmationTokenAsync(ValidateConfirmationDto model)
+        public virtual System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model)
         {
             return ValidateConfirmationTokenAsync(model, System.Threading.CancellationToken.None);
         }
@@ -660,7 +660,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenDto> ValidateConfirmationTokenAsync(ValidateConfirmationDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -708,7 +708,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -741,7 +741,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email</param>
         /// <returns>If the confirmation code was resent</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationDto model)
+        public virtual System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationRequestDto model)
         {
             return ResendConfirmationTokenAsync(model, System.Threading.CancellationToken.None);
         }
@@ -753,7 +753,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email</param>
         /// <returns>If the confirmation code was resent</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<bool> ResendConfirmationTokenAsync(ResendConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -949,7 +949,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> CreateUserAnyRoleAsync(CreateUserAnyRoleDto model);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAnyRoleAsync(CreateUserAnyRoleRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -958,7 +958,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> CreateUserAnyRoleAsync(CreateUserAnyRoleDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAnyRoleAsync(CreateUserAnyRoleRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Creates a new user with any role - no authentication
@@ -966,7 +966,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> CreateUserAsync(CreateUserDto model);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAsync(CreateUserRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -975,7 +975,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> CreateUserAsync(CreateUserDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAsync(CreateUserRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets an identity user
@@ -983,7 +983,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="email">The users email</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> GetIdentityUserAsync(string email);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> GetIdentityUserAsync(string email);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -992,14 +992,14 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="email">The users email</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> GetIdentityUserAsync(string email, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> GetIdentityUserAsync(string email, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Creates a new user using the user role ONLY. Only SSO Authenticated users can call this to create accounts from their existing token. Only 1 user can be created per minute per IP address
         /// </summary>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> CreateUserFromSSOAsync();
+        System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserFromSSOAsync();
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1007,7 +1007,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// </summary>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<IdentityUserDto> CreateUserFromSSOAsync(System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserFromSSOAsync(System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -1062,7 +1062,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<IdentityUserDto> CreateUserAnyRoleAsync(CreateUserAnyRoleDto model)
+        public virtual System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAnyRoleAsync(CreateUserAnyRoleRequestDto model)
         {
             return CreateUserAnyRoleAsync(model, System.Threading.CancellationToken.None);
         }
@@ -1074,7 +1074,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<IdentityUserDto> CreateUserAnyRoleAsync(CreateUserAnyRoleDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAnyRoleAsync(CreateUserAnyRoleRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -1122,7 +1122,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1132,7 +1132,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         else
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1165,7 +1165,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<IdentityUserDto> CreateUserAsync(CreateUserDto model)
+        public virtual System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAsync(CreateUserRequestDto model)
         {
             return CreateUserAsync(model, System.Threading.CancellationToken.None);
         }
@@ -1177,7 +1177,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<IdentityUserDto> CreateUserAsync(CreateUserDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserAsync(CreateUserRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -1225,7 +1225,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1235,7 +1235,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         else
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1268,7 +1268,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="email">The users email</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<IdentityUserDto> GetIdentityUserAsync(string email)
+        public virtual System.Threading.Tasks.Task<IdentityUserResponseDto> GetIdentityUserAsync(string email)
         {
             return GetIdentityUserAsync(email, System.Threading.CancellationToken.None);
         }
@@ -1280,7 +1280,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="email">The users email</param>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<IdentityUserDto> GetIdentityUserAsync(string email, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<IdentityUserResponseDto> GetIdentityUserAsync(string email, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1327,7 +1327,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1359,7 +1359,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// </summary>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<IdentityUserDto> CreateUserFromSSOAsync()
+        public virtual System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserFromSSOAsync()
         {
             return CreateUserFromSSOAsync(System.Threading.CancellationToken.None);
         }
@@ -1370,7 +1370,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// </summary>
         /// <returns>A user if created successfully</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<IdentityUserDto> CreateUserFromSSOAsync(System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<IdentityUserResponseDto> CreateUserFromSSOAsync(System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1412,7 +1412,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1422,7 +1422,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         else
                         if (status_ == 201)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<IdentityUserResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1562,7 +1562,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class TokenResponseDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _tokenValue;
         private string _refreshTokenValue;
@@ -1622,10 +1622,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static TokenDto FromJson(string data)
+        public static TokenResponseDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<TokenDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<TokenResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1640,7 +1640,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LoginDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class LoginRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _userName;
         private string _password;
@@ -1683,10 +1683,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static LoginDto FromJson(string data)
+        public static LoginRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<LoginDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<LoginRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1701,7 +1701,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RefreshTokenDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class RefreshTokenRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _tokenValue;
         private string _refreshTokenValue;
@@ -1744,10 +1744,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static RefreshTokenDto FromJson(string data)
+        public static RefreshTokenRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<RefreshTokenDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<RefreshTokenRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1762,7 +1762,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class UpdatePasswordDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class UpdatePasswordRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _oldPassword;
         private string _newPassword;
@@ -1809,10 +1809,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static UpdatePasswordDto FromJson(string data)
+        public static UpdatePasswordRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<UpdatePasswordDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<UpdatePasswordRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1871,7 +1871,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PasswordResetDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class PasswordResetRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _email;
         private string _token;
@@ -1931,10 +1931,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static PasswordResetDto FromJson(string data)
+        public static PasswordResetRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<PasswordResetDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PasswordResetRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1949,7 +1949,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ValidateConfirmationDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class ValidateConfirmationRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _email;
         private string _confirmationToken;
@@ -1994,10 +1994,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static ValidateConfirmationDto FromJson(string data)
+        public static ValidateConfirmationRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ValidateConfirmationDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ValidateConfirmationRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -2012,7 +2012,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class ResendConfirmationDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class ResendConfirmationRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _email;
 
@@ -2040,10 +2040,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static ResendConfirmationDto FromJson(string data)
+        public static ResendConfirmationRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<ResendConfirmationDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ResendConfirmationRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -2058,7 +2058,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class IdentityUserDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class IdentityUserResponseDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _email;
         private RoleType _role;
@@ -2118,10 +2118,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static IdentityUserDto FromJson(string data)
+        public static IdentityUserResponseDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<IdentityUserDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<IdentityUserResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -2148,7 +2148,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateUserAnyRoleDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class CreateUserAnyRoleRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _email;
         private RoleType _role;
@@ -2247,10 +2247,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static CreateUserAnyRoleDto FromJson(string data)
+        public static CreateUserAnyRoleRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateUserAnyRoleDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateUserAnyRoleRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -2265,7 +2265,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class CreateUserDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class CreateUserRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _email;
         private string _password;
@@ -2346,10 +2346,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static CreateUserDto FromJson(string data)
+        public static CreateUserRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateUserDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateUserRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

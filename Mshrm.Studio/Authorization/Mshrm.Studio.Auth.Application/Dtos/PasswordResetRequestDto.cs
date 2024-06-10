@@ -2,7 +2,7 @@
 
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
-    public class PasswordResetDto
+    public class PasswordResetRequestDto
     {
         [JsonProperty("email")]
         public string Email { get; set; }

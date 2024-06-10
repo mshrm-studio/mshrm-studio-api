@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
-    public class IdentityUserDto
+    public class IdentityUserResponseDto
     {
         /// <summary>
         /// The user to registered email address this cannot be updated (used for identification). 

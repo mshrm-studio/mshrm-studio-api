@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
     /// <summary>
-    /// Create a user any role
+    /// For creating a user
     /// </summary>
-    public class CreateUserAnyRoleDto
+    public class CreateUserRequestDto
     {
         /// <summary>
         /// The user to registered email address this cannot be updated (used for identification). 
@@ -19,13 +19,6 @@ namespace Mshrm.Studio.Auth.Api.Models.Dtos
         public required string Email { get; set; }
 
         /// <summary>
-        /// The users role. 
-        /// Example: Member
-        /// </summary>
-        [JsonProperty("role")]
-        public RoleType Role { get; set; }
-
-        /// <summary>
         /// The password to set for new user. 
         /// Example: Pajhdy66_oRd
         /// </summary>
@@ -35,12 +28,12 @@ namespace Mshrm.Studio.Auth.Api.Models.Dtos
         public required string Password { get; set; }
 
         /// <summary>
-        /// The users firstname
+        /// The users first name
         /// </summary>
         public required string FirstName { get; set; }
 
         /// <summary>
-        /// The users laast name
+        /// The users last name
         /// </summary>
         public required string LastName { get; set; }
     }

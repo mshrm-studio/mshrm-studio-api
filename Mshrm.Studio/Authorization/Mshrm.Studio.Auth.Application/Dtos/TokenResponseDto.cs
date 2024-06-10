@@ -2,7 +2,7 @@
 
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
-    public class TokenDto
+    public class TokenResponseDto
     {
         [JsonProperty("tokenValue")]
         public string TokenValue { get; set; }

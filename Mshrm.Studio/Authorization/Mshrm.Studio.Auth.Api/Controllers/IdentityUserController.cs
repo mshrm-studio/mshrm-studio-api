@@ -49,15 +49,15 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <returns>A user if created successfully</returns>
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status201Created)]
         [Route("any-role")]
-        public async Task<ActionResult<IdentityUserDto>> CreateUserAnyRoleAsync([FromBody] CreateUserAnyRoleDto model)
+        public async Task<ActionResult<IdentityUserResponseDto>> CreateUserAnyRoleAsync([FromBody] CreateUserAnyRoleRequestDto model)
         {
             var user = await _mediator.Send<MshrmStudioIdentityUser>(_mapper.Map<CreateUserAnyRoleCommand>(model), Request.HttpContext.RequestAborted);
 
             // Map and return
-            return Ok(_mapper.Map<IdentityUserDto>(user));
+            return Ok(_mapper.Map<IdentityUserResponseDto>(user));
         }
 
         /// <summary>
@@ -66,15 +66,15 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The new users information</param>
         /// <returns>A user if created successfully</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status201Created)]
         [Route("")]
-        public async Task<ActionResult<IdentityUserDto>> CreateUserAsync([FromBody] CreateUserDto model)
+        public async Task<ActionResult<IdentityUserResponseDto>> CreateUserAsync([FromBody] CreateUserRequestDto model)
         {
             var user = await _mediator.Send<MshrmStudioIdentityUser>(_mapper.Map<CreateUserCommand>(model), Request.HttpContext.RequestAborted); 
 
             // Map and return
-            return Ok(_mapper.Map<IdentityUserDto>(user));
+            return Ok(_mapper.Map<IdentityUserResponseDto>(user));
         }
 
         /// <summary>
@@ -83,10 +83,10 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <returns>A user if created successfully</returns>
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status201Created)]
         [Route("sso")]
-        public async Task<ActionResult<IdentityUserDto>> CreateUserFromSSOAsync()
+        public async Task<ActionResult<IdentityUserResponseDto>> CreateUserFromSSOAsync()
         {
             // Create user
             var user = await _mediator.Send<MshrmStudioIdentityUser>(new CreateUserFromSSOCommand()
@@ -96,7 +96,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
             }, Request.HttpContext.RequestAborted);
 
             // Map and return
-            return Ok(_mapper.Map<IdentityUserDto>(user));
+            return Ok(_mapper.Map<IdentityUserResponseDto>(user));
         }
 
         /// <summary>
@@ -105,10 +105,10 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="email">The users email</param>
         /// <returns>A user if created successfully</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IdentityUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IdentityUserResponseDto), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("")]
-        public async Task<ActionResult<IdentityUserDto>> GetIdentityUserAsync([FromQuery] string email)
+        public async Task<ActionResult<IdentityUserResponseDto>> GetIdentityUserAsync([FromQuery] string email)
         {
             var user = await _mediator.Send<MshrmStudioUser>(new GetUserByEmailQuery()
             {
@@ -118,7 +118,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
             }, Request.HttpContext.RequestAborted);
 
             // Map and return
-            return Ok(_mapper.Map<IdentityUserDto>(user));
+            return Ok(_mapper.Map<IdentityUserResponseDto>(user));
         }
     }
 }

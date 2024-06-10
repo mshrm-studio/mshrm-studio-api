@@ -50,15 +50,15 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
         [Route("token")]
-        public async Task<ActionResult<TokenDto>> GenerateTokenAsync([FromBody] LoginDto model)
+        public async Task<ActionResult<TokenResponseDto>> GenerateTokenAsync([FromBody] LoginRequestDto model)
         {
             // Generate token
             var token = await _mediator.Send<Token>(_mapper.Map<CreateTokenCommand>(model), Request.HttpContext.RequestAborted);
 
             // Return token
-            return Ok(_mapper.Map<TokenDto>(token));
+            return Ok(_mapper.Map<TokenResponseDto>(token));
         }
 
         /// <summary>
@@ -67,15 +67,15 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
         [Route("refresh/token")]
-        public async Task<ActionResult<TokenDto>> GenerateTokenFromRefreshTokenAsync([FromBody] RefreshTokenDto model)
+        public async Task<ActionResult<TokenResponseDto>> GenerateTokenFromRefreshTokenAsync([FromBody] RefreshTokenRequestDto model)
         {
             // Generate token
             var token = await _mediator.Send<Token>(_mapper.Map<CreateRefreshTokenCommand>(model), Request.HttpContext.RequestAborted);
 
             // Return token
-            return Ok(_mapper.Map<TokenDto>(token));
+            return Ok(_mapper.Map<TokenResponseDto>(token));
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("password")]
-        public async Task<ActionResult> UpdatePasswordAsync([FromBody] UpdatePasswordDto model)
+        public async Task<ActionResult> UpdatePasswordAsync([FromBody] UpdatePasswordRequestDto model)
         {
             // Build commmand
             var command = _mapper.Map<UpdatePasswordCommand>(model);
@@ -123,7 +123,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("password/reset")]
-        public async Task<ActionResult<bool>> ResetPasswordAsync([FromBody] PasswordResetDto model)
+        public async Task<ActionResult<bool>> ResetPasswordAsync([FromBody] PasswordResetRequestDto model)
         {
             var outcome = await _mediator.Send<bool>(_mapper.Map<ResetPasswordCommand>(model), Request.HttpContext.RequestAborted); 
 
@@ -137,14 +137,14 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(TokenDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
         [Route("confirmation/validate")]
-        public async Task<ActionResult<TokenDto>> ValidateConfirmationTokenAsync([FromBody] ValidateConfirmationDto model)
+        public async Task<ActionResult<TokenResponseDto>> ValidateConfirmationTokenAsync([FromBody] ValidateConfirmationRequestDto model)
         {
             var token = await _mediator.Send<Token>(_mapper.Map<ValidateUserConfirmationCommand>(model), Request.HttpContext.RequestAborted);
 
             // Map and return
-            return Ok(_mapper.Map<TokenDto>(token));
+            return Ok(_mapper.Map<TokenResponseDto>(token));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [Route("confirmation")]
-        public async Task<ActionResult<bool>> ResendConfirmationTokenAsync([FromBody] ResendConfirmationDto model)
+        public async Task<ActionResult<bool>> ResendConfirmationTokenAsync([FromBody] ResendConfirmationRequestDto model)
         {
             var resent = await _mediator.Send<bool>(_mapper.Map<ResendUserConfirmationCommand>(model), Request.HttpContext.RequestAborted);
 

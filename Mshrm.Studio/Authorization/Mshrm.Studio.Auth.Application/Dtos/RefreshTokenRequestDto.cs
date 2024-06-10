@@ -2,7 +2,7 @@
 
 namespace Mshrm.Studio.Auth.Api.Models.Dtos
 {
-    public class RefreshTokenDto
+    public class RefreshTokenRequestDto
     {
         /// <summary>
         /// The expired token. 

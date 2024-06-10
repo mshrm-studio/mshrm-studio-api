@@ -27,26 +27,23 @@ namespace Mshrm.Studio.Api.Controllers
         private readonly IMapper _mapper;
 
         private readonly IQueryUserService _readOnlyUserService;
-        private readonly IUserAuthorizationService _authorizationService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserController"/> class.
         /// </summary>
         /// <param name="readOnlyUserService"></param>
-        /// <param name="authorizationService"></param>
         /// <param name="domainUserClient"></param>
         /// <param name="contextAccessor"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        public UserController(IQueryUserService readOnlyUserService, IUserAuthorizationService authorizationService, IDomainUserClient domainUserClient, 
-            IHttpContextAccessor contextAccessor, IMapper mapper, ILogger<UserController> logger) :
+        public UserController(IQueryUserService readOnlyUserService, IDomainUserClient domainUserClient, IHttpContextAccessor contextAccessor, 
+            IMapper mapper, ILogger<UserController> logger) :
             base(domainUserClient, contextAccessor)
         {
             _logger = logger;
             _mapper = mapper;
 
             _readOnlyUserService = readOnlyUserService;
-            _authorizationService = authorizationService;
         }
 
         /// <summary>

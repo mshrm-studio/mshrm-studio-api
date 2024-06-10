@@ -27,26 +27,26 @@ namespace Mshrm.Studio.Auth.Api.Mapping
         {
             #region Token
 
-            CreateMap<Token, TokenDto>().ReverseMap();
+            CreateMap<Token, TokenResponseDto>().ReverseMap();
 
             #endregion
 
             #region User
 
-            CreateMap<MshrmStudioUser, IdentityUserDto>().ReverseMap();
-            CreateMap<MshrmStudioIdentityUser, IdentityUserDto>()
+            CreateMap<MshrmStudioUser, IdentityUserResponseDto>().ReverseMap();
+            CreateMap<MshrmStudioIdentityUser, IdentityUserResponseDto>()
                 .ForMember(dest => dest.Confirmed, src => src.MapFrom(x => x.EmailConfirmed))
                 .ReverseMap();
 
-            CreateMap<LoginDto, CreateTokenCommand>().ReverseMap();
-            CreateMap<RefreshTokenDto, CreateRefreshTokenCommand>().ReverseMap();
-            CreateMap<UpdatePasswordDto, UpdatePasswordCommand>().ReverseMap();
+            CreateMap<LoginRequestDto, CreateTokenCommand>().ReverseMap();
+            CreateMap<RefreshTokenRequestDto, CreateRefreshTokenCommand>().ReverseMap();
+            CreateMap<UpdatePasswordRequestDto, UpdatePasswordCommand>().ReverseMap();
             CreateMap<PasswordResetTokenRequestDto, CreatePasswordResetTokenCommand>().ReverseMap();
-            CreateMap<PasswordResetDto, ResetPasswordCommand>().ReverseMap();
-            CreateMap<ValidateConfirmationDto, ValidateUserConfirmationCommand>().ReverseMap();
-            CreateMap<ResendConfirmationDto, ResendUserConfirmationCommand>().ReverseMap();
-            CreateMap<CreateUserAnyRoleDto, CreateUserAnyRoleCommand>().ReverseMap();
-            CreateMap<CreateUserDto, CreateUserCommand>().ReverseMap();
+            CreateMap<PasswordResetRequestDto, ResetPasswordCommand>().ReverseMap();
+            CreateMap<ValidateConfirmationRequestDto, ValidateUserConfirmationCommand>().ReverseMap();
+            CreateMap<ResendConfirmationRequestDto, ResendUserConfirmationCommand>().ReverseMap();
+            CreateMap<CreateUserAnyRoleRequestDto, CreateUserAnyRoleCommand>().ReverseMap();
+            CreateMap<CreateUserRequestDto, CreateUserCommand>().ReverseMap();
    
             #endregion
         }
