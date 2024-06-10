@@ -8,11 +8,11 @@ spec:
 # `email` - the email address to be associated with the ACME account (make sure it's a valid one).
 # `server` - the URL used to access the ACME server’s directory endpoint.
 # `privateKeySecretRef` - Kubernetes Secret to store the automatically generated account private key.
-acme:
+  acme:
     email: matt19sharp@gmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-    name: letsencrypt-nginx-wcard-private
+      name: letsencrypt-nginx-wcard-private
     # List of challenge solvers that will be used to solve ACME challenges for the matching domains.
     solvers:
     # Use the DigitalOcean DNS API to manage DNS01 challenge records.
