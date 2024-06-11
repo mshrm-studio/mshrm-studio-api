@@ -44,8 +44,24 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
             {
                 var existingResources = await _localizationRepository.GetLocalizationResourcesReadOnlyAsync(command.LocalizationArea, command.Culture, command.Name, cancellationToken);
                 if (existingResources.Any())
+                {
                     throw new UnprocessableEntityException("Localization resource already exists", FailureCode.LocalizationResourceAlreadyExists);
+                }
 
+                // Validate name/key
+                switch (command.LocalizationArea)
+                {
+                    case LocalizationArea.Errors:
+                        // Validate failure code
+                        var isValidFailureCode = Enum.TryParse<FailureCode>(command.Name, true, out var result);
+                        if(!isValidFailureCode)
+                        {
+                            throw new UnprocessableEntityException("Failure code is invalid", FailureCode.FailureCodeIsInvalid, nameof(command.Name));
+                        }
+                        break;
+                    default: throw new UnprocessableEntityException("Localization area not supported", FailureCode.LocalizationAreaNotSupported, nameof(command.LocalizationArea));
+                }
+                
                 // Clear cache so this is now included
                 await _cacheService.ClearItemsThatStartWithAsync(MshrmStudioLocalizationConstants.LocalizationResourcesKey);
 
