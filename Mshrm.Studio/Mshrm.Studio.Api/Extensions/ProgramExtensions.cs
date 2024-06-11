@@ -263,6 +263,10 @@
                 new PricesClient(builder.Configuration.GetValue<string>("PriceApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("PriceApi"), s.GetService<IHttpContextAccessor>())
             );
 
+            builder.Services.AddTransient<IJobClient, JobClient>(s =>
+               new JobClient(builder.Configuration.GetValue<string>("PriceApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("PriceApi"), s.GetService<IHttpContextAccessor>())
+            );
+
             builder.Services.AddTransient<IAssetsClient, AssetsClient>(s =>
                 new AssetsClient(builder.Configuration.GetValue<string>("CurrenciesApi:Url"), s.GetService<IHttpClientFactory>().CreateClient("PriceApi"), s.GetService<IHttpContextAccessor>())
             );

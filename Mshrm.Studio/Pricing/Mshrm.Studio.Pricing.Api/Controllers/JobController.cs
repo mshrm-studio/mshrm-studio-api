@@ -52,7 +52,7 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// </summary>
         /// <param name="pricingProviderType">The provider to import prices for</param>
         /// <returns>An action result</returns>
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [Route("import-prices/{pricingProviderType}")]
         public async Task<ActionResult<bool>> ImportPricesAsync([FromRoute] PricingProviderType pricingProviderType)

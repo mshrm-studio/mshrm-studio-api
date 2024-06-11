@@ -40,7 +40,7 @@ namespace Mshrm.Studio.Api.Controllers
         /// </summary>
         /// <param name="pricingProviderType">The provider to import prices for</param>
         /// <returns>If the job was successful or not</returns>
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [Route("import-prices/{pricingProviderType}")]
