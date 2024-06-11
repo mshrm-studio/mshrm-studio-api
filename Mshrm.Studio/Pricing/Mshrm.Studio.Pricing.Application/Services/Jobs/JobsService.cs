@@ -35,7 +35,7 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
         /// </summary>
         /// <param name="type">Provider type</param>
         /// <returns>An async task</returns>
-        public async Task ImportProviderPairsAsync(PricingProviderType type)
+        public async Task<bool> ImportProviderPairsAsync(PricingProviderType type)
         {
             try
             {
@@ -57,11 +57,15 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs
                 }, CancellationToken.None);
 
                 _logger.LogInformation($"Finishing import for {type.ToString()} at {DateTime.UtcNow}");
+
+                return true;
             }
             catch (Exception ex)
             {
                 _logger.LogCritical($"Job for provider: {type} failed");
                 _logger.LogCritical(ex.StackTrace);
+
+                return false;
             }
         }
 

@@ -26,7 +26,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <summary>
         /// Returns a new JWT bearer token which can be used to make authenticated calls.
         /// </summary>
-        /// <param name="model">Login data</param>
+        /// <param name="model">Login data - username and password</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model);
@@ -35,13 +35,13 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <summary>
         /// Returns a new JWT bearer token which can be used to make authenticated calls.
         /// </summary>
-        /// <param name="model">Login data</param>
+        /// <param name="model">Login data - username and password</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Returns a new JWT bearer token in exchnage for a valid refresh token + old JWT
+        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
         /// </summary>
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
@@ -50,7 +50,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Returns a new JWT bearer token in exchnage for a valid refresh token + old JWT
+        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
         /// </summary>
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
@@ -192,7 +192,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <summary>
         /// Returns a new JWT bearer token which can be used to make authenticated calls.
         /// </summary>
-        /// <param name="model">Login data</param>
+        /// <param name="model">Login data - username and password</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
         public virtual System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model)
@@ -204,7 +204,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <summary>
         /// Returns a new JWT bearer token which can be used to make authenticated calls.
         /// </summary>
-        /// <param name="model">Login data</param>
+        /// <param name="model">Login data - username and password</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
         public virtual async System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model, System.Threading.CancellationToken cancellationToken)
@@ -283,7 +283,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         }
 
         /// <summary>
-        /// Returns a new JWT bearer token in exchnage for a valid refresh token + old JWT
+        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
         /// </summary>
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>
@@ -295,7 +295,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Returns a new JWT bearer token in exchnage for a valid refresh token + old JWT
+        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
         /// </summary>
         /// <param name="model">Login data</param>
         /// <returns>Bearer token, refresh token and expiry time</returns>

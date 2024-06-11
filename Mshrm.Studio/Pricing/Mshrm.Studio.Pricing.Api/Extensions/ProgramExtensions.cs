@@ -369,7 +369,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
 
             builder.Services.AddScoped<IRequestHandler<GetProviderPricesQuery, List<PricePair>>, GetProviderPricesQuerysHandler>();
             builder.Services.AddScoped<IRequestHandler<GetProviderAssetsQuery, List<ProviderAsset>>, GetProviderAssetsQuerysHandler>();
-           
+            builder.Services.AddScoped<IRequestHandler<ImportPricesCommand, bool>, ImportPricesCommandHandler>();
+
             return builder;
         }
 

@@ -9,6 +9,6 @@ namespace Mshrm.Studio.Pricing.Api.Services.Jobs.Interfaces
         /// </summary>
         /// <param name="type">Provider type</param>
         /// <returns>An async task</returns>
-        public Task ImportProviderPairsAsync(PricingProviderType type);
+        public Task<bool> ImportProviderPairsAsync(PricingProviderType type);
     }
 }
