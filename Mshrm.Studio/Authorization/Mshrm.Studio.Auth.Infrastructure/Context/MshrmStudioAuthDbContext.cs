@@ -21,7 +21,7 @@ namespace Mshrm.Studio.Auth.Api.Context
     /// <summary>
     /// Login context
     /// </summary>
-    public class MshrmStudioAuthDbContext : IdentityDbContext<MshrmStudioIdentityUser, IdentityRole, string>
+    public class MshrmStudioAuthDbContext : IdentityDbContext<MshrmStudioIdentityUser, IdentityRole, string> 
     {
         /// <summary>
         /// Mediatr

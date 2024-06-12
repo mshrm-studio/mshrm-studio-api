@@ -301,7 +301,8 @@ namespace Mshrm.Studio.Storage.Api.Extensions
             builder.Services.SetContext<MshrmStudioStorageDbContext>(
                 builder.Configuration.GetValue<string>("ApplicationDatabaseUsername"),
                 builder.Configuration.GetValue<string>("ApplicationDatabasePassword"),
-                builder.Configuration.GetConnectionString("ApplicationDatabase")
+                builder.Configuration.GetConnectionString("ApplicationDatabase"),
+                "Mshrm.Studio.Storage.Infrastructure"
             );
 
             return builder;

@@ -37,7 +37,14 @@ using Microsoft.Extensions.Configuration;
 using Mshrm.Studio.Auth.Domain.Users;
 using Mshrm.Studio.Auth.Infrastructure.Factories;
 using Mshrm.Studio.Shared.Enums;
-using Microsoft.Extensions.Localization;
+using Duende.IdentityServer.EntityFramework.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Duende.IdentityServer.EntityFramework.DbContexts;
+using Google.Api;
+using Duende.IdentityServer.AspNetIdentity;
+using IdentityModel;
+using Microsoft.IdentityModel.Logging;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -126,7 +133,6 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             {
                 options.Limits.MaxRequestBodySize = null;
                 options.AllowSynchronousIO = true;
-                options.Limits.KeepAliveTimeout = TimeSpan.FromSeconds(30);
                 options.ConfigureHttpsDefaults(co =>
                 {
                     co.SslProtocols = SslProtocols.Tls12;
@@ -201,12 +207,27 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             var username = builder.Configuration.GetValue<string>("ApplicationDatabaseUsername");
             var password = builder.Configuration.GetValue<string>("ApplicationDatabasePassword");
 
-            // Set the context
+            // Set the contexts
             builder.Services.SetContext<MshrmStudioAuthDbContext>(
                 username,
                 password,
-                builder.Configuration.GetConnectionString("ApplicationDatabase")
+                builder.Configuration.GetConnectionString("ApplicationDatabase"),
+                "Mshrm.Studio.Auth.Infrastructure"
             );
+
+            builder.Services.SetContext<PersistedGrantDbContext>(
+             username,
+             password,
+             builder.Configuration.GetConnectionString("ApplicationDatabase"),
+             "Mshrm.Studio.Auth.Infrastructure"//typeof(ProgramExtensions).GetTypeInfo().Assembly.GetName().Name
+           );
+
+            builder.Services.SetContext<ConfigurationDbContext>(
+              username,
+              password,
+              builder.Configuration.GetConnectionString("ApplicationDatabase"),
+              "Mshrm.Studio.Auth.Infrastructure"//typeof(ProgramExtensions).GetTypeInfo().Assembly.GetName().Name
+           );
 
             return builder;
         }
@@ -292,8 +313,58 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             .AddEntityFrameworkStores<MshrmStudioAuthDbContext>()
             .AddDefaultTokenProviders();
 
+            // Get connection string to set up stores
+            var username = builder.Configuration.GetValue<string>("ApplicationDatabaseUsername");
+            var password = builder.Configuration.GetValue<string>("ApplicationDatabasePassword");
+            var connectionStringWithCredentials = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ApplicationDatabase"));
+            connectionStringWithCredentials.UserID = username;
+            connectionStringWithCredentials.Password = password;
+
+            var migrationsAssembly = typeof(ProgramExtensions).GetTypeInfo().Assembly.GetName().Name;
+
+            // Add identity server to API
+            builder.Services.AddIdentityServer()
+                .AddAspNetIdentity<MshrmStudioIdentityUser>()
+                .AddDeveloperSigningCredential() //TODO: NOT something we want to use in a production environment
+                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator<MshrmStudioIdentityUser>>()
+                .AddConfigurationStore(opt =>
+                {
+                    opt.ConfigureDbContext = c => c.UseSqlServer(connectionStringWithCredentials.ToString(), sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddOperationalStore(opt =>
+                {
+                    opt.ConfigureDbContext = o => o.UseSqlServer(connectionStringWithCredentials.ToString(), sql => sql.MigrationsAssembly(migrationsAssembly));
+                    opt.EnableTokenCleanup = true;
+                });
+
+            // Setup related services for identity user/role
+            builder.Services.AddScoped<IUserValidator<MshrmStudioIdentityUser>, UserValidator<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<IPasswordValidator<MshrmStudioIdentityUser>, PasswordValidator<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<IPasswordHasher<MshrmStudioIdentityUser>, PasswordHasher<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<ILookupNormalizer, UpperInvariantLookupNormalizer>();
+            builder.Services.AddScoped<IRoleValidator<MshrmStudioIdentityUser>, RoleValidator<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<IdentityErrorDescriber>();
+            builder.Services.AddScoped<ISecurityStampValidator, SecurityStampValidator<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<ITwoFactorSecurityStampValidator, TwoFactorSecurityStampValidator<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<IUserClaimsPrincipalFactory<MshrmStudioIdentityUser>, UserClaimsPrincipalFactory<MshrmStudioIdentityUser, IdentityRole>>();
+            builder.Services.AddScoped<UserManager<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<SignInManager<MshrmStudioIdentityUser>>();
+            builder.Services.AddScoped<RoleManager<IdentityRole>>();
+
+            // What to include in token
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                options.ClaimsIdentity.UserIdClaimType = JwtClaimTypes.Subject;
+                options.ClaimsIdentity.UserNameClaimType = JwtClaimTypes.Name;
+                options.ClaimsIdentity.RoleClaimType = JwtClaimTypes.Role;
+            });
+
             // Identity password hash config
             builder.Services.Configure<PasswordHasherOptions>(options => options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3);
+
+            // For debugging
+            IdentityModelEventSource.ShowPII = builder.Environment.IsDevelopment();
+            IdentityModelEventSource.LogCompleteSecurityArtifact = builder.Environment.IsDevelopment();
 
             return builder;
         }
@@ -385,8 +456,11 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     // So expriy works
                     ClockSkew = TimeSpan.Zero,
 
+
                     // Custom issuer validater to support multi tenant requests
                     IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
+
+                    IssuerSigningKeyResolver = (string token, Microsoft.IdentityModel.Tokens.SecurityToken securityToken, string kid, Microsoft.IdentityModel.Tokens.TokenValidationParameters validationParameters) => new List<SecurityKey> { SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey) }
                 };
 
                 // Add events for adding claims that OpenID cannot (ie. role)

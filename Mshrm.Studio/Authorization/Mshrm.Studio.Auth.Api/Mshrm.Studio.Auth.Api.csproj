@@ -31,6 +31,9 @@
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Dapr.AspNetCore" Version="1.12.0" />
     <PackageReference Include="Dapr.Client" Version="1.12.0" />
+    <PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.5" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework" Version="7.0.5" />
+    <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.5" />
     <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.5.1" />
     <PackageReference Include="Herald.Logging.OpenTrace" Version="1.2.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
@@ -44,7 +47,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.8" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.9" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.3" />
     <PackageReference Include="NSwag.MSBuild" Version="14.0.3">
       <PrivateAssets>all</PrivateAssets>

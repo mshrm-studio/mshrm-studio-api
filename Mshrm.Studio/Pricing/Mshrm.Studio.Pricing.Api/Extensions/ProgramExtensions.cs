@@ -428,7 +428,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             builder.Services.SetContext<MshrmStudioPricingDbContext>(
                 builder.Configuration.GetValue<string>("ApplicationDatabaseUsername"),
                 password,
-                builder.Configuration.GetConnectionString("ApplicationDatabase")
+                builder.Configuration.GetConnectionString("ApplicationDatabase"),
+                "Mshrm.Studio.Pricing.Infrastructure"
             );
 
             return builder;

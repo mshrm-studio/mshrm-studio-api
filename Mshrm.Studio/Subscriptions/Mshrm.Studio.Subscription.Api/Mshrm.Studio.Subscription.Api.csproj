@@ -33,7 +33,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.8" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.9" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.3" />
     <PackageReference Include="NSwag.MSBuild" Version="14.0.3">
       <PrivateAssets>all</PrivateAssets>

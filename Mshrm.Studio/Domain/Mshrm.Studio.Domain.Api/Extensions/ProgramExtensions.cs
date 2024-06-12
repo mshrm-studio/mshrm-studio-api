@@ -216,7 +216,8 @@ namespace Mshrm.Studio.Domain.Api.Extensions
             builder.Services.SetContext<MshrmStudioDomainDbContext>(
                 username,
                 password,
-                builder.Configuration.GetConnectionString("ApplicationDatabase")
+                builder.Configuration.GetConnectionString("ApplicationDatabase"),
+                "Mshrm.Studio.Domain.Infrastructure"
             );
 
             return builder;

@@ -18,6 +18,10 @@ dotnet user-secrets set "OpenId:MicrosoftClientSecret" "" --project Authorizatio
 2. Set package manager console default project to Infrastructure project ie. Mshrm.Studio.X.Infrastructure
 3. Run "add-migration Migration_Name" in package manager console
 
+Add-Migration InitialIdentityMigration -c MshrmStudioDbContext -o Migrations
+Add-Migration InitialConfigurationMigration -c ConfigurationDbContext -o Migrations/IdentityServer/ConfigurationDb
+Add-Migration InitialPersistedGranMigration -c PersistedGrantDbContext -o Migrations/IdentityServer/PersistedGrantDb
+
 ## License
 
 The project is under [MIT license](https://github.com/mshrm-studio/mshrm-studio-api/blob/main/LICENSE).

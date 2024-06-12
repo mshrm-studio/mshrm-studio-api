@@ -6,6 +6,8 @@ using Mshrm.Studio.Auth.Api.Extensions;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Mshrm.Studio.Shared.Extensions;
 using Newtonsoft.Json;
+using Duende.IdentityServer.EntityFramework.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +64,9 @@ app.UseRequestLocalization(options.Value);
 if (builder.Configuration.GetValue<bool>("EFCore:Migrate") == true)
 {
     await app.AddDatabaseMigrationAsync<MshrmStudioAuthDbContext>();
+
+    await app.AddDatabaseMigrationAsync<PersistedGrantDbContext>();
+    await app.AddDatabaseMigrationAsync<ConfigurationDbContext>();
 }
 
 // Configure the HTTP request pipeline.
@@ -111,5 +116,7 @@ app.UseEndpoints(endpoints =>
 });
 
 app.MapHealthChecks("/health");
+
+app.UseIdentityServer();
 
 app.Run();

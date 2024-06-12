@@ -282,7 +282,8 @@ namespace Mshrm.Studio.Subscription.Api.Extensions
             builder.Services.SetContext<MshrmStudioSubscriptionDbContext>(
                 builder.Configuration.GetValue<string>("ApplicationDatabaseUsername"),
                 builder.Configuration.GetValue<string>("ApplicationDatabasePassword"),
-                builder.Configuration.GetConnectionString("ApplicationDatabase")
+                builder.Configuration.GetConnectionString("ApplicationDatabase"),
+                "Mshrm.Studio.Subscription.Infrastructure"
             );
 
             return builder;

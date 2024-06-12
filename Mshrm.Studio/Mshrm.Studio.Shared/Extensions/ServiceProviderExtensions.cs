@@ -16,7 +16,7 @@ namespace Mshrm.Studio.Shared.Extensions
         /// <param name="services">The service provider</param>
         /// <param name="connectionString">The connection string of the connection</param>
         /// <returns>The service collection</returns>
-        public static IServiceCollection SetContext<T>(this IServiceCollection services, string? username, string? password, string? connectionString)
+        public static IServiceCollection SetContext<T>(this IServiceCollection services, string? username, string? password, string? connectionString, string? migrationsAssembly)
            where T : DbContext
         {
             // Basic validation
@@ -43,6 +43,12 @@ namespace Mshrm.Studio.Shared.Extensions
                         errorNumbersToAdd: null
                     // Command timeout of 60s 
                     ).CommandTimeout(60);
+
+                    if (!string.IsNullOrEmpty(migrationsAssembly))
+                    {
+                        options.MigrationsAssembly(migrationsAssembly);
+                    }
+
                 }).UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
             }, ServiceLifetime.Transient);
         }

@@ -200,7 +200,8 @@ namespace Mshrm.Studio.Email.Api.Extensions
             builder.Services.SetContext<MshrmStudioEmailDbContext>(
                 builder.Configuration.GetValue<string>("ApplicationDatabaseUsername"),
                 builder.Configuration.GetValue<string>("ApplicationDatabasePassword"),
-                builder.Configuration.GetConnectionString("ApplicationDatabase")
+                builder.Configuration.GetConnectionString("ApplicationDatabase"),
+                "Mshrm.Studio.Email.Infrastructure"
             );
 
             return builder;
