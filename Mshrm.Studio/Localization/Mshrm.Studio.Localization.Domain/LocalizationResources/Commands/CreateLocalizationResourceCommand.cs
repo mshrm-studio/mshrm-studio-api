@@ -15,7 +15,7 @@ namespace Mshrm.Studio.Localization.Api.Models.CQRS.LocalizationResources.Comman
         /// <summary>
         /// The key
         /// </summary>
-        public required string Name { get; set; }
+        public required string Key { get; set; }
 
         /// <summary>
         /// The value for key

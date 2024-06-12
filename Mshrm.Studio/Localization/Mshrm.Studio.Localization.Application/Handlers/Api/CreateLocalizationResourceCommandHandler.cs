@@ -47,7 +47,7 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
         {
             using (var scope = _tracer.BuildSpan("CreateLocalizationResourceAsync_CreateLocalizationService").StartActive(true))
             {
-                var existingResources = await _localizationRepository.GetLocalizationResourcesReadOnlyAsync(command.LocalizationArea, command.Culture, command.Name, cancellationToken);
+                var existingResources = await _localizationRepository.GetLocalizationResourcesReadOnlyAsync(command.LocalizationArea, command.Culture, command.Key, cancellationToken);
                 if (existingResources.Any())
                 {
                     throw new UnprocessableEntityException("Localization resource already exists", FailureCode.LocalizationResourceAlreadyExists);
@@ -64,10 +64,10 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
                 {
                     case LocalizationArea.Errors:
                         // Validate failure code
-                        var isValidFailureCode = Enum.TryParse<FailureCode>(command.Name, true, out var result);
+                        var isValidFailureCode = Enum.TryParse<FailureCode>(command.Key, true, out var result);
                         if(!isValidFailureCode)
                         {
-                            throw new UnprocessableEntityException("Failure code is invalid", FailureCode.FailureCodeIsInvalid, nameof(command.Name));
+                            throw new UnprocessableEntityException("Failure code is invalid", FailureCode.FailureCodeIsInvalid, nameof(command.Key));
                         }
                         break;
                     default: throw new UnprocessableEntityException("Localization area not supported", FailureCode.LocalizationAreaNotSupported, nameof(command.LocalizationArea));
@@ -76,7 +76,7 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
                 // Clear cache so this is now included
                 await _cacheService.ClearItemsThatStartWithAsync(MshrmStudioLocalizationConstants.LocalizationResourcesKey);
 
-                return await _localizationRepository.CreateLocalizationResourceAsync(command.LocalizationArea, command.Culture, command.Name, command.Value, command.Comment, cancellationToken);
+                return await _localizationRepository.CreateLocalizationResourceAsync(command.LocalizationArea, command.Culture, command.Key, command.Value, command.Comment, cancellationToken);
             }
         }
     }
