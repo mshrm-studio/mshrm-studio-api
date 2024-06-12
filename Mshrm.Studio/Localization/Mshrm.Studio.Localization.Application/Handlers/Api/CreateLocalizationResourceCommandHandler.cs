@@ -7,6 +7,7 @@ using Mshrm.Studio.Localization.Api.Models.CQRS.LocalizationResources.Commands;
 using Mshrm.Studio.Localization.Api.Models.Entities;
 using Mshrm.Studio.Localization.Api.Models.Enums;
 using Mshrm.Studio.Localization.Api.Repositories.Interfaces;
+using Mshrm.Studio.Localization.Application.Helpers;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Exceptions;
 using Mshrm.Studio.Shared.Exceptions.HttpAction;
@@ -61,21 +62,12 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
                 }
 
                 // Validate name/key
-                switch (command.LocalizationArea)
+                var areaKeys = LocalizationAreaKeyHelper.GetKeys(command.LocalizationArea);
+                if (!areaKeys.Contains(command.Key))
                 {
-                    case LocalizationArea.Errors:
-                        // Validate failure code
-                        var isValidFailureCode = Enum.TryParse<FailureCode>(command.Key, true, out var result);
-                        var badRequestAccessors = typeof(ModelBindingMessageProvider).GetProperties().Select(p => p.Name).Where(x => x.Contains("Accessor")).ToList();
-                        var isValidModelBindingAccessor = badRequestAccessors.Contains(command.Key);
-                        if (!isValidFailureCode && !isValidFailureCode)
-                        {
-                            throw new UnprocessableEntityException("Failure code is invalid", FailureCode.FailureCodeIsInvalid, nameof(command.Key));
-                        }
-                        break;
-                    default: throw new UnprocessableEntityException("Localization area not supported", FailureCode.LocalizationAreaNotSupported, nameof(command.LocalizationArea));
+                    throw new UnprocessableEntityException("Localization area key is invalid", FailureCode.LocalizationAreaKeyIsInvalid, nameof(command.Key));
                 }
-                
+
                 // Clear cache so this is now included
                 await _cacheService.ClearItemsThatStartWithAsync(MshrmStudioLocalizationConstants.LocalizationResourcesKey);
 

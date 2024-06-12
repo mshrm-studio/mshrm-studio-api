@@ -47,6 +47,7 @@ namespace Mshrm.Studio.Shared.Enums
         AssetPriceMustBeACurrency = 36,
         FailureCodeIsInvalid = 37,
         LocalizationAreaNotSupported = 38,
-        CultureNotSupported = 39
+        CultureNotSupported = 39,
+        LocalizationAreaKeyIsInvalid = 40
     }
 }

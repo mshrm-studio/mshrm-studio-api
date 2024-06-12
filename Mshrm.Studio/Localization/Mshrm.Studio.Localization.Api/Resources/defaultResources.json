@@ -258,5 +258,10 @@
     "Id": 52,
     "Key": "ValueMustNotBeNullAccessor",
     "Value": "The value '{0}' is invalid."
+  },
+  {
+    "Id": 53,
+    "Key": "LocalizationAreaKeyIsInvalid",
+    "Value": "The key provided for the localization area is invalid."
   }
 ]

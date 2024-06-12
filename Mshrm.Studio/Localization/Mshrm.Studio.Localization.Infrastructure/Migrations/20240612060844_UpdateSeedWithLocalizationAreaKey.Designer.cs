@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mshrm.Studio.Localization.Api.Contexts;
 
@@ -11,9 +12,11 @@ using Mshrm.Studio.Localization.Api.Contexts;
 namespace Mshrm.Studio.Localization.Api.Migrations
 {
     [DbContext(typeof(MshrmStudioLocalizationDbContext))]
-    partial class MshrmStudioLocalizationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240612060844_UpdateSeedWithLocalizationAreaKey")]
+    partial class UpdateSeedWithLocalizationAreaKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
