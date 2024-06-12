@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Microsoft.Extensions.Options;
 using Mshrm.Studio.Localization.Api.Models.Constants;
 using Mshrm.Studio.Localization.Api.Models.CQRS.LocalizationResources.Commands;
@@ -65,7 +66,9 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
                     case LocalizationArea.Errors:
                         // Validate failure code
                         var isValidFailureCode = Enum.TryParse<FailureCode>(command.Key, true, out var result);
-                        if(!isValidFailureCode)
+                        var badRequestAccessors = typeof(ModelBindingMessageProvider).GetProperties().Select(p => p.Name).Where(x => x.Contains("Accessor")).ToList();
+                        var isValidModelBindingAccessor = badRequestAccessors.Contains(command.Key);
+                        if (!isValidFailureCode && !isValidFailureCode)
                         {
                             throw new UnprocessableEntityException("Failure code is invalid", FailureCode.FailureCodeIsInvalid, nameof(command.Key));
                         }
