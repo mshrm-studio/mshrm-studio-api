@@ -203,5 +203,60 @@
     "Id": 41,
     "Key": "CultureNotSupported",
     "Value": "The culture provided is not supported"
+  },
+  {
+    "Id": 42,
+    "Key": "AttemptedValueIsInvalidAccessor",
+    "Value": "The value '{0}' is not valid for {1}."
+  },
+  {
+    "Id": 43,
+    "Key": "MissingBindRequiredValueAccessor",
+    "Value": "A value for the '{0}' parameter or property was not provided."
+  },
+  {
+    "Id": 44,
+    "Key": "MissingKeyOrValueAccessor",
+    "Value": "A value is required."
+  },
+  {
+    "Id": 45,
+    "Key": "MissingRequestBodyRequiredValueAccessor",
+    "Value": "A non-empty request body is required."
+  },
+  {
+    "Id": 46,
+    "Key": "NonPropertyAttemptedValueIsInvalidAccessor",
+    "Value": "The value '{0}' is not valid."
+  },
+  {
+    "Id": 47,
+    "Key": "NonPropertyUnknownValueIsInvalidAccessor",
+    "Value": "The supplied value is invalid."
+  },
+  {
+    "Id": 48,
+    "Key": "NonPropertyValueMustBeANumberAccessor",
+    "Value": "The field must be a number."
+  },
+  {
+    "Id": 49,
+    "Key": "UnknownValueIsInvalidAccessor",
+    "Value": "The supplied value is invalid for {0}."
+  },
+  {
+    "Id": 50,
+    "Key": "ValueIsInvalidAccessor",
+    "Value": "The value '{0}' is invalid."
+  },
+  {
+    "Id": 51,
+    "Key": "ValueMustBeANumberAccessor",
+    "Value": "The field {0} must be a number."
+  },
+  {
+    "Id": 52,
+    "Key": "ValueMustNotBeNullAccessor",
+    "Value": "The value '{0}' is invalid."
   }
 ]

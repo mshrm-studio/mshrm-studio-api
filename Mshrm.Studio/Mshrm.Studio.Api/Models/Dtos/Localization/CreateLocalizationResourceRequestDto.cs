@@ -1,5 +1,8 @@
 ﻿using Mshrm.Studio.Api.Clients.Localization;
+using Mshrm.Studio.Shared.Constants;
+using Mshrm.Studio.Shared.Enums;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Api.Models.Dtos.Localization
 {

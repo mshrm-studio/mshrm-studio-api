@@ -37,6 +37,7 @@ using Microsoft.Extensions.Configuration;
 using Mshrm.Studio.Auth.Domain.Users;
 using Mshrm.Studio.Auth.Infrastructure.Factories;
 using Mshrm.Studio.Shared.Enums;
+using Microsoft.Extensions.Localization;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {

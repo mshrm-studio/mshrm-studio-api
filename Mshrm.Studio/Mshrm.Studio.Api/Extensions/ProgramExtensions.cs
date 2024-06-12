@@ -19,6 +19,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Server.Kestrel.Core;
     using Microsoft.Extensions.Localization;
+    using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using Mshrm.Studio.Api.Clients;
@@ -30,6 +31,7 @@
     using Mshrm.Studio.Api.Clients.Storage;
     using Mshrm.Studio.Api.Models;
     using Mshrm.Studio.Api.Models.Options;
+    using Mshrm.Studio.Api.Models.Options.Configurations;
     using Mshrm.Studio.Api.Services.Api;
     using Mshrm.Studio.Api.Services.Api.Interfaces;
     using Mshrm.Studio.Api.Services.Localization;
@@ -102,17 +104,18 @@
         {
             // Add Mvc and custom options
             builder.Services.AddMvcCore()
-                .AddJsonOptions(options =>
-                {
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                    options.JsonSerializerOptions.IgnoreNullValues = true;
-                })
-                .ConfigureApiBehaviorOptions(options => { })
-                .AddApiExplorer()
-                .AddDataAnnotationsLocalization(options => {
-                    options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource));
-                });
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+            })
+            .ConfigureApiBehaviorOptions(options => { })
+            .AddApiExplorer()
+            .AddDataAnnotationsLocalization(options =>
+            {
+                options.DataAnnotationLocalizerProvider = (type, factory) =>
+                factory.Create(typeof(SharedResource));
+            });
 
             return builder;
         }
@@ -203,6 +206,7 @@
             builder.Services.Configure<LoginApiOptions>(options => builder.Configuration.GetSection("LoginApi").Bind(options));
             builder.Services.Configure<EmailApiOptions>(options => builder.Configuration.GetSection("EmailApi").Bind(options));
             builder.Services.Configure<JwtOptions>(options => builder.Configuration.GetSection("Jwt").Bind(options));
+            builder.Services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureModelBindingLocalization>();
 
             return builder;
         }
@@ -471,7 +475,7 @@
             // Setup DI
             builder.Services.AddLocalization(options => { options.ResourcesPath = "Resources"; });
             builder.Services.AddScoped<IStringLocalizer, ApiResourceStringLocalizer>();
-   
+
             // Add locales
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -579,8 +583,8 @@
                     {
                         var storageApiException = exception as StorageApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(storageApiException.Response);
-    
-                         if(propegatedProblemDetail != null)
+
+                        if (propegatedProblemDetail != null)
                         {
                             CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Storage.Api");
                         }
@@ -594,7 +598,7 @@
                         var localizationApiException = exception as LocalizationApiException;
                         var propegatedProblemDetail = JsonConvert.DeserializeObject<MshrmStudioProblemDetails>(localizationApiException.Response);
 
-                        if(propegatedProblemDetail != null)
+                        if (propegatedProblemDetail != null)
                         {
                             CreateHttpClientProblemDetails(propegatedProblemDetail, ctx, strLocalizer, "Mshrm.Studio.Localization.Api");
                         }

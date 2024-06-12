@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
 using Mshrm.Studio.Localization.Api.Models.Enums;
 using Mshrm.Studio.Localization.Domain.LocalizationResources.Queries;
 using Mshrm.Studio.Shared.Enums;
@@ -38,7 +39,10 @@ namespace Mshrm.Studio.Localization.Application.Handlers.Api
                 switch (query.LocalizationArea)
                 {
                     case LocalizationArea.Errors:
-                        return Enum.GetNames(typeof(FailureCode)).ToList();
+                        var errors = Enum.GetNames(typeof(FailureCode)).ToList();
+                        var badRequestAccessors = typeof(ModelBindingMessageProvider).GetProperties().Select(p => p.Name).Where(x => x.Contains("Accessor")).ToList();
+                        errors.AddRange(badRequestAccessors);
+                        return errors;
                     default: throw new UnprocessableEntityException("Localization area not supported", FailureCode.LocalizationAreaNotSupported);
                 }
             }
