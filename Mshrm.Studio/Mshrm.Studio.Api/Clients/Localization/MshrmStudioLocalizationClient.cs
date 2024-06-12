@@ -28,10 +28,10 @@ namespace Mshrm.Studio.Api.Clients.Localization
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text to localize</param>
         /// <returns>Localization resources</returns>
         /// <exception cref="LocalizationApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string name);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string key);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -39,10 +39,10 @@ namespace Mshrm.Studio.Api.Clients.Localization
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text to localize</param>
         /// <returns>Localization resources</returns>
         /// <exception cref="LocalizationApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string name, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string key, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Create a localization resource
@@ -179,12 +179,12 @@ namespace Mshrm.Studio.Api.Clients.Localization
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text to localize</param>
         /// <returns>Localization resources</returns>
         /// <exception cref="LocalizationApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string name)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string key)
         {
-            return GetLocalizationResourcesAsync(area, culture, name, System.Threading.CancellationToken.None);
+            return GetLocalizationResourcesAsync(area, culture, key, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
@@ -193,10 +193,10 @@ namespace Mshrm.Studio.Api.Clients.Localization
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text to localize</param>
         /// <returns>Localization resources</returns>
         /// <exception cref="LocalizationApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string name, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<LocalizationResourceDto>> GetLocalizationResourcesAsync(LocalizationArea? area, string culture, string key, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -220,9 +220,9 @@ namespace Mshrm.Studio.Api.Clients.Localization
                     {
                         urlBuilder_.Append(System.Uri.EscapeDataString("culture")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(culture, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
-                    if (name != null)
+                    if (key != null)
                     {
-                        urlBuilder_.Append(System.Uri.EscapeDataString("name")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                        urlBuilder_.Append(System.Uri.EscapeDataString("key")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(key, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
                     }
                     urlBuilder_.Length--;
 
@@ -843,7 +843,7 @@ namespace Mshrm.Studio.Api.Clients.Localization
     {
         private System.Guid _guidId;
         private string _culture;
-        private string _name;
+        private string _key;
         private string _value;
         private string _comment;
         private LocalizationArea _localizationArea;
@@ -880,17 +880,17 @@ namespace Mshrm.Studio.Api.Clients.Localization
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Name
+        public string Key
         {
-            get { return _name; }
+            get { return _key; }
 
             set
             {
-                if (_name != value)
+                if (_key != value)
                 {
-                    _name = value;
+                    _key = value;
                     RaisePropertyChanged();
                 }
             }
@@ -980,7 +980,7 @@ namespace Mshrm.Studio.Api.Clients.Localization
     public partial class CreateLocalizationResourceDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _culture;
-        private string _name;
+        private string _key;
         private string _value;
         private string _comment;
         private LocalizationArea _localizationArea;
@@ -1001,17 +1001,17 @@ namespace Mshrm.Studio.Api.Clients.Localization
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Name
+        public string Key
         {
-            get { return _name; }
+            get { return _key; }
 
             set
             {
-                if (_name != value)
+                if (_key != value)
                 {
-                    _name = value;
+                    _key = value;
                     RaisePropertyChanged();
                 }
             }

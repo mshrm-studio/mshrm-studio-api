@@ -57,7 +57,7 @@ namespace Mshrm.Studio.Api.Controllers
         public async Task<ActionResult<LocalizationResourceResponseDto>> CreateLocalizationResourceAsync([FromBody] CreateLocalizationResourceRequestDto model)
         {
             // Create localization
-            var localization = await _createLocalizationService.CreateLocalizationResourceAsync(model.LocalizationArea, model.Culture, model.Name, model.Value, model.Comment,
+            var localization = await _createLocalizationService.CreateLocalizationResourceAsync(model.LocalizationArea, model.Culture, model.Key, model.Value, model.Comment,
                 Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map< LocalizationResourceResponseDto>(localization));
@@ -68,16 +68,16 @@ namespace Mshrm.Studio.Api.Controllers
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text key to localize</param>
         /// <returns>Localization resources</returns>
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [ProducesResponseType(typeof(List<LocalizationResourceResponseDto>), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<List<LocalizationResourceResponseDto>>> GetLocalizationResourcesAsync([FromQuery] LocalizationArea? area, [FromQuery] string? culture, [FromQuery] string? name)
+        public async Task<ActionResult<List<LocalizationResourceResponseDto>>> GetLocalizationResourcesAsync([FromQuery] LocalizationArea? area, [FromQuery] string? culture, [FromQuery] string? key)
         {
             // Get localizations
-            var localizations = await _queryLocalizationService.GetLocalizationResourcesAsync(area, culture, name, Request.HttpContext.RequestAborted);
+            var localizations = await _queryLocalizationService.GetLocalizationResourcesAsync(area, culture, key, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<List<LocalizationResourceResponseDto>>(localizations));
         }

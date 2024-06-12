@@ -11,8 +11,8 @@ namespace Mshrm.Studio.Api.Models.Dtos.Localization
         [JsonProperty("culture")]
         public string Culture { get; set; }
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        [JsonProperty("key")]
+        public string Key { get; set; }
 
         [JsonProperty("value")]
         public string Value { get; set; }

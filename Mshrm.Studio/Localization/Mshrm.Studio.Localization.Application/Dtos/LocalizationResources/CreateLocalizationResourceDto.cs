@@ -17,8 +17,8 @@ namespace Mshrm.Studio.Localization.Api.Models.Dtos.LocalizationResources
         /// <summary>
         /// The key
         /// </summary>
-        [JsonProperty("name")]
-        public required string Name { get; set; }
+        [JsonProperty("key")]
+        public required string Key { get; set; }
 
         /// <summary>
         /// The value for key

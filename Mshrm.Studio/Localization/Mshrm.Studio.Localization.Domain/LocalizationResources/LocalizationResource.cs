@@ -11,15 +11,15 @@ namespace Mshrm.Studio.Localization.Api.Models.Entities
         public Guid GuidId { get; private set; }
 
         public string Culture { get; private set; }
-        public string Name { get; private set; }
+        public string Key { get; private set; }
         public string Value { get; private set; }
         public string? Comment { get; private set; }
         public LocalizationArea LocalizationArea { get; private set; }
 
-        public LocalizationResource(LocalizationArea localizationArea, string culture, string name, string value, string? comment)
+        public LocalizationResource(LocalizationArea localizationArea, string culture, string key, string value, string? comment)
         {
             Culture = culture;
-            Name = name;
+            Key = key;
             Value = value;
             Comment = comment;
             LocalizationArea = localizationArea;
@@ -28,7 +28,7 @@ namespace Mshrm.Studio.Localization.Api.Models.Entities
         public void SetupForDefaultImport(int id, string culture)
         {
             Id = id;
-            GuidId = Name.GenerateSeededGuid();
+            GuidId = Key.GenerateSeededGuid();
             Culture = culture;
         }
     }

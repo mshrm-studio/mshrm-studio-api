@@ -44,7 +44,7 @@ namespace Mshrm.Studio.Api.Services.Localization
             {
                 foreach (var resource in resources)
                 {
-                    var key = resource.Name as string;
+                    var key = resource.Key as string;
                     var value = resource.Value as string;
 
                     var localizedString = new LocalizedString(key, value);

@@ -48,18 +48,18 @@ namespace Mshrm.Studio.Localization.Api.Controllers
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text to localize</param>
         /// <returns>Localization resources</returns>
         [HttpGet]
         [ProducesResponseType(typeof(List<LocalizationResourceDto>), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<List<LocalizationResourceDto>>> GetLocalizationResourcesAsync([FromQuery] LocalizationArea? area, [FromQuery] string? culture, [FromQuery] string? name)
+        public async Task<ActionResult<List<LocalizationResourceDto>>> GetLocalizationResourcesAsync([FromQuery] LocalizationArea? area, [FromQuery] string? culture, [FromQuery] string? key)
         {
             var localizationResources = await _mediator.Send<List<LocalizationResource>>(new GetLocalizationResourcesQuery()
             { 
                 Area = area, 
                 Culture= culture, 
-                Name = name 
+                Key = key 
             }, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<List<LocalizationResourceDto>>(localizationResources));

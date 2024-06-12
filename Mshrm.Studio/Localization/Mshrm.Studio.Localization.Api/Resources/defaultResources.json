@@ -1,207 +1,207 @@
 [
   {
     "Id": 1,
-    "Name": "RoleDoesntExist",
+    "Key": "RoleDoesntExist",
     "Value": "Role doesn't exist"
   },
   {
     "Id": 2,
-    "Name": "UserDoesntExist",
+    "Key": "UserDoesntExist",
     "Value": "User doesn't exist"
   },
   {
     "Id": 3,
-    "Name": "IpNotValid",
+    "Key": "IpNotValid",
     "Value": "The IP address provided is not valid"
   },
   {
     "Id": 4,
-    "Name": "EmailNotFound",
+    "Key": "EmailNotFound",
     "Value": "Email doesn't exist"
   },
   {
     "Id": 5,
-    "Name": "FailedToCreateIdentityUser",
+    "Key": "FailedToCreateIdentityUser",
     "Value": "Failed to create identity user"
   },
   {
     "Id": 6,
-    "Name": "FailedToCreateDomainUser",
+    "Key": "FailedToCreateDomainUser",
     "Value": "Failed to create domain user"
   },
   {
     "Id": 7,
-    "Name": "CannotViewOtherUsersData",
+    "Key": "CannotViewOtherUsersData",
     "Value": "Non admin users can only see their own data"
   },
   {
     "Id": 8,
-    "Name": "EmailIsInvalid Email",
+    "Key": "EmailIsInvalid Email",
     "Value": "is invalid"
   },
   {
     "Id": 9,
-    "Name": "FailedToGenerateToken",
+    "Key": "FailedToGenerateToken",
     "Value": "Failed to generate token"
   },
   {
     "Id": 10,
-    "Name": "UserLockedOut",
+    "Key": "UserLockedOut",
     "Value": "User is locked out"
   },
   {
     "Id": 11,
-    "Name": "UserRequiresConfirmation",
+    "Key": "UserRequiresConfirmation",
     "Value": "User requires confirmation"
   },
   {
     "Id": 12,
-    "Name": "FailedToRefreshToken",
+    "Key": "FailedToRefreshToken",
     "Value": "Failed to refresh token"
   },
   {
     "Id": 13,
-    "Name": "UserAlreadyExists",
+    "Key": "UserAlreadyExists",
     "Value": "User already exists"
   },
   {
     "Id": 14,
-    "Name": "FailedToGenerateConfirmationToken",
+    "Key": "FailedToGenerateConfirmationToken",
     "Value": "Failed to generate confirmation token"
   },
   {
     "Id": 15,
-    "Name": "CannotViewOtherUsersData",
+    "Key": "CannotViewOtherUsersData",
     "Value": "Non admin users can only see their own data"
   },
   {
     "Id": 16,
-    "Name": "FailedToGenerateResetToken",
+    "Key": "FailedToGenerateResetToken",
     "Value": "Password could not be reset"
   },
   {
     "Id": 17,
-    "Name": "FailedToUpdatePassword",
+    "Key": "FailedToUpdatePassword",
     "Value": "Failed to update password"
   },
   {
     "Id": 18,
-    "Name": "AlreadyConfirmed",
+    "Key": "AlreadyConfirmed",
     "Value": "Already confirmed"
   },
   {
     "Id": 19,
-    "Name": "FailedToValidateConfirmationToken",
+    "Key": "FailedToValidateConfirmationToken",
     "Value": "Failed to validate confirmation token"
   },
   {
     "Id": 20,
-    "Name": "ContactFormDoesntExist",
+    "Key": "ContactFormDoesntExist",
     "Value": "Contact form doesn't exist"
   },
   {
     "Id": 21,
-    "Name": "ToolDoesntExist",
+    "Key": "ToolDoesntExist",
     "Value": "Tool doesn't exist"
   },
   {
     "Id": 22,
-    "Name": "FailedToSendEmail",
+    "Key": "FailedToSendEmail",
     "Value": "Failed to send email"
   },
   {
     "Id": 23,
-    "Name": "NoEmailTypeRegistered",
+    "Key": "NoEmailTypeRegistered",
     "Value": "No email type has been registered for the email being sent"
   },
   {
     "Id": 24,
-    "Name": "LocalizationResourceAlreadyExists",
+    "Key": "LocalizationResourceAlreadyExists",
     "Value": "Localization resource already exists"
   },
   {
     "Id": 25,
-    "Name": "LocalizationResourceDoesntExist",
+    "Key": "LocalizationResourceDoesntExist",
     "Value": "Localization resource doesn't exist"
   },
   {
     "Id": 26,
-    "Name": "AssetAlreadyExists",
+    "Key": "AssetAlreadyExists",
     "Value": "The asset already exists"
   },
   {
     "Id": 27,
-    "Name": "AssetNotSupported",
+    "Key": "AssetNotSupported",
     "Value": "Asset is not supported by the provider"
   },
   {
     "Id": 28,
-    "Name": "BaseAssetNotSupported",
+    "Key": "BaseAssetNotSupported",
     "Value": "The base asset symbol provided is not supported"
   },
   {
     "Id": 29,
-    "Name": "BaseAssetPriceDoesntExist",
+    "Key": "BaseAssetPriceDoesntExist",
     "Value": "The base asset symbols price doesn't exist"
   },
   {
     "Id": 30,
-    "Name": "AssetDoesntExist",
+    "Key": "AssetDoesntExist",
     "Value": "The asset doesn't exists"
   },
   {
     "Id": 31,
-    "Name": "TemporaryFileNotFound",
+    "Key": "TemporaryFileNotFound",
     "Value": "Temporary file not found"
   },
   {
     "Id": 32,
-    "Name": "KeyNotProvided",
+    "Key": "KeyNotProvided",
     "Value": "Key must be provided"
   },
   {
     "Id": 33,
-    "Name": "FileNotFound",
+    "Key": "FileNotFound",
     "Value": "File not found"
   },
   {
     "Id": 34,
-    "Name": "ResourceDoesntExist",
+    "Key": "ResourceDoesntExist",
     "Value": "Resource doesn't exist"
   },
   {
     "Id": 35,
-    "Name": "ResourceIsPrivate",
+    "Key": "ResourceIsPrivate",
     "Value": "Cannot view this resource unauthenticated"
   },
   {
     "Id": 36,
-    "Name": "SystemError",
+    "Key": "SystemError",
     "Value": "System error, please contact admin"
   },
   {
     "Id": 37,
-    "Name": "PricingStructureDoesntExist",
+    "Key": "PricingStructureDoesntExist",
     "Value": "The pricing structure doesn't exist"
   },
   {
     "Id": 38,
-    "Name": "AssetPriceMustBeACurrency",
+    "Key": "AssetPriceMustBeACurrency",
     "Value": "The asset price must be a currency"
   },
   {
     "Id": 39,
-    "Name": "FailureCodeIsInvalid",
+    "Key": "FailureCodeIsInvalid",
     "Value": "The failure code provided is invalid"
   },
   {
     "Id": 40,
-    "Name": "LocalizationAreaNotSupported",
+    "Key": "LocalizationAreaNotSupported",
     "Value": "The localization area provided is not supported"
   },
   {
     "Id": 41,
-    "Name": "CultureNotSupported",
+    "Key": "CultureNotSupported",
     "Value": "The culture provided is not supported"
   }
 ]

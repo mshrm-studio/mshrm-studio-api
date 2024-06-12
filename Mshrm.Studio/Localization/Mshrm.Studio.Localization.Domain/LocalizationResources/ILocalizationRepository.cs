@@ -31,10 +31,10 @@ namespace Mshrm.Studio.Localization.Api.Repositories.Interfaces
         /// </summary>
         /// <param name="area">The area to create resource for</param>
         /// <param name="culture">The culture for the resource</param>
-        /// <param name="name">The resource text to localize</param>
+        /// <param name="key">The resource text key to localize</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>Localization resources</returns>
-        public Task<List<LocalizationResource>> GetLocalizationResourcesReadOnlyAsync(LocalizationArea? area, string? culture, string? name, CancellationToken cancellationToken);
+        public Task<List<LocalizationResource>> GetLocalizationResourcesReadOnlyAsync(LocalizationArea? area, string? culture, string? key, CancellationToken cancellationToken);
 
         /// <summary>
         /// Get a localization resource

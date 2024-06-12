@@ -8,6 +8,6 @@ namespace Mshrm.Studio.Localization.Api.Models.CQRS.LocalizationResources.Querie
     {
         public LocalizationArea? Area { get; set; }
         public string? Culture { get; set; }
-        public string? Name { get; set; }
+        public string? Key { get; set; }
     }
 }
