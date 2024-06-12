@@ -188,5 +188,20 @@
     "Id": 38,
     "Name": "AssetPriceMustBeACurrency",
     "Value": "The asset price must be a currency"
+  },
+  {
+    "Id": 39,
+    "Name": "FailureCodeIsInvalid",
+    "Value": "The failure code provided is invalid"
+  },
+  {
+    "Id": 40,
+    "Name": "LocalizationAreaNotSupported",
+    "Value": "The localization area provided is not supported"
+  },
+  {
+    "Id": 41,
+    "Name": "CultureNotSupported",
+    "Value": "The culture provided is not supported"
   }
 ]

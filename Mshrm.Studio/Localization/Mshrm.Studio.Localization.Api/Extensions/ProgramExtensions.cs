@@ -37,6 +37,8 @@ using Mshrm.Studio.Localization.Domain.LocalizationResources;
 using Mshrm.Studio.Localization.Infrastructure.Factories;
 using Mshrm.Studio.Shared.Enums;
 using Microsoft.Extensions.Caching.Distributed;
+using Mshrm.Studio.Localization.Application.Handlers.Api;
+using Mshrm.Studio.Localization.Domain.LocalizationResources.Queries;
 
 namespace Mshrm.Studio.Localization.Api.Extensions
 {
@@ -261,7 +263,9 @@ namespace Mshrm.Studio.Localization.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<GetLocalizationResourceByGuidQuery, LocalizationResource>, GetLocalizationResourceByGuidQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<DeleteLocalizationResourceCommand, bool>, DeleteLocalizationResourceCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<CreateLocalizationResourceCommand, LocalizationResource>, CreateLocalizationResourceCommandHandler>();
-
+            builder.Services.AddScoped<IRequestHandler<GetSupportedLocalizationResourceCulturesQuery, List<string>>, GetSupportedLocalizationResourceCulturesQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetKeysForLocalizationAreaQuery, List<string>>, GetKeysForLocalizationAreaQueryHandler>();
+            
             return builder;
         }
 

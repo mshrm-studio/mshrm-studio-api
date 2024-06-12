@@ -47,7 +47,7 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
                     $"{MshrmStudioLocalizationConstants.LocalizationResourcesKey}_{query.Area}_{query.Culture}_{query.Name}",
                     async () => await _localizationRepository.GetLocalizationResourcesReadOnlyAsync(query.Area, query.Culture, query.Name, cancellationToken),
                     cancellationToken,
-                    20
+                    3
                 );
 
                 return resources;

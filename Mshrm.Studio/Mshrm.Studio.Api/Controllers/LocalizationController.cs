@@ -113,5 +113,34 @@ namespace Mshrm.Studio.Api.Controllers
 
             return Ok(_mapper.Map<LocalizationResourceResponseDto>(localization));
         }
+
+        /// <summary>
+        /// Gets all supported localization cultures
+        /// </summary>
+        /// <returns>All supported localization cultures</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [Route("supported-cultures")]
+        public async Task<ActionResult<List<string>>> GetSupportedLocalizationCulturesAsync()
+        {
+            var localizationResourceCultures = await _queryLocalizationService.GetSupportedLocalizationCulturesAsync(Request.HttpContext.RequestAborted);
+
+            return Ok(localizationResourceCultures);
+        }
+
+        /// <summary>
+        /// Gets all keys for localization area
+        /// </summary>
+        /// <param name="localizationArea">Get all keys for a localization area</param>
+        /// <returns>All keys that can be used for a localization area</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [Route("localization-area/{localizationArea}/keys")]
+        public async Task<ActionResult<List<string>>> GetLocalizationAreaKeysAsync([FromRoute] LocalizationArea localizationArea)
+        {
+            var localizationAreaKeys = await _queryLocalizationService.GetLocalizationAreaKeysAsync(localizationArea , Request.HttpContext.RequestAborted);
+
+            return Ok(localizationAreaKeys);
+        }
     }
 }

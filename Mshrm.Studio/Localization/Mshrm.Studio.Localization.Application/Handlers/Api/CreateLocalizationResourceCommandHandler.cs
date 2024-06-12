@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 using Mshrm.Studio.Localization.Api.Models.Constants;
 using Mshrm.Studio.Localization.Api.Models.CQRS.LocalizationResources.Commands;
 using Mshrm.Studio.Localization.Api.Models.Entities;
@@ -18,18 +20,21 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
         private readonly ICacheService _cacheService;
         private readonly ITracer _tracer;
 
+        private readonly RequestLocalizationOptions _requestLocalizationOptions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateLocalizationResourceCommandHandler"/> class.
         /// </summary>
         /// <param name="localizationRepository"></param>
         /// <param name="cacheService"></param>
         /// <param name="tracer"></param>
-        public CreateLocalizationResourceCommandHandler(ILocalizationRepository localizationRepository, ICacheService cacheService, ITracer tracer)
+        public CreateLocalizationResourceCommandHandler(ILocalizationRepository localizationRepository, ICacheService cacheService, ITracer tracer, IOptions<RequestLocalizationOptions> requestLocalizationOptions)
         {
             _localizationRepository = localizationRepository;
             _cacheService = cacheService;
 
             _tracer = tracer;
+            _requestLocalizationOptions = requestLocalizationOptions.Value;
         }
 
         /// <summary>
@@ -46,6 +51,12 @@ namespace Mshrm.Studio.Localization.Api.Services.Api
                 if (existingResources.Any())
                 {
                     throw new UnprocessableEntityException("Localization resource already exists", FailureCode.LocalizationResourceAlreadyExists);
+                }
+
+                // Validate culture
+                if(!_requestLocalizationOptions.SupportedCultures.Select(x => x.Name).Contains(command.Culture))
+                {
+                    throw new BadRequestException("Culture not supported", FailureCode.CultureNotSupported, nameof(command.Culture));
                 }
 
                 // Validate name/key

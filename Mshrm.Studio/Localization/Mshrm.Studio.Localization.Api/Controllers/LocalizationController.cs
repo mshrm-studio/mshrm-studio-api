@@ -9,6 +9,7 @@ using Mshrm.Studio.Localization.Api.Models.Dtos.LocalizationResources;
 using Mshrm.Studio.Localization.Api.Models.Entities;
 using Mshrm.Studio.Localization.Api.Models.Enums;
 using Mshrm.Studio.Localization.Api.Services.Api;
+using Mshrm.Studio.Localization.Domain.LocalizationResources.Queries;
 using Mshrm.Studio.Shared.Models.Pagination;
 using Mshrm.Studio.Shared.Services;
 using Mshrm.Studio.Shared.Services.Interfaces;
@@ -109,6 +110,35 @@ namespace Mshrm.Studio.Localization.Api.Controllers
             var localizationResource = await _mediator.Send<LocalizationResource>(new GetLocalizationResourceByGuidQuery(){ GuidId = guidId }, Request.HttpContext.RequestAborted);
 
             return Ok(_mapper.Map<LocalizationResourceDto>(localizationResource));
+        }
+
+        /// <summary>
+        /// Gets all supported localization cultures
+        /// </summary>
+        /// <returns>All supported localization cultures</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [Route("supported-cultures")]
+        public async Task<ActionResult<List<string>>> GetSupportedLocalizationCulturesAsync()
+        {
+            var localizationResourceCultures = await _mediator.Send<List<string>>(new GetSupportedLocalizationResourceCulturesQuery(), Request.HttpContext.RequestAborted);
+
+            return Ok(localizationResourceCultures);
+        }
+
+        /// <summary>
+        /// Gets all keys for localization area
+        /// </summary>
+        /// <param name="localizationArea">Get all keys for a localization area</param>
+        /// <returns>All keys that can be used for a localization area</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(List<string>), StatusCodes.Status200OK)]
+        [Route("localization-area/{localizationArea}/keys")]
+        public async Task<ActionResult<List<string>>> GetLocalizationAreaKeysAsync([FromRoute] LocalizationArea localizationArea)
+        {
+            var localizationAreaKeys = await _mediator.Send<List<string>>(new GetKeysForLocalizationAreaQuery() { LocalizationArea = localizationArea }, Request.HttpContext.RequestAborted);
+
+            return Ok(localizationAreaKeys);
         }
     }
 }

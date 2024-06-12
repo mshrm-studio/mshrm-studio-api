@@ -1,4 +1,6 @@
-﻿using Mshrm.Studio.Api.Clients.Localization;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
+using Mshrm.Studio.Api.Clients.Localization;
 
 namespace Mshrm.Studio.Api.Services.Api.Interfaces
 {
@@ -21,5 +23,20 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>The localization resource if exists</returns>
         public Task<LocalizationResourceDto> GetLocalizationResourceAsync(Guid guidId, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets all supported localization cultures
+        /// </summary>
+        /// <param name="cancellationToken">A stopping token</param>
+        /// <returns>All supported localization cultures</returns>
+        public Task<List<string>> GetSupportedLocalizationCulturesAsync(CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Gets all keys for localization area
+        /// </summary>
+        /// <param name="localizationArea">Get all keys for a localization area</param>
+        /// <param name="cancellationToken">A stopping token</param>
+        /// <returns>All keys that can be used for a localization area</returns>
+        public Task<List<string>> GetLocalizationAreaKeysAsync(LocalizationArea localizationArea, CancellationToken cancellationToken);
     }
 }
