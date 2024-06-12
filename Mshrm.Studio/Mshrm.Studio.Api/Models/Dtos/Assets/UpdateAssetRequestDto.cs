@@ -10,7 +10,7 @@ namespace Mshrm.Studio.Api.Models.Dtos.Assets
         [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("name")]
         [StringLength(256, ErrorMessage = "{0} must have less than {1} characters")]
-        public required string Name { get; private set; }
+        public required string Name { get; set; }
 
         [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("symbolNative")]
@@ -22,7 +22,6 @@ namespace Mshrm.Studio.Api.Models.Dtos.Assets
         [StringLength(1000, ErrorMessage = "{0} must have less than {1} characters")]
         public required string Description { get; set; }
 
-        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("providerType")]
         public required PricingProviderType ProviderType { get; set; }
