@@ -110,7 +110,6 @@
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 options.JsonSerializerOptions.IgnoreNullValues = true;
             })
-            .ConfigureApiBehaviorOptions(options => { })
             .AddApiExplorer()
             .AddDataAnnotationsLocalization(options =>
             {

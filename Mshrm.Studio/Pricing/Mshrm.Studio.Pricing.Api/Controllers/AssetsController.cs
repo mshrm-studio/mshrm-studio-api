@@ -58,11 +58,6 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <returns>The new asset added</returns>
         [HttpPost]
         [ProducesResponseType(typeof(AssetDto), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("")]
         public async Task<ActionResult<AssetDto>> CreateSupportedAssetAsync([FromBody] CreateSupportedAssetDto model)
