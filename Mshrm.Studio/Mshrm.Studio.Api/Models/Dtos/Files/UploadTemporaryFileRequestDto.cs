@@ -1,5 +1,6 @@
 ﻿using Mshrm.Studio.Shared.Attributes;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mshrm.Studio.Api.Models.Dtos.Files
 {
@@ -12,6 +13,7 @@ namespace Mshrm.Studio.Api.Models.Dtos.Files
         [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png", ".gif" })]
         [MaxFileSize(new string[] { ".jpg", ".jpeg", ".png", ".gif" }, 1500000)]
         [MinFileSize(new string[] { ".jpg", ".jpeg", ".png", ".gif" }, 10)]
-        public IFormFile File { get; set; }
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
+        public required IFormFile File { get; set; }
     }
 }

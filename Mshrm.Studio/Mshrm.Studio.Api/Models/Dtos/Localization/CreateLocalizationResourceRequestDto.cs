@@ -10,18 +10,21 @@ namespace Mshrm.Studio.Api.Models.Dtos.Localization
         /// <summary>
         /// The localization culture
         /// </summary>
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("culture")]
         public required string Culture { get; set; }
 
         /// <summary>
         /// The key
         /// </summary>
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("key")]
         public required string Key { get; set; }
 
         /// <summary>
         /// The value for key
         /// </summary>
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("value")]
         public required string Value { get; set; }
 
@@ -34,7 +37,8 @@ namespace Mshrm.Studio.Api.Models.Dtos.Localization
         /// <summary>
         /// A category for localization
         /// </summary>
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [JsonProperty("localizationArea")]
-        public LocalizationArea LocalizationArea { get; set; }
+        public required LocalizationArea LocalizationArea { get; set; }
     }
 }

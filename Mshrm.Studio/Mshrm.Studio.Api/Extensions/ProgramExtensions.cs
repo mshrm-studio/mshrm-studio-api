@@ -17,6 +17,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Localization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.DataAnnotations;
     using Microsoft.AspNetCore.Server.Kestrel.Core;
     using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Options;
@@ -114,7 +115,9 @@
             .AddDataAnnotationsLocalization(options =>
             {
                 options.DataAnnotationLocalizerProvider = (type, factory) =>
-                factory.Create(typeof(SharedResource));
+                {
+                    return builder.Services.BuildServiceProvider().GetService<IStringLocalizer>();
+                };
             });
 
             return builder;

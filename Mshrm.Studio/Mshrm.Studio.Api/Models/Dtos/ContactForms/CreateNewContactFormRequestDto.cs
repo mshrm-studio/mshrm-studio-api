@@ -10,13 +10,14 @@ namespace Mshrm.Studio.Api.Models.Dtos.ContactForm
         /// The message sent
         /// </summary>
         [JsonProperty("message")]
-        [StringLength(10000, ErrorMessage = "{0} must have less than {1} characters")]
-        public string Message { get; set; }
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
+        public required string Message { get; set; }
 
         /// <summary>
         /// A contact email for the message
         /// </summary>
         [JsonProperty("contactEmail")]
+        [Required(ErrorMessage = "MissingBindRequiredValueAccessor")]
         [StringLength(256, ErrorMessage = "{0} must have less than {1} characters")]
         [RegularExpression(@"^[\w!#$%&'*+\-/=?\^_`{|}~]+(\.[\w!#$%&'*+\-/=?\^_`{|}~]+)*" + "@" + @"((([\-\w]+\.)+[a-zA-Z]{2,50})|(([0-9]{1,3}\.){3}[0-9]{1,3}))$")]
         public required string ContactEmail { get; set; }
