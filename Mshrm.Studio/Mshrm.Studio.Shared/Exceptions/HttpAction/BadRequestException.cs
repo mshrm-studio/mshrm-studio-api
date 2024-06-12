@@ -17,7 +17,7 @@ namespace Mshrm.Studio.Shared.Exceptions.HttpAction
         /// Constructor
         /// </summary>
         /// <param name="message">A message for the exception</param>
-        public BadRequestException(string failedReason, FailureCode failureCode, string? property = null) : base(HttpStatusCode.Forbidden, failureCode, failedReason, property)
+        public BadRequestException(string failedReason, FailureCode failureCode, string? property = null) : base(HttpStatusCode.BadRequest, failureCode, failedReason, property)
         { }
     }
 }
