@@ -75,12 +75,12 @@ namespace Mshrm.Studio.Pricing.Api.Models.Entites
         /// <summary>
         /// All base prices the asset is used for
         /// </summary>
-        public List<ExchangePricingPair> BasePricingPairs { get; private set; } = new List<ExchangePricingPair>();
+        public List<AssetPrice> BaseAssetPrices { get; private set; } = new List<AssetPrice>();
 
         /// <summary>
         /// All prices the asset is used for
         /// </summary>
-        public List<ExchangePricingPair> PricingPairs { get; private set; } = new List<ExchangePricingPair>();
+        public List<AssetPrice> AssetPrices { get; private set; } = new List<AssetPrice>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asset"/> class.

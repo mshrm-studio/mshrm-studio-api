@@ -28,8 +28,8 @@ namespace Mshrm.Studio.Pricing.Api.Models.Maps
                 .IsRequired()
                 .HasValueGenerator<GuidValueGenerator>();
 
-            entityTypeBuilder.HasMany(x => x.BasePricingPairs).WithOne(x => x.BaseAsset).HasForeignKey(x => x.BaseAssetId);
-            entityTypeBuilder.HasMany(x => x.PricingPairs).WithOne(x => x.Asset).HasForeignKey(x => x.AssetId);
+            entityTypeBuilder.HasMany(x => x.BaseAssetPrices).WithOne(x => x.BaseAsset).HasForeignKey(x => x.BaseAssetId);
+            entityTypeBuilder.HasMany(x => x.AssetPrices).WithOne(x => x.Asset).HasForeignKey(x => x.AssetId);
 
             entityTypeBuilder.Property(e => e.ProviderType).HasConversion(new EnumToStringConverter<PricingProviderType>());
             entityTypeBuilder.Property(e => e.AssetType).HasConversion(new EnumToStringConverter<AssetType>());

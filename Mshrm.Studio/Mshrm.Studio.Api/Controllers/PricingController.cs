@@ -74,7 +74,7 @@ namespace Mshrm.Studio.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(PageResultDto<PriceHistoryResponseDto>), StatusCodes.Status200OK)]
         [Route("history")]
-        public async Task<ActionResult<List<PriceDto>>> GetLatestPricesAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType,
+        public async Task<ActionResult<PageResultDto<PriceHistoryResponseDto>>> GetLatestPricesAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType,
             [FromQuery] string baseAssetGuidId, [FromQuery] string orderProperty = "createdDate", [FromQuery] Order order = Order.Descending, [FromQuery] uint pageNumber = 1,
              [FromQuery] uint perPage = 30)
         {

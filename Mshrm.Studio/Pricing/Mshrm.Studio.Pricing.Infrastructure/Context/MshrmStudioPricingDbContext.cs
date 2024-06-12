@@ -13,6 +13,7 @@ using Mshrm.Studio.Shared.Extensions;
 using MediatR;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Maps;
+using Mshrm.Studio.Pricing.Domain.AssetPriceHistories;
 
 namespace Mshrm.Studio.Pricing.Api.Context
 {
@@ -32,14 +33,14 @@ namespace Mshrm.Studio.Pricing.Api.Context
         public DbSet<Asset> Assets { get; set; }
 
         /// <summary>
-        /// Exchange price pairs table
+        /// Asset prices table
         /// </summary>
-        public DbSet<ExchangePricingPair> ExchangePricingPairs { get; set; }
+        public DbSet<AssetPrice> AssetPrices { get; set; }
 
         /// <summary>
-        /// Exchange price pairs history table
+        /// Asset price history table
         /// </summary>
-        public DbSet<ExchangePricingPairHistory> ExchangePricingPairHistories { get; set; }
+        public DbSet<AssetPriceHistory> AssetPriceHistories { get; set; }
 
         /// <summary>
         /// Mediatr
@@ -65,8 +66,8 @@ namespace Mshrm.Studio.Pricing.Api.Context
         {
             // Map entities
             _ = new AssetMap(builder.Entity<Asset>());
-            _ = new ExchangePricingPairMap(builder.Entity<ExchangePricingPair>());
-			_ = new ExchangePricingPairHistoryMap(builder.Entity<ExchangePricingPairHistory>());
+            _ = new AssetPriceMap(builder.Entity<AssetPrice>());
+			_ = new AssetPriceHistoryMap(builder.Entity<AssetPriceHistory>());
 
             base.OnModelCreating(builder);
         }

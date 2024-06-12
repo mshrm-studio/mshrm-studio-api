@@ -86,7 +86,7 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
                     b.ToTable("Assets", "dbo");
                 });
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPair", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.AssetPrice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,10 +136,10 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     b.HasIndex("GuidId");
 
-                    b.ToTable("ExchangePricingPairs", "dbo");
+                    b.ToTable("AssetPrices", "dbo");
                 });
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPairHistory", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Domain.AssetPriceHistories.AssetPriceHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,14 +147,14 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AssetPriceId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CreatedById")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("ExchangePricingPairId")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("GuidId")
                         .HasColumnType("uniqueidentifier");
@@ -189,23 +189,23 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExchangePricingPairId");
+                    b.HasIndex("AssetPriceId");
 
                     b.HasIndex("GuidId");
 
-                    b.ToTable("ExchangePricingPairHistories", "dbo");
+                    b.ToTable("AssetPriceHistories", "dbo");
                 });
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPair", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.AssetPrice", b =>
                 {
                     b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", "Asset")
-                        .WithMany("PricingPairs")
+                        .WithMany("AssetPrices")
                         .HasForeignKey("AssetId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", "BaseAsset")
-                        .WithMany("BasePricingPairs")
+                        .WithMany("BaseAssetPrices")
                         .HasForeignKey("BaseAssetId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -215,27 +215,27 @@ namespace Mshrm.Studio.Pricing.Api.Migrations
                     b.Navigation("BaseAsset");
                 });
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPairHistory", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Domain.AssetPriceHistories.AssetPriceHistory", b =>
                 {
-                    b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPair", "ExchangePricingPair")
-                        .WithMany("ExchangePricingPairHistories")
-                        .HasForeignKey("ExchangePricingPairId")
+                    b.HasOne("Mshrm.Studio.Pricing.Api.Models.Entites.AssetPrice", "AssetPrice")
+                        .WithMany("AssetPriceHistories")
+                        .HasForeignKey("AssetPriceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ExchangePricingPair");
+                    b.Navigation("AssetPrice");
                 });
 
             modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.Asset", b =>
                 {
-                    b.Navigation("BasePricingPairs");
+                    b.Navigation("AssetPrices");
 
-                    b.Navigation("PricingPairs");
+                    b.Navigation("BaseAssetPrices");
                 });
 
-            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.ExchangePricingPair", b =>
+            modelBuilder.Entity("Mshrm.Studio.Pricing.Api.Models.Entites.AssetPrice", b =>
                 {
-                    b.Navigation("ExchangePricingPairHistories");
+                    b.Navigation("AssetPriceHistories");
                 });
 #pragma warning restore 612, 618
         }

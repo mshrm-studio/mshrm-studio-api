@@ -34,7 +34,7 @@ namespace Mshrm.Studio.Pricing.Application.Services.Background
                     var services = serviceScope.ServiceProvider;
                     var jobService = services.GetRequiredService<IJobsService>();
 
-                    await jobService.ImportProviderPairsAsync(PricingProviderType.FreeCurrency);
+                    await jobService.ImportProviderAssetsAsync(PricingProviderType.FreeCurrency);
                 }
             }
         }

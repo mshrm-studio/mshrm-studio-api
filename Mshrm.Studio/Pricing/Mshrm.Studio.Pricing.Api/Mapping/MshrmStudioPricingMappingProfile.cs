@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPriceHistories.Commands;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPrices.Events;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairHistories.Commands;
 using Mshrm.Studio.Pricing.Api.Models.Dtos.Asset;
-using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
+using Mshrm.Studio.Pricing.Api.Models.Dtos.AssetPrices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
-using Mshrm.Studio.Pricing.Api.Models.Events;
-using Mshrm.Studio.Pricing.Application.Dtos.Prices;
+using Mshrm.Studio.Pricing.Application.Dtos.AssetPriceHistories;
 using Mshrm.Studio.Pricing.Application.Dtos.Providers;
+using Mshrm.Studio.Pricing.Domain.AssetPriceHistories;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
@@ -48,34 +49,34 @@ namespace Mshrm.Studio.Pricing.Api.Mapping
 
             #region Prices
 
-            CreateMap<PagedResult<ExchangePricingPair>, PageResultDto<PriceDto>>()
+            CreateMap<PagedResult<AssetPrice>, PageResultDto<AssetPriceDto>>()
                 .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
                 .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
                 .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
                 .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName))
                 .ReverseMap();
 
-            CreateMap<PagedResult<ExchangePricingPairHistory>, PageResultDto<PriceHistoryDto>>()
+            CreateMap<PagedResult<AssetPriceHistory>, PageResultDto<AssetPriceHistoryDto>>()
                 .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
                 .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
                 .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
                 .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName))
                 .ReverseMap();
 
-            CreateMap<ExchangePricingPairHistory, PriceHistoryDto>()
+            CreateMap<AssetPriceHistory, AssetPriceHistoryDto>()
                 .ReverseMap();
 
-            CreateMap<ExchangePricingPair, PriceDto>().ReverseMap();
+            CreateMap<AssetPrice, AssetPriceDto>().ReverseMap();
 
-            CreateMap<ExchangePricePairUpdatedEvent, CreateExchangePricingPairHistoryCommand>()
+            CreateMap<AssetPriceUpdatedEvent, CreateAssetPriceHistoryCommand>()
                 .ReverseMap();
-            CreateMap<ExchangePricePairCreatedEvent, CreateExchangePricingPairHistoryCommand>()
-                .ForMember(dest => dest.NewMarketCap, src => src.MapFrom(x => x.ExchangePricingPair.MarketCap))
-                .ForMember(dest => dest.PricingProviderType, src => src.MapFrom(x => x.ExchangePricingPair.PricingProviderType))
-                .ForMember(dest => dest.NewPrice, src => src.MapFrom(x => x.ExchangePricingPair.Price))
-                .ForMember(dest => dest.Id, src => src.MapFrom(x => x.ExchangePricingPair.Id))
-                .ForMember(dest => dest.NewVolume, src => src.MapFrom(x => x.ExchangePricingPair.Volume))
-                .ForMember(dest => dest.UpdatedDate, src => src.MapFrom(x => x.ExchangePricingPair.UpdatedDate))
+            CreateMap<AssetPriceCreatedEvent, CreateAssetPriceHistoryCommand>()
+                .ForMember(dest => dest.NewMarketCap, src => src.MapFrom(x => x.AssetPrice.MarketCap))
+                .ForMember(dest => dest.PricingProviderType, src => src.MapFrom(x => x.AssetPrice.PricingProviderType))
+                .ForMember(dest => dest.NewPrice, src => src.MapFrom(x => x.AssetPrice.Price))
+                .ForMember(dest => dest.Id, src => src.MapFrom(x => x.AssetPrice.Id))
+                .ForMember(dest => dest.NewVolume, src => src.MapFrom(x => x.AssetPrice.Volume))
+                .ForMember(dest => dest.UpdatedDate, src => src.MapFrom(x => x.AssetPrice.UpdatedDate))
                 .ReverseMap();
 
             #endregion

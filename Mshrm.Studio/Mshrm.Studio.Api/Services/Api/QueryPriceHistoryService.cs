@@ -28,7 +28,7 @@ namespace Mshrm.Studio.Api.Services.Api
         /// <param name="perPage">How many to return in the page</param>
         /// <param name="cancellationToken"></param>
         /// <returns>Price history</returns>
-        public async Task<PageResultDtoOfPriceHistoryDto> GetPagedPriceHistoryAsync(string assetGuidId, string baseAssetGuidId, PricingProviderType? pricingProviderType, string orderProperty,
+        public async Task<PageResultDtoOfAssetPriceHistoryDto> GetPagedPriceHistoryAsync(string assetGuidId, string baseAssetGuidId, PricingProviderType? pricingProviderType, string orderProperty,
             Order order, uint pageNumber, uint perPage, CancellationToken cancellationToken)
         {
             return await _priceClient.GetPriceHistoryAsync(assetGuidId, pricingProviderType, baseAssetGuidId, orderProperty,

@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Mshrm.Studio.Pricing.Api.Models.Cache;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
+using Mshrm.Studio.Pricing.Domain.AssetPrices.Queries;
 using OpenTracing;
 using System;
 using System.Collections.Generic;
@@ -22,8 +21,8 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
         /// <summary>
         /// Initializes a new instance of the <see cref="GetProviderPricesQuerysHandler"/> class.
         /// </summary>
-        /// <param name="exchangePricingPairRepository"></param>
-        /// <param name="assetRepository"></param>
+        /// <param name="assetPriceServiceResolver"></param>
+        /// <param name="tracer"></param>
         public GetProviderPricesQuerysHandler(AssetPriceServiceResolver assetPriceServiceResolver, ITracer tracer)
         {
             _assetPriceServiceResolver = assetPriceServiceResolver;
@@ -39,7 +38,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
         /// <returns>Latest prices</returns>
         public async Task<List<PricePair>> Handle(GetProviderPricesQuery query, CancellationToken cancellationToken)
         {
-            using (var scope = _tracer.BuildSpan("CreateAssetAsync_CreateAssetService").StartActive(true))
+            using (var scope = _tracer.BuildSpan("GetProviderPricesQuerysHandler").StartActive(true))
             {
                 var provider = _assetPriceServiceResolver(query.ProviderType);
 

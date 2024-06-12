@@ -6,13 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Mshrm.Studio.Pricing.Api.Extensions;
 using Mshrm.Studio.Pricing.Api.Models.Cache;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
-using Mshrm.Studio.Pricing.Api.Models.Dtos.Prices;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPrices.Queries;
+using Mshrm.Studio.Pricing.Api.Models.Dtos.AssetPrices;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
 using Mshrm.Studio.Pricing.Api.Services.Providers;
-using Mshrm.Studio.Pricing.Application.Dtos.Prices;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories.Queries;
+using Mshrm.Studio.Pricing.Application.Dtos.AssetPriceHistories;
+using Mshrm.Studio.Pricing.Domain.AssetPriceHistories;
+using Mshrm.Studio.Pricing.Domain.AssetPriceHistories.Queries;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
@@ -55,12 +56,12 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(List<PriceDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<AssetPriceDto>), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<List<PriceDto>>> GetLatestPricesAsync([FromQuery] PricingProviderType? pricingProviderType,
+        public async Task<ActionResult<List<AssetPriceDto>>> GetLatestPricesAsync([FromQuery] PricingProviderType? pricingProviderType,
             [FromQuery] AssetType? assetType, [FromQuery] string baseAsset = "USD", [FromQuery] List<string>? symbols = null)
         {
-            var prices = await _mediator.Send<List<ExchangePricingPair>>(new GetLatestPricesQuery()
+            var prices = await _mediator.Send<List<AssetPrice>>(new GetLatestPricesQuery()
             {
                 Symbols = symbols,
                 BaseAssetSymbol = baseAsset,
@@ -68,7 +69,7 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
                 PricingProviderType = pricingProviderType
             });
 
-            return Ok(_mapper.Map<List<PriceDto>>(prices));
+            return Ok(_mapper.Map<List<AssetPriceDto>>(prices));
         }
 
         /// <summary>
@@ -83,13 +84,13 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Price history</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(PageResultDto<PriceHistoryDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PageResultDto<AssetPriceHistoryDto>), StatusCodes.Status200OK)]
         [Route("history")]
-        public async Task<ActionResult<List<PriceDto>>> GetPriceHistoryAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType, 
+        public async Task<ActionResult<List<AssetPriceDto>>> GetPriceHistoryAsync([FromQuery] string assetGuidId, [FromQuery] PricingProviderType? pricingProviderType, 
             [FromQuery] string baseAssetGuidId, [FromQuery] string orderProperty = "createdDate", [FromQuery] Order order = Order.Descending, [FromQuery] uint pageNumber = 1,
              [FromQuery] uint perPage = 30)
         {
-            var prices = await _mediator.Send<PagedResult<ExchangePricingPairHistory>>(new GetPagedPriceHistoryQuery()
+            var prices = await _mediator.Send<PagedResult<AssetPriceHistory>>(new GetPagedAssetPriceHistoryQuery()
             {
                 BaseAssetGuidId = assetGuidId,
                 AssetGuidId = assetGuidId,
@@ -100,7 +101,7 @@ namespace Mshrm.Studio.Pricing.Api.Controllers
                 PerPage = perPage
             });
 
-            return Ok(_mapper.Map<PageResultDto<PriceHistoryDto>>(prices));
+            return Ok(_mapper.Map<PageResultDto<AssetPriceHistoryDto>>(prices));
         }
     }
 }

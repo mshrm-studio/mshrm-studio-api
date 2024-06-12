@@ -13,7 +13,7 @@ using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
 using Mshrm.Studio.Pricing.Api.Services.Providers;
 using Mshrm.Studio.Pricing.Application.Dtos.Providers;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
+using Mshrm.Studio.Pricing.Domain.AssetPrices.Queries;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets.Queries;
 using Mshrm.Studio.Shared.Enums;

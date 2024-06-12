@@ -32,43 +32,43 @@ using Mshrm.Studio.Pricing.Api.Services.Http.Interfaces;
 using Mshrm.Studio.Pricing.Api.Context;
 using Mshrm.Studio.Pricing.Api.Repositories;
 using Mshrm.Studio.Pricing.Api.Services.Http;
-using Mshrm.Studio.Pricing.Api.EventHandlers.Users;
-using Mshrm.Studio.Pricing.Api.Models.Events;
 using Mshrm.Studio.Shared.Exceptions.HttpAction;
 using Mshrm.Studio.Shared.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Mshrm.Studio.Shared.Models.Pagination;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Commands;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairHistories.Commands;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPrices.Queries;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPrices.Commands;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPriceHistories.Commands;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.Assets;
-using Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePair;
-using Mshrm.Studio.Pricing.Application.Handlers.Request.ExchangePricePairHistory;
 using Google.Api;
 using Mshrm.Studio.Pricing.Api.Models.Enums;
 using Mshrm.Studio.Pricing.Api.Services.Providers.Interfaces;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
 using System.Data.SqlClient;
 using Mshrm.Studio.Pricing.Infrastructure.Factories;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Commands;
 using Mshrm.Studio.Pricing.Api.Models.CQRS.Assets.Queries;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.Assets;
 using Mshrm.Studio.Pricing.Domain.Assets;
 using Mshrm.Studio.Pricing.Application.Services.Background;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairHistories.Queries;
 using Mshrm.Studio.Pricing.Api.Models.Cache;
-using Mshrm.Studio.Pricing.Domain.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Application.Handlers.Request.Providers;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets.Queries;
 using Mshrm.Studio.Pricing.Domain.ProviderAssets;
 using Mshrm.Studio.Shared.Services.Interfaces;
 using Mshrm.Studio.Shared.Services;
 using Microsoft.Extensions.Caching.Distributed;
+using Mshrm.Studio.Pricing.Domain.AssetPrices.Queries;
+using Mshrm.Studio.Pricing.Domain.AssetPriceHistories.Queries;
+using Mshrm.Studio.Pricing.Domain.AssetPriceHistories;
+using Mshrm.Studio.Pricing.Application.Handlers.Request.AssetPriceHistories;
+using Mshrm.Studio.Pricing.Application.Handlers.Request.AssetPrices;
+using Mshrm.Studio.Pricing.Domain.AssetPrices;
+using Mshrm.Studio.Pricing.Api.Models.CQRS.AssetPrices.Events;
+using Mshrm.Studio.Pricing.Api.EventHandlers.AssetPrices;
 
 namespace Mshrm.Studio.Pricing.Api.Extensions
 {
@@ -259,8 +259,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
 
-            builder.Services.AddTransient<IExchangePricingPairHistoryFactory, ExchangePricingPairHistoryFactory>();
-            builder.Services.AddTransient<IExchangePricingPairFactory, ExchangePricingPairFactory>();
+            builder.Services.AddTransient<IAssetPriceHistoryFactory, AssetPriceHistoryFactory>();
+            builder.Services.AddTransient<IAssetPriceFactory, AssetPriceFactory>();
             builder.Services.AddTransient<IAssetFactory, AssetFactory>();
 
             builder.Services.AddTransient<FreeCurrencyCurrencyPriceProvider>();
@@ -288,8 +288,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             });
 
             builder.Services.AddTransient<IAssetRepository, AssetRepository>();
-            builder.Services.AddTransient<IExchangePricingPairRepository, ExchangePricingPairRepository>();
-            builder.Services.AddTransient<IExchangePricingPairHistoryRepository, ExchangePricingPairHistoryRepository>();
+            builder.Services.AddTransient<IAssetPriceRepository, AssetPriceRepository>();
+            builder.Services.AddTransient<IAssetPriceHistoryRepository, AssetPriceHistoryRepository>();
 
             // Setup the data repositories
             builder.Services.AddTransient<ITwelveDataService, TwelveDataService>(s =>
@@ -325,8 +325,8 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             builder.Services.AddTransient<IJobsService, JobsService>();
 
             // Setup event handlers
-            builder.Services.AddScoped<INotificationHandler<ExchangePricePairCreatedEvent>, ExchangePricePairCreatedEventHandler>();
-            builder.Services.AddScoped<INotificationHandler<ExchangePricePairUpdatedEvent>, ExchangePricePairUpdatedEventHandler>();
+            builder.Services.AddScoped<INotificationHandler<AssetPriceCreatedEvent>, AssetPriceCreatedEventHandler>();
+            builder.Services.AddScoped<INotificationHandler<AssetPriceUpdatedEvent>, AssetPriceUpdatedEventHandler>();
 
             // Misc
             builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
@@ -361,11 +361,11 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<CreateSupportedAssetCommand, Asset>, CreateSupportedAssetCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<UpdateSupportedAssetCommand, Asset>, UpdateSupportedAssetCommandHandler>();
 
-            builder.Services.AddScoped<IRequestHandler<GetLatestPricesQuery, List<ExchangePricingPair>>, GetLatestPricesQueryHandler>();
-            builder.Services.AddScoped<IRequestHandler<CreateOrReplacePricingPairsCommand, List<ExchangePricingPair>>, CreateOrReplacePricingPairsCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetLatestPricesQuery, List<AssetPrice>>, GetLatestPricesQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateOrReplaceAssetPricesCommand, List<AssetPrice>>, CreateOrReplaceAssetPricesCommandHandler>();
 
-            builder.Services.AddScoped<IRequestHandler<CreateExchangePricingPairHistoryCommand, ExchangePricingPairHistory>, CreateExchangePricingPairHistoryCommandHandler>();
-            builder.Services.AddScoped<IRequestHandler<GetPagedPriceHistoryQuery, PagedResult<ExchangePricingPairHistory>>, GetPagedPriceHistoryQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateAssetPriceHistoryCommand, AssetPriceHistory>, CreateAssetPriceHistoryCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetPagedAssetPriceHistoryQuery, PagedResult<AssetPriceHistory>>, GetPagedAssetPriceHistoryQueryHandler>();
 
             builder.Services.AddScoped<IRequestHandler<GetProviderPricesQuery, List<PricePair>>, GetProviderPricesQuerysHandler>();
             builder.Services.AddScoped<IRequestHandler<GetProviderAssetsQuery, List<ProviderAsset>>, GetProviderAssetsQuerysHandler>();

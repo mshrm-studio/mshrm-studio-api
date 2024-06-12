@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Mshrm.Studio.Pricing.Api.Models.Cache;
-using Mshrm.Studio.Pricing.Api.Models.CQRS.ExchangePricingPairs.Queries;
 using Mshrm.Studio.Pricing.Api.Models.Entites;
 using Mshrm.Studio.Pricing.Api.Repositories.Interfaces;
 using Mshrm.Studio.Pricing.Application.Services.Providers;
@@ -25,8 +24,9 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
         /// <summary>
         /// Initializes a new instance of the <see cref="GetProviderPricesQuerysHandler"/> class.
         /// </summary>
-        /// <param name="exchangePricingPairRepository"></param>
-        /// <param name="assetRepository"></param>
+        /// <param name="assetPriceServiceResolver"></param>
+        /// <param name="cacheService"></param>
+        /// <param name="tracer"></param>
         public GetProviderAssetsQuerysHandler(AssetPriceServiceResolver assetPriceServiceResolver, ICacheService cacheService, ITracer tracer)
         {
             _assetPriceServiceResolver = assetPriceServiceResolver;
@@ -35,7 +35,7 @@ namespace Mshrm.Studio.Pricing.Application.Handlers.Request.Providers
         }
 
         /// <summary>
-        /// Get the latest prices for symbols
+        /// Get the latest asset prices for symbols
         /// </summary>
         /// <param name="query">The query</param>
         /// <param name="cancellationToken">The stopping token</param>

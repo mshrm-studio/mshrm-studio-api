@@ -14,6 +14,6 @@ namespace Mshrm.Studio.Api.Services.Api.Interfaces
         /// <param name="symbols">Filter by supported assets</param>
         /// <param name="cancellationToken">Stopping token</param>
         /// <returns>A list of latest prices</returns>
-        Task<List<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, List<string>? symbols, CancellationToken cancellationToken);
+        Task<List<AssetPriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, List<string>? symbols, CancellationToken cancellationToken);
     }
 }

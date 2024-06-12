@@ -972,7 +972,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AssetPriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -984,7 +984,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AssetPriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets price history paged
@@ -998,7 +998,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Price history</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage);
+        System.Threading.Tasks.Task<PageResultDtoOfAssetPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -1013,7 +1013,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Price history</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PageResultDtoOfAssetPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -1071,7 +1071,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols)
+        public virtual System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AssetPriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols)
         {
             return GetLatestPricesAsync(pricingProviderType, assetType, baseAsset, symbols, System.Threading.CancellationToken.None);
         }
@@ -1086,7 +1086,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="symbols">Symbols - all used if left empty</param>
         /// <returns>Latest prices</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<PriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<System.Collections.ObjectModel.ObservableCollection<AssetPriceDto>> GetLatestPricesAsync(PricingProviderType? pricingProviderType, AssetType? assetType, string baseAsset, System.Collections.Generic.IEnumerable<string> symbols, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1145,7 +1145,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<PriceDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.ObjectModel.ObservableCollection<AssetPriceDto>>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1184,7 +1184,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Price history</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage)
+        public virtual System.Threading.Tasks.Task<PageResultDtoOfAssetPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage)
         {
             return GetPriceHistoryAsync(assetGuidId, pricingProviderType, baseAssetGuidId, orderProperty, order, pageNumber, perPage, System.Threading.CancellationToken.None);
         }
@@ -1202,7 +1202,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Price history</returns>
         /// <exception cref="PricingApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PageResultDtoOfPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<PageResultDtoOfAssetPriceHistoryDto> GetPriceHistoryAsync(string assetGuidId, PricingProviderType? pricingProviderType, string baseAssetGuidId, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1273,7 +1273,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfPriceHistoryDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfAssetPriceHistoryDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new PricingApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2176,7 +2176,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PriceDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class AssetPriceDto : System.ComponentModel.INotifyPropertyChanged
     {
         private decimal _price;
         private decimal? _marketCap;
@@ -2300,10 +2300,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static PriceDto FromJson(string data)
+        public static AssetPriceDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<PriceDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<AssetPriceDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -2318,14 +2318,14 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PageResultDtoOfPriceHistoryDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class PageResultDtoOfAssetPriceHistoryDto : System.ComponentModel.INotifyPropertyChanged
     {
         private int _pageNumber;
         private int _perPage;
         private int _totalResults;
         private Order _order;
         private string _propertyName;
-        private System.Collections.ObjectModel.ObservableCollection<PriceHistoryDto> _results;
+        private System.Collections.ObjectModel.ObservableCollection<AssetPriceHistoryDto> _results;
 
         [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
         public int PageNumber
@@ -2405,7 +2405,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
         }
 
         [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<PriceHistoryDto> Results
+        public System.Collections.ObjectModel.ObservableCollection<AssetPriceHistoryDto> Results
         {
             get { return _results; }
 
@@ -2425,10 +2425,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static PageResultDtoOfPriceHistoryDto FromJson(string data)
+        public static PageResultDtoOfAssetPriceHistoryDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfPriceHistoryDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfAssetPriceHistoryDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -2443,7 +2443,7 @@ namespace Mshrm.Studio.Api.Clients.Pricing
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class PriceHistoryDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class AssetPriceHistoryDto : System.ComponentModel.INotifyPropertyChanged
     {
         private decimal _oldPrice;
         private decimal? _oldMarketCap;
@@ -2565,10 +2565,10 @@ namespace Mshrm.Studio.Api.Clients.Pricing
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static PriceHistoryDto FromJson(string data)
+        public static AssetPriceHistoryDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<PriceHistoryDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<AssetPriceHistoryDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
