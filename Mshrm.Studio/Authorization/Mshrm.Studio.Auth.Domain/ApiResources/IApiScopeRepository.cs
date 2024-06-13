@@ -9,40 +9,40 @@ using System.Threading.Tasks;
 
 namespace Mshrm.Studio.Auth.Domain.ApiResources
 {
-    public interface IApiResourceRepository
+    public interface IApiScopeRepository
     {
         /// <summary>
-        /// Create a new api resource
+        /// Create a new api scope
         /// </summary>
-        /// <param name="name">The api resource name</param>
-        /// <returns>The new api resource + its secret as a tuple</returns>
-        public Task<(ApiResource Client, string Secret)> CreateApiResourceAsync(string name, CancellationToken cancellationToken);
+        /// <param name="name">The api scope name</param>
+        /// <returns>The new api scope + its secret as a tuple</returns>
+        public Task<ApiScope> CreateApiScopeAsync(string name, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get an api resource by id
+        /// Get an api scope by id
         /// </summary>
         /// <param name="id">The id</param>
         /// <param name="cancellationToken">A stopping token</param>
-        /// <returns>An api resource</returns>
-        Task<ApiResource?> GetApiResourceByIdAsync(int id, CancellationToken cancellationToken);
+        /// <returns>An api scope</returns>
+        Task<ApiScope?> GetApiScopeByIdAsync(int id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get an api resource by name
+        /// Get an api scope by name
         /// </summary>
         /// <param name="id">The name</param>
         /// <param name="cancellationToken">A stopping token</param>
-        /// <returns>An api resource</returns>
-        Task<ApiResource?> GetApiResourceByNameAsync(string name, CancellationToken cancellationToken);
+        /// <returns>An api scope</returns>
+        Task<ApiScope?> GetApiScopeByNameAsync(string name, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Get a page of api resources
+        /// Get a page of api scope
         /// </summary>
         /// <param name="searchTerm">A search term</param>
         /// <param name="name">A name</param>
         /// <param name="page">The page to return</param>
         /// <param name="sortOrder">The order to return</param>
         /// <param name="cancellationToken">A stopping token</param>
-        /// <returns>A page of api resources</returns>
-        Task<PagedResult<ApiResource>> GetApiResourcesPagedAsync(string? searchTerm, string? name, Page page, SortOrder sortOrder, CancellationToken cancellationToken);
+        /// <returns>A page of api scopes</returns>
+        Task<PagedResult<ApiScope>> GetApiScopesPagedAsync(string? searchTerm, string? name, Page page, SortOrder sortOrder, CancellationToken cancellationToken);
     }
 }

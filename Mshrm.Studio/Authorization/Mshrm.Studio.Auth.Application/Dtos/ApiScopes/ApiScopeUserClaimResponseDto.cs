@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace Mshrm.Studio.Auth.Application.Dtos.ApiResources
 {
-    public class ApiResourceScopeResponseDto
+    public class ApiScopeUserClaimResponseDto
     {
-        [JsonProperty("scope")]
-        public string Scope { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
-        [JsonProperty("apiResourceId")]
-        public int ApiResourceId { get; set; }
+        [JsonProperty("apiScopeId")]
+        public int ApiScopeId { get; set; }
     }
 }

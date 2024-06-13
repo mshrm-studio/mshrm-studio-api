@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mshrm.Studio.Auth.Application.Dtos.ApiResources
 {
-    public class CreateApiResourceRequestDto
+    public class CreateApiScopeRequestDto
     {
         [JsonProperty("name")]
         public required string Name { get; set; }

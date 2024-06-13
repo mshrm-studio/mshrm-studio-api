@@ -17,42 +17,32 @@ using System.Xml.Linq;
 
 namespace Mshrm.Studio.Auth.Infrastructure.Repositories
 {
-    public class ApiResourceRepository : IApiResourceRepository
+    public class ApiScopeRepository : IApiScopeRepository
     {
         private readonly ConfigurationDbContext _configurationDbContext;
-        private readonly IApiResourceFactory _apiResourceFactory;
+        private readonly IApiScopeFactory _apiScopeFactory;
 
-        public ApiResourceRepository(ConfigurationDbContext configurationDbContext, IApiResourceFactory apiResourceFactory)
+        public ApiScopeRepository(ConfigurationDbContext configurationDbContext, IApiScopeFactory apiScopeFactory)
         {
             _configurationDbContext = configurationDbContext;
-            _apiResourceFactory = apiResourceFactory;
+            _apiScopeFactory = apiScopeFactory;
         }
 
         /// <summary>
-        /// Create a new api resource
+        /// Create a new api scope
         /// </summary>
-        /// <param name="name">The api resource name</param>
-        /// <returns>The new api resource + its secret as a tuple</returns>
-        public async Task<(ApiResource Client, string Secret)> CreateApiResourceAsync(string name, CancellationToken cancellationToken)
+        /// <param name="name">The api scope name</param>
+        /// <returns>The new api scope</returns>
+        public async Task<ApiScope> CreateApiScopeAsync(string name, CancellationToken cancellationToken)
         {
-            // Create the secret
-            var secret = StringUtility.GetRandomPassword(32);
-
-            // Setup the default scopes
-            var scopes = new List<string>()
-            {
-                "mshrm.studio.read",
-                "mshrm.studio.write"
-            };
-
             // Create api resource
-            var apiResource = _apiResourceFactory.CreateNewApiResource(name, scopes, secret);
+            var apiScope = _apiScopeFactory.CreateNewApiScope(name);
+            _configurationDbContext.ApiScopes.Add(apiScope);
 
-            // Save client
-            _configurationDbContext.ApiResources.Add(apiResource);
+            // Save api scope
             await _configurationDbContext.SaveChangesAsync(cancellationToken);
 
-            return (apiResource, secret);
+            return apiScope;
         }
 
         /// <summary>
@@ -61,9 +51,9 @@ namespace Mshrm.Studio.Auth.Infrastructure.Repositories
         /// <param name="id">The id</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>An api resource</returns>
-        public async Task<ApiResource?> GetApiResourceByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<ApiScope?> GetApiScopeByIdAsync(int id, CancellationToken cancellationToken)
         {
-            return await _configurationDbContext.ApiResources.Where(x => x.Id == id)
+            return await _configurationDbContext.ApiScopes.Where(x => x.Id == id)
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
@@ -73,9 +63,9 @@ namespace Mshrm.Studio.Auth.Infrastructure.Repositories
         /// <param name="id">The name</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>An api resource</returns>
-        public async Task<ApiResource?> GetApiResourceByNameAsync(string name, CancellationToken cancellationToken)
+        public async Task<ApiScope?> GetApiScopeByNameAsync(string name, CancellationToken cancellationToken)
         {
-            return await _configurationDbContext.ApiResources.Where(x => x.Name.ToLower().Trim() == name.ToLower().Trim())
+            return await _configurationDbContext.ApiScopes.Where(x => x.Name.ToLower().Trim() == name.ToLower().Trim())
                 .FirstOrDefaultAsync(cancellationToken);
         }
 
@@ -88,11 +78,10 @@ namespace Mshrm.Studio.Auth.Infrastructure.Repositories
         /// <param name="sortOrder">The order to return</param>
         /// <param name="cancellationToken">A stopping token</param>
         /// <returns>A page of api resources</returns>
-        public async Task<PagedResult<ApiResource>> GetApiResourcesPagedAsync(string? searchTerm, string? name, Page page, SortOrder sortOrder, CancellationToken cancellationToken)
+        public async Task<PagedResult<ApiScope>> GetApiScopesPagedAsync(string? searchTerm, string? name, Page page, SortOrder sortOrder, CancellationToken cancellationToken)
         {
-            var apiResources = _configurationDbContext.ApiResources.Include(x => x.Secrets)
+            var apiResources = _configurationDbContext.ApiScopes
                 .Include(x => x.UserClaims)
-                .Include(x => x.Scopes)
                 .AsNoTracking();
 
             if (!string.IsNullOrEmpty(searchTerm))
@@ -115,7 +104,7 @@ namespace Mshrm.Studio.Auth.Infrastructure.Repositories
             var returnPage = await apiResources.PageAsync(page, cancellationToken);
 
             // Return as page
-            return new PagedResult<ApiResource>()
+            return new PagedResult<ApiScope>()
             {
                 Page = page,
                 SortOrder = sortOrder,
@@ -132,7 +121,7 @@ namespace Mshrm.Studio.Auth.Infrastructure.Repositories
         /// <param name="set">The list to order</param>
         /// <param name="sortOrder">The sort order details</param>
         /// <returns>Sorted list</returns>
-        private IQueryable<ApiResource> OrderSet(IQueryable<ApiResource> set, SortOrder sortOrder)
+        private IQueryable<ApiScope> OrderSet(IQueryable<ApiScope> set, SortOrder sortOrder)
         {
             return (sortOrder.PropertyName.Trim(), sortOrder.Order) switch
             {

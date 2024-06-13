@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Mshrm.Studio.Auth.Domain.ApiResources.Queries
 {
-    public class GetPagedApiResourcesQuery : IRequest<PagedResult<ApiResource>>
+    public class GetPagedApiScopesQuery : IRequest<PagedResult<ApiScope>>
     {
         public string? SearchTerm;
         public string? Name { get; set; }

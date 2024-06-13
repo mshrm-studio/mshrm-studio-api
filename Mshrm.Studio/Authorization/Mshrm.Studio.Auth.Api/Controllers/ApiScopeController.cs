@@ -30,22 +30,22 @@ namespace Mshrm.Studio.Auth.Api.Controllers
     /// Client API
     /// </summary>
     [ApiController]
-    [Route("api/v1/api-resources")]
-    public class ApiResourceController : BaseAuthController
+    [Route("api/v1/api-scopes")]
+    public class ApiScopeController : BaseAuthController
     {
-        private readonly ILogger<ApiResourceController> _logger;
+        private readonly ILogger<ApiScopeController> _logger;
         private readonly IMapper _mapper;
 
         private readonly IMediator _mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ApiResourceController"/> class.
+        /// Initializes a new instance of the <see cref="ApiScopeController"/> class.
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="httpContextAccessor"></param>
         /// <param name="logger"></param>
         /// <param name="mapper"></param>
-        public ApiResourceController(IMediator mediator, IHttpContextAccessor httpContextAccessor, ILogger<ApiResourceController> logger, IMapper mapper) : base(httpContextAccessor)
+        public ApiScopeController(IMediator mediator, IHttpContextAccessor httpContextAccessor, ILogger<ApiScopeController> logger, IMapper mapper) : base(httpContextAccessor)
         {
             _logger = logger;
             _mapper = mapper;
@@ -54,42 +54,42 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         }
 
         /// <summary>
-        /// Create a new api resource
+        /// Create a new api scope
         /// </summary>
-        /// <param name="model">The new api resource configuration</param>
-        /// <returns>The api resource created</returns>
+        /// <param name="model">The new api scope configuration</param>
+        /// <returns>The api scope created</returns>
         [HttpPost]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ProducesResponseType(typeof(CreatedApiResourceResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiScopeResponseDto), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<CreatedApiResourceResponseDto>> CreateApiResourceAsync([FromBody] CreateApiResourceRequestDto model)
+        public async Task<ActionResult<ApiScopeResponseDto>> CreateApiScopeAsync([FromBody] CreateApiScopeRequestDto model)
         {
-            // Create client
-            var client = await _mediator.Send<ApiResourceWithSecret>(_mapper.Map<CreateApiResourceCommand>(model), Request.HttpContext.RequestAborted);
+            // Create api scope
+            var apiScope = await _mediator.Send<ApiScope>(_mapper.Map<CreateApiScopeCommand>(model), Request.HttpContext.RequestAborted);
 
             // Return
-            return Ok(_mapper.Map<CreatedApiResourceResponseDto>(client));
+            return Ok(_mapper.Map<ApiScopeResponseDto>(apiScope));
         }
 
         /// <summary>
-        /// Get a page of api resources
+        /// Get a page of api scopes
         /// </summary>
-        /// <param name="name">The api resources name</param>
+        /// <param name="name">The api scopes name</param>
         /// <param name="searchTerm">A search term</param>
         /// <param name="orderProperty">The property to order by</param>
         /// <param name="order">The order to return set in</param>
         /// <param name="pageNumber">The page number</param>
         /// <param name="perPage">How many to return in the page</param>
-        /// <returns>Api resources</returns>
+        /// <returns>Api scopes</returns>
         [HttpGet]
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [ProducesResponseType(typeof(PageResultDto<ApiResourceResponseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PageResultDto<ApiScopeResponseDto>), StatusCodes.Status200OK)]
         [Route("")]
-        public async Task<ActionResult<PageResultDto<ApiResourceResponseDto>>> GetApiResourcesPagedAsync([FromQuery] string? name, [FromQuery] string? searchTerm, 
+        public async Task<ActionResult<PageResultDto<ApiScopeResponseDto>>> GetApiScopesPagedAsync([FromQuery] string? name, [FromQuery] string? searchTerm, 
             [FromQuery] string? orderProperty = "createdDate", [FromQuery] Order order = Order.Descending, [FromQuery] uint pageNumber = 1, [FromQuery] uint perPage = 30)
         {
-            // Get clients
-            var apiResources = await _mediator.Send<PagedResult<ApiResource>>(new GetPagedApiResourcesQuery() 
+            // Get api scopes
+            var apiScopes = await _mediator.Send<PagedResult<ApiScope>>(new GetPagedApiScopesQuery() 
             { 
                 SearchTerm = searchTerm,
                 Name = name, 
@@ -100,7 +100,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
             }, Request.HttpContext.RequestAborted);
 
             // Return
-            return Ok(_mapper.Map<PageResultDto<ApiResourceResponseDto>>(apiResources));
+            return Ok(_mapper.Map<PageResultDto<ApiScopeResponseDto>>(apiScopes));
         }
     }
 }

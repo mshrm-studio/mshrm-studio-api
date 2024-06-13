@@ -71,11 +71,9 @@ namespace Mshrm.Studio.Auth.Api.Mapping
 
             #region Api Resource
 
-            CreateMap<ApiResource, ApiResourceResponseDto>().ReverseMap();
-            CreateMap<ApiResourceWithSecret, CreatedApiResourceResponseDto>().ReverseMap();
-            CreateMap<ApiResourceSecret, ApiResourceSecretResponseDto>().ReverseMap();
-            CreateMap<CreateApiResourceRequestDto, CreateApiResourceCommand>().ReverseMap();
-            CreateMap<PagedResult<ApiResource>, PageResultDto<ApiResourceResponseDto>>();
+            CreateMap<ApiScope, ApiScopeResponseDto>().ReverseMap();
+            CreateMap<CreateApiScopeRequestDto, CreateApiScopeCommand>().ReverseMap();
+            CreateMap<PagedResult<ApiScope>, PageResultDto<ApiScopeResponseDto>>();
 
             #endregion
         }

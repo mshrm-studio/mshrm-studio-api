@@ -9,26 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using ApiResource = Duende.IdentityServer.EntityFramework.Entities.ApiResource;
+using ApiScope = Duende.IdentityServer.EntityFramework.Entities.ApiScope;
 
 namespace Mshrm.Studio.Auth.Infrastructure.Factories
 {
-    public class ApiResourceFactory : IApiResourceFactory
+    public class ApiResourceFactory : IApiScopeFactory
     {
         /// <summary>
-        /// Create a new api resource
+        /// Create a new api scope
         /// </summary>
-        /// <param name="name">The new resources name</param>
-        /// <param name="scopes">The resource scopes</param>
-        /// <param name="secret">The secret hashed</param>
-        /// <returns>A new api resource</returns>
-        public ApiResource CreateNewApiResource(string name, List<string> scopes, string secret)
+        /// <param name="name">The new scopes name</param>
+        /// <returns>A new api scope</returns>
+        public ApiScope CreateNewApiScope(string name)
         {
-            return new ApiResource
+            return new ApiScope
             {
-                Name = name,
-                Scopes = scopes.Select(x => new ApiResourceScope() { Scope = x.ToLower().Trim() }).ToList(),
-                Secrets = new List<ApiResourceSecret>(){ new ApiResourceSecret() { Value = secret.Sha256() } },
-                UserClaims = new List<ApiResourceClaim>() { new ApiResourceClaim() { Type = "role" } },
+                Name = name.ToLower(),
+                DisplayName = name,
+                UserClaims = new List<ApiScopeClaim>() { new ApiScopeClaim() { Type = "role" } },
             };
         }
     }

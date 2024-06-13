@@ -12,28 +12,28 @@ using System.Threading.Tasks;
 
 namespace Mshrm.Studio.Auth.Application.Handlers.ApiResources
 {
-    public class GetPagedApiResourcesQueryHandler : IRequestHandler<GetPagedApiResourcesQuery, PagedResult<ApiResource>>
+    public class GetPagedApiResourcesQueryHandler : IRequestHandler<GetPagedApiScopesQuery, PagedResult<ApiScope>>
     {
-        private readonly IApiResourceRepository _apiResourceRepository;
+        private readonly IApiScopeRepository _apiScopeRepository;
         private readonly ITracer _tracer;
 
-        public GetPagedApiResourcesQueryHandler(IApiResourceRepository apiResourceRepository, ITracer tracer)
+        public GetPagedApiResourcesQueryHandler(IApiScopeRepository apiScopeRepository, ITracer tracer)
         {
-            _apiResourceRepository = apiResourceRepository;
+            _apiScopeRepository = apiScopeRepository;
 
             _tracer = tracer;
         }
 
         /// <summary>
-        /// Get a page of api resources
+        /// Get a page of api scopes
         /// </summary>
         /// <param name="query">The query data</param>
         /// <returns>A page of api resources</returns>
-        public async Task<PagedResult<ApiResource>> Handle(GetPagedApiResourcesQuery query, CancellationToken cancellationToken)
+        public async Task<PagedResult<ApiScope>> Handle(GetPagedApiScopesQuery query, CancellationToken cancellationToken)
         {
             using (var scope = _tracer.BuildSpan("GetPagedApiResourcesQueryHandler").StartActive(true))
             {
-                var apiResources = await _apiResourceRepository.GetApiResourcesPagedAsync(query.SearchTerm, query.Name,
+                var apiResources = await _apiScopeRepository.GetApiScopesPagedAsync(query.SearchTerm, query.Name,
                     new Page(query.PageNumber, query.PerPage), new SortOrder(query.OrderProperty, query.Order), cancellationToken);
 
                 return apiResources;

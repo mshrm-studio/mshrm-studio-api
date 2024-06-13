@@ -258,8 +258,8 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<GetUserByEmailQuery, MshrmStudioUser>, GetUserByEmailQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<CreateClientCommand, ClientWithSecret>, CreateClientCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<GetPagedClientsQuery, PagedResult<Client>>, GetPagedClientsQueryHandler>();
-            builder.Services.AddScoped<IRequestHandler<CreateApiResourceCommand, ApiResourceWithSecret>, CreateApiResourceCommandHandler>();
-            builder.Services.AddScoped<IRequestHandler<GetPagedApiResourcesQuery, PagedResult<ApiResource>>, GetPagedApiResourcesQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateApiScopeCommand, ApiScope>, CreateApiScopeCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetPagedApiScopesQuery, PagedResult<ApiScope>>, GetPagedApiResourcesQueryHandler>();
 
             return builder;
         }
@@ -273,7 +273,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
         {
             builder.Services.AddTransient<IMshrmStudioIdentityUserFactory, MshrmStudioIdentityUserFactory>();
             builder.Services.AddTransient<IClientFactory, ClientFactory>();
-            builder.Services.AddTransient<IApiResourceFactory, ApiResourceFactory>();
+            builder.Services.AddTransient<IApiScopeFactory, ApiResourceFactory>();
 
             // Setup the managers
             builder.Services.AddTransient<UserManager<MshrmStudioIdentityUser>>();
@@ -281,7 +281,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
 
             // Setup the repositories
             builder.Services.AddTransient<IClientRepository, ClientRepository>();
-            builder.Services.AddTransient<IApiResourceRepository, ApiResourceRepository>();
+            builder.Services.AddTransient<IApiScopeRepository, ApiScopeRepository>();
 
             // Setup the services
             builder.Services.AddTransient<IIdentityUserService, IdentityUserService>();
