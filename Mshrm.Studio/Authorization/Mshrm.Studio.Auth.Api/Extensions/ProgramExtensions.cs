@@ -427,7 +427,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
             // Get JWT signing keys
-            var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints).GetAwaiter().GetResult();
+            var microsoftSigningKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints).GetAwaiter().GetResult();
 
             // Setup JWT Auth
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -439,7 +439,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
 
                     // OIDC Signing Keys
-                    IssuerSigningKeys = signingKeys,
+                    IssuerSigningKeys = microsoftSigningKeys,
 
                     // Name claim definition
                     NameClaimType = ClaimTypes.NameIdentifier,
@@ -459,8 +459,8 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     // Ensure issuer is validated
                     ValidateIssuer = true,
 
-                    // Ensure audience is validated
-                    ValidateAudience = true,
+                    // Not required for ID4
+                    ValidateAudience = false,
 
                     // Require check for expiration
                     RequireExpirationTime = true,

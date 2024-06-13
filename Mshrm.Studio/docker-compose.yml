@@ -18,6 +18,8 @@ services:
       retries: 3
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    depends_on:
+      - mshrm-studio-auth-api
 
   mshrm-studio-auth-api:
     image: ${DOCKER_REGISTRY-}mshrmstudioauthapi

@@ -395,8 +395,8 @@ namespace Mshrm.Studio.Domain.Api.Extensions
                     // Ensure issuer is validated
                     ValidateIssuer = true,
 
-                    // Ensure audience is validated
-                    ValidateAudience = true,
+                    // Not required for ID4
+                    ValidateAudience = false,
 
                     // Require check for expiration
                     RequireExpirationTime = true,
