@@ -14,7 +14,8 @@
 
   <ItemGroup>
     <PackageReference Include="Dapr.AspNetCore" Version="1.12.0" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.9" />
+    <PackageReference Include="IdentityServer4.Storage" Version="4.1.2" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.11" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mshrm.Studio.Auth.Domain\Mshrm.Studio.Auth.Domain.csproj" />
+    <ProjectReference Include="..\Mshrm.Studio.Auth.Infrastructure\Mshrm.Studio.Auth.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

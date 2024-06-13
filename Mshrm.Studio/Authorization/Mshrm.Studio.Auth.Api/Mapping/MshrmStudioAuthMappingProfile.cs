@@ -1,9 +1,17 @@
 ﻿using AutoMapper;
-using Mshrm.Studio.Auth.Api.Models.Dtos;
+using Duende.IdentityServer.EntityFramework.Entities;
 using Mshrm.Studio.Auth.Api.Models.Entities;
 using Mshrm.Studio.Auth.Api.Models.Pocos;
+using Mshrm.Studio.Auth.Application.Dtos.ApiResources;
+using Mshrm.Studio.Auth.Application.Dtos.Clients;
+using Mshrm.Studio.Auth.Application.Dtos.Users;
+using Mshrm.Studio.Auth.Domain.ApiResources.Commands;
+using Mshrm.Studio.Auth.Domain.Clients;
+using Mshrm.Studio.Auth.Domain.Clients.Commands;
 using Mshrm.Studio.Auth.Domain.Tokens.Commands;
 using Mshrm.Studio.Auth.Domain.User.Commands;
+using Mshrm.Studio.Shared.Models.Dtos;
+using Mshrm.Studio.Shared.Models.Pagination;
 
 namespace Mshrm.Studio.Auth.Api.Mapping
 {
@@ -47,7 +55,28 @@ namespace Mshrm.Studio.Auth.Api.Mapping
             CreateMap<ResendConfirmationRequestDto, ResendUserConfirmationCommand>().ReverseMap();
             CreateMap<CreateUserAnyRoleRequestDto, CreateUserAnyRoleCommand>().ReverseMap();
             CreateMap<CreateUserRequestDto, CreateUserCommand>().ReverseMap();
-   
+
+            #endregion
+
+            #region Client
+
+            CreateMap<Client, ClientResponseDto>().ReverseMap();
+            CreateMap<ClientWithSecret, CreatedClientResponseDto>().ReverseMap();
+            CreateMap<ClientSecret, ClientSecretResponseDto>().ReverseMap();
+            CreateMap<CreateClientRequestDto, CreateClientCommand>().ReverseMap();
+            CreateMap<PagedResult<Client>, PageResultDto<ClientResponseDto>>();
+
+            #endregion
+
+
+            #region Api Resource
+
+            CreateMap<ApiResource, ApiResourceResponseDto>().ReverseMap();
+            CreateMap<ApiResourceWithSecret, CreatedApiResourceResponseDto>().ReverseMap();
+            CreateMap<ApiResourceSecret, ApiResourceSecretResponseDto>().ReverseMap();
+            CreateMap<CreateApiResourceRequestDto, CreateApiResourceCommand>().ReverseMap();
+            CreateMap<PagedResult<ApiResource>, PageResultDto<ApiResourceResponseDto>>();
+
             #endregion
         }
     }

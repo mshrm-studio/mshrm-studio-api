@@ -25,8 +25,6 @@ using System.Text.Unicode;
 using Mshrm.Studio.Shared.Extensions;
 using Mshrm.Studio.Shared.Providers;
 using Mshrm.Studio.Shared.Exceptions.HttpAction;
-using Mshrm.Studio.Auth.Api.Handlers;
-using Mshrm.Studio.Auth.Api.Services.Api;
 using Mshrm.Studio.Auth.Api.Models.Pocos;
 using Mshrm.Studio.Auth.Domain.User.Commands;
 using Mshrm.Studio.Auth.Domain.User.Queries;
@@ -45,6 +43,17 @@ using Google.Api;
 using Duende.IdentityServer.AspNetIdentity;
 using IdentityModel;
 using Microsoft.IdentityModel.Logging;
+using Mshrm.Studio.Auth.Infrastructure.Repositories;
+using Mshrm.Studio.Auth.Application.Handlers.Users;
+using Mshrm.Studio.Auth.Domain.Clients;
+using Mshrm.Studio.Auth.Domain.Clients.Commands;
+using Mshrm.Studio.Auth.Application.Handlers.Clients;
+using Mshrm.Studio.Auth.Domain.Clients.Queries;
+using Mshrm.Studio.Shared.Models.Pagination;
+using Mshrm.Studio.Auth.Domain.ApiResources;
+using Mshrm.Studio.Auth.Domain.ApiResources.Commands;
+using Mshrm.Studio.Auth.Application.Handlers.ApiResources;
+using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -105,13 +114,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 })
-                .ConfigureApiBehaviorOptions(options =>
-                {
-                    options.InvalidModelStateResponseFactory = actionContext =>
-                    {
-                        return ModelStateValidationErrorBuilder.BuildBadRequest(actionContext.ModelState);
-                    };
-                }).AddApiExplorer();
+                .ConfigureApiBehaviorOptions(options => {}).AddApiExplorer();
 
             return builder;
         }
@@ -253,6 +256,10 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<ValidateUserConfirmationCommand, Token>, ValidateUserConfirmationCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<ResendUserConfirmationCommand, bool>, ResendUserConfirmationCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<GetUserByEmailQuery, MshrmStudioUser>, GetUserByEmailQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateClientCommand, ClientWithSecret>, CreateClientCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetPagedClientsQuery, PagedResult<Client>>, GetPagedClientsQueryHandler>();
+            builder.Services.AddScoped<IRequestHandler<CreateApiResourceCommand, ApiResourceWithSecret>, CreateApiResourceCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<GetPagedApiResourcesQuery, PagedResult<ApiResource>>, GetPagedApiResourcesQueryHandler>();
 
             return builder;
         }
@@ -265,10 +272,16 @@ namespace Mshrm.Studio.Auth.Api.Extensions
         public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddTransient<IMshrmStudioIdentityUserFactory, MshrmStudioIdentityUserFactory>();
+            builder.Services.AddTransient<IClientFactory, ClientFactory>();
+            builder.Services.AddTransient<IApiResourceFactory, ApiResourceFactory>();
 
             // Setup the managers
             builder.Services.AddTransient<UserManager<MshrmStudioIdentityUser>>();
             builder.Services.AddTransient<RoleManager<IdentityRole>>();
+
+            // Setup the repositories
+            builder.Services.AddTransient<IClientRepository, ClientRepository>();
+            builder.Services.AddTransient<IApiResourceRepository, ApiResourceRepository>();
 
             // Setup the services
             builder.Services.AddTransient<IIdentityUserService, IdentityUserService>();

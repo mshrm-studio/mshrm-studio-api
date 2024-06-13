@@ -41,7 +41,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Localization" Version="8.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.9" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.3" />
     <PackageReference Include="OpenTracing" Version="0.12.1" />

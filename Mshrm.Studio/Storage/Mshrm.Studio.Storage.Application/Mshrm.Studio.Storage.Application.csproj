@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.S3" Version="3.7.305.31" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.9" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.11" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>

@@ -48,6 +48,8 @@ namespace Mshrm.Studio.Shared.Enums
         FailureCodeIsInvalid = 37,
         LocalizationAreaNotSupported = 38,
         CultureNotSupported = 39,
-        LocalizationAreaKeyIsInvalid = 40
+        LocalizationAreaKeyIsInvalid = 40,
+        ClientIdShouldBeUnique = 41,
+        ApiResourceNameShouldBeUnique = 42
     }
 }
