@@ -349,6 +349,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     opt.ConfigureDbContext = o => o.UseSqlServer(connectionStringWithCredentials.ToString(), sql => sql.MigrationsAssembly(migrationsAssembly));
                     opt.EnableTokenCleanup = true;
                 });
+                //.AddProfileService<IdentityProfileService>();
 
             // Setup related services for identity user/role
             builder.Services.AddScoped<IUserValidator<MshrmStudioIdentityUser>, UserValidator<MshrmStudioIdentityUser>>();
@@ -468,7 +469,6 @@ namespace Mshrm.Studio.Auth.Api.Extensions
 
                     // So expriy works
                     ClockSkew = TimeSpan.Zero,
-
 
                     // Custom issuer validater to support multi tenant requests
                     IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),

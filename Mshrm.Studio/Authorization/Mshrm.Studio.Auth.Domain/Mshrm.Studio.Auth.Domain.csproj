@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApiResources\Enums\" />
+    <Folder Include="ApiScopess\Enums\" />
   </ItemGroup>
 
 </Project>

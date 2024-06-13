@@ -59,7 +59,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The new api scope configuration</param>
         /// <returns>The api scope created</returns>
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
         [ProducesResponseType(typeof(ApiScopeResponseDto), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<ApiScopeResponseDto>> CreateApiScopeAsync([FromBody] CreateApiScopeRequestDto model)
@@ -82,7 +82,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Api scopes</returns>
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [ProducesResponseType(typeof(PageResultDto<ApiScopeResponseDto>), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<PageResultDto<ApiScopeResponseDto>>> GetApiScopesPagedAsync([FromQuery] string? name, [FromQuery] string? searchTerm, 

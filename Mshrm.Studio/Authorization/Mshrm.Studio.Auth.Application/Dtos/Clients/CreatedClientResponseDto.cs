@@ -13,7 +13,7 @@ namespace Mshrm.Studio.Auth.Application.Dtos.Clients
     public class CreatedClientResponseDto
     {
         [JsonProperty("client")]
-        public ClientResponseDto Client { get; set; }
+        public ClientResponseDto? Client { get; set; }
 
         [JsonProperty("plainTextSecret")]
         public string PlainTextSecret { get; set; }

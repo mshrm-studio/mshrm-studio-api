@@ -12,7 +12,7 @@ namespace Mshrm.Studio.Auth.Application.Dtos.ApiResources
         [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonProperty("apiScopeId")]
-        public int ApiScopeId { get; set; }
+        [JsonProperty("scopeId")]
+        public int ScopeId { get; set; }
     }
 }

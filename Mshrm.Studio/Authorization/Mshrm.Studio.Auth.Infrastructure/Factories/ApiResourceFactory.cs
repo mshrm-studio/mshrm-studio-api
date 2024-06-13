@@ -26,7 +26,12 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
             {
                 Name = name.ToLower(),
                 DisplayName = name,
-                UserClaims = new List<ApiScopeClaim>() { new ApiScopeClaim() { Type = "role" } },
+                UserClaims = new List<ApiScopeClaim>() 
+                { 
+                    new ApiScopeClaim() { Type = "role" }, 
+                    new ApiScopeClaim() { Type = "email" },
+                    new ApiScopeClaim() { Type = "aud" },
+                },
             };
         }
     }

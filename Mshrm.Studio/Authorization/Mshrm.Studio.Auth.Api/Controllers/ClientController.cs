@@ -56,7 +56,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The new clients configuration</param>
         /// <returns>The client created</returns>
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [ProducesResponseType(typeof(CreatedClientResponseDto), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<CreatedClientResponseDto>> CreateClientAsync([FromBody] CreateClientRequestDto model)
@@ -80,7 +80,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="perPage">How many to return in the page</param>
         /// <returns>Clients</returns>
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [ProducesResponseType(typeof(PageResultDto<ClientResponseDto>), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<PageResultDto<ClientResponseDto>>> GetClientsPagedAsync([FromQuery] string? clientName, string? clientId, [FromQuery] string? searchTerm, 

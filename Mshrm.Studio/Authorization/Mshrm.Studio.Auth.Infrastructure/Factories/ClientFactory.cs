@@ -34,8 +34,9 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
                 AllowedGrantTypes = grantTypes.Select(x => new ClientGrantType()
                 {
                     GrantType = (x == AllowedGrantType.ClientCredentials) ? GrantType.ClientCredentials :
-                                (x == AllowedGrantType.Password) ? GrantType.ResourceOwnerPassword :
-                                (x == AllowedGrantType.Password) ? GrantType.AuthorizationCode : null
+                                (x == AllowedGrantType.ResourceOwnerPassword) ? GrantType.ResourceOwnerPassword :
+                                (x == AllowedGrantType.AuthorizationCode) ? GrantType.AuthorizationCode :
+                                (x == AllowedGrantType.Hybrid) ? GrantType.Hybrid : null
                 }).ToList(),
                 ClientSecrets = new List<ClientSecret> { new ClientSecret() { Value = secret.Sha256() } },
                 AllowedScopes = scopes.Select(x => new ClientScope() { Scope = x }).ToList()

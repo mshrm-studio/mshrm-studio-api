@@ -17,6 +17,6 @@ namespace Mshrm.Studio.Auth.Application.Dtos.ApiResources
         public string? DisplayName { get; set; }
 
         [JsonProperty("userClaims")]
-        public List<ApiScopeUserClaimResponseDto> UserClaims { get; set; }
+        public List<ApiScopeUserClaimResponseDto> UserClaims { get; set; } = new List<ApiScopeUserClaimResponseDto>();
     }
 }
