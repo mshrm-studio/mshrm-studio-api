@@ -19,7 +19,7 @@ namespace Mshrm.Studio.Shared.Helpers
         public static async Task<List<SecurityKey>> GetOpenIdSecurityKeysAsync(string openIdConfigUri)
         {
             // Create the config manager and init with uri to get config from
-            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(openIdConfigUri, new OpenIdConnectConfigurationRetriever());
+            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(openIdConfigUri, new OpenIdConnectConfigurationRetriever() );
 
             // Get the config from the endpoint
             var openidconfig = await configManager.GetConfigurationAsync();

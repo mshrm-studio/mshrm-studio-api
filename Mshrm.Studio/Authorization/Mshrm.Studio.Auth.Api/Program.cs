@@ -8,6 +8,7 @@ using Mshrm.Studio.Shared.Extensions;
 using Newtonsoft.Json;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
+using Mshrm.Studio.Auth.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,10 +70,13 @@ if (builder.Configuration.GetValue<bool>("EFCore:Migrate") == true)
     await app.AddDatabaseMigrationAsync<ConfigurationDbContext>();
 }
 
+// Set middleware to rewrite server url for wellknown etc.
+app.UseMiddleware<IdentityOriginSettingMiddleware>(builder.Configuration.GetValue<string>("IdentityServerPublicFacingUri"));
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint(builder.Configuration.GetValue<string>("Swagger:EndPoint"), builder.Configuration.GetValue<string>("Swagger:Title"));

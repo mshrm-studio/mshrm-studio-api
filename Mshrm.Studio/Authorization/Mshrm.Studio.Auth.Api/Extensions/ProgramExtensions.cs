@@ -54,6 +54,7 @@ using Mshrm.Studio.Auth.Domain.ApiResources;
 using Mshrm.Studio.Auth.Domain.ApiResources.Commands;
 using Mshrm.Studio.Auth.Application.Handlers.ApiResources;
 using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
+using Mshrm.Studio.Auth.Api.Middleware;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -336,7 +337,10 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             var migrationsAssembly = typeof(ProgramExtensions).GetTypeInfo().Assembly.GetName().Name;
 
             // Add identity server to API
-            builder.Services.AddIdentityServer()
+            builder.Services.AddIdentityServer(options =>
+            {
+
+            })
                 .AddAspNetIdentity<MshrmStudioIdentityUser>()
                 .AddDeveloperSigningCredential() //TODO: NOT something we want to use in a production environment
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator<MshrmStudioIdentityUser>>()

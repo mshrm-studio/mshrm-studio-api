@@ -21,6 +21,7 @@
     using Microsoft.AspNetCore.Server.Kestrel.Core;
     using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Logging;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using Mshrm.Studio.Api.Clients;
@@ -348,6 +349,10 @@
 
             // Get JWT signing keys
             var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints).GetAwaiter().GetResult();
+
+            // For debugging
+            IdentityModelEventSource.ShowPII = builder.Environment.IsDevelopment();
+            IdentityModelEventSource.LogCompleteSecurityArtifact = builder.Environment.IsDevelopment();
 
             // Setup JWT Auth
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
