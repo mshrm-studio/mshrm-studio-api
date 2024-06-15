@@ -59,7 +59,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The new api scope configuration</param>
         /// <returns>The api scope created</returns>
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles ="Admin")]
         [ProducesResponseType(typeof(ApiScopeResponseDto), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<ApiScopeResponseDto>> CreateApiScopeAsync([FromBody] CreateApiScopeRequestDto model)
