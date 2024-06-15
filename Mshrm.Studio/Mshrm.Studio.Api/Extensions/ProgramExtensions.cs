@@ -352,8 +352,8 @@
             var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints, !builder.Environment.IsDevelopment()).GetAwaiter().GetResult();
 
             // For debugging
-            IdentityModelEventSource.ShowPII = builder.Environment.IsDevelopment();
-            IdentityModelEventSource.LogCompleteSecurityArtifact = builder.Environment.IsDevelopment();
+            IdentityModelEventSource.ShowPII = true; //builder.Environment.IsDevelopment();
+            IdentityModelEventSource.LogCompleteSecurityArtifact = true; //builder.Environment.IsDevelopment();
 
             // Setup JWT Auth
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
