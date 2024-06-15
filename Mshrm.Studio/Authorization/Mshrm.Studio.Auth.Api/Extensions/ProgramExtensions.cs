@@ -55,6 +55,7 @@ using Mshrm.Studio.Auth.Domain.ApiResources.Commands;
 using Mshrm.Studio.Auth.Application.Handlers.ApiResources;
 using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
 using Mshrm.Studio.Auth.Api.Middleware;
+using Mshrm.Studio.Auth.Application.Options;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -197,6 +198,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             // Add Options
             builder.Services.Configure<IdentityOptions>(options => { });
             builder.Services.Configure<JwtOptions>(options => builder.Configuration.GetSection("Jwt").Bind(options));
+            builder.Services.Configure<IdentityOriginOptions>(options => builder.Configuration.GetSection("IdentityOrigin").Bind(options));
 
             return builder;
         }

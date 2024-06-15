@@ -1,5 +1,7 @@
 ﻿using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Services;
+using Microsoft.Extensions.Options;
+using Mshrm.Studio.Auth.Application.Options;
 
 namespace Mshrm.Studio.Auth.Api.Middleware
 {
@@ -9,17 +11,17 @@ namespace Mshrm.Studio.Auth.Api.Middleware
     public class IdentityOriginSettingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly string _publicFacingUri;
+        private readonly IdentityOriginOptions _options;
 
-        public IdentityOriginSettingMiddleware(RequestDelegate next, string publicFacingUri)
+        public IdentityOriginSettingMiddleware(RequestDelegate next, IOptions<IdentityOriginOptions> options)
         {
-            _publicFacingUri = publicFacingUri;
+            _options = options.Value;
             _next = next;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            context.RequestServices.GetRequiredService<IServerUrls>().Origin = _publicFacingUri;
+            context.RequestServices.GetRequiredService<IServerUrls>().Origin = _options.IdentityServerPublicFacingUri;
 
             await _next(context);
         }
