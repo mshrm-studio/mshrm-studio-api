@@ -56,7 +56,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The new clients configuration</param>
         /// <returns>The client created</returns>
         [HttpPost]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         [ProducesResponseType(typeof(CreatedClientResponseDto), StatusCodes.Status200OK)]
         [Route("")]
         public async Task<ActionResult<CreatedClientResponseDto>> CreateClientAsync([FromBody] CreateClientRequestDto model)
