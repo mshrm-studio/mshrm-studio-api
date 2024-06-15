@@ -71,7 +71,7 @@ if (builder.Configuration.GetValue<bool>("EFCore:Migrate") == true)
 }
 
 // Set middleware to rewrite server url for wellknown etc.
-app.UseMiddleware<IdentityOriginSettingMiddleware>(builder.Configuration.GetValue<string>("IdentityServerPublicFacingUri"));
+app.UseMiddleware<IdentityOriginSettingMiddleware>();
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
