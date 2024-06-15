@@ -16,10 +16,10 @@ namespace Mshrm.Studio.Shared.Helpers
         /// </summary>
         /// <param name="openIdConfigUri">The endpoint to get configuration from</param>
         /// <returns>Signing keys</returns>
-        public static async Task<List<SecurityKey>> GetOpenIdSecurityKeysAsync(string openIdConfigUri)
+        public static async Task<List<SecurityKey>> GetOpenIdSecurityKeysAsync(string openIdConfigUri, bool requireHttps)
         {
             // Create the config manager and init with uri to get config from
-            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(openIdConfigUri, new OpenIdConnectConfigurationRetriever() );
+            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(openIdConfigUri, new OpenIdConnectConfigurationRetriever(), new HttpDocumentRetriever() { RequireHttps = requireHttps });
 
             // Get the config from the endpoint
             var openidconfig = await configManager.GetConfigurationAsync();
@@ -54,7 +54,7 @@ namespace Mshrm.Studio.Shared.Helpers
         /// <param name="openIdConfigUris">OpenId well-known endpoint/s</param>
         /// <param name="additionalSigningKeys">Any additional signing keys to add ie. from appication</param>
         /// <returns>A list of signing keys for the application to decode JWT with</returns>
-        public static async Task<List<SecurityKey>> GetSigningKeysAsync(List<string> openIdConfigUris, params string[] additionalSigningKeys)
+        public static async Task<List<SecurityKey>> GetSigningKeysAsync(List<string> openIdConfigUris, bool requireHttps, params string[] additionalSigningKeys)
         {
             var signingKeys = new List<SecurityKey>();
 
@@ -65,7 +65,7 @@ namespace Mshrm.Studio.Shared.Helpers
                 foreach (var openIdConfigUri in openIdConfigUris)
                 {
                     // Get security keys from config + add to list
-                    var openIdSigningKeys = await SigningKeyHelper.GetOpenIdSecurityKeysAsync(openIdConfigUri);
+                    var openIdSigningKeys = await SigningKeyHelper.GetOpenIdSecurityKeysAsync(openIdConfigUri, requireHttps);
                     if ((openIdSigningKeys?.Any() ?? false))
                         signingKeys.AddRange(openIdSigningKeys);
                 }

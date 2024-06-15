@@ -22,6 +22,7 @@
     using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Logging;
+    using Microsoft.IdentityModel.Protocols;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using Mshrm.Studio.Api.Clients;
@@ -348,7 +349,7 @@
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
             // Get JWT signing keys
-            var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints).GetAwaiter().GetResult();
+            var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints, !builder.Environment.IsDevelopment()).GetAwaiter().GetResult();
 
             // For debugging
             IdentityModelEventSource.ShowPII = builder.Environment.IsDevelopment();

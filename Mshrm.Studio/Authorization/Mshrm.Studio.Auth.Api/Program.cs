@@ -73,6 +73,12 @@ if (builder.Configuration.GetValue<bool>("EFCore:Migrate") == true)
 // Set middleware to rewrite server url for wellknown etc.
 app.UseMiddleware<IdentityOriginSettingMiddleware>();
 
+app.Use((context, next) =>
+{
+    context.Request.Scheme = "https";
+    return next(context);
+});
+
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{

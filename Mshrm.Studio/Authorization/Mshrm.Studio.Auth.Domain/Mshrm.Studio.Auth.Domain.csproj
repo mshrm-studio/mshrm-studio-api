@@ -11,7 +11,7 @@
     <PackageReference Include="Duende.IdentityServer.EntityFramework.Storage" Version="7.0.5" />
     <PackageReference Include="IdentityServer4.Storage" Version="4.1.2" />
     <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.11" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.12" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

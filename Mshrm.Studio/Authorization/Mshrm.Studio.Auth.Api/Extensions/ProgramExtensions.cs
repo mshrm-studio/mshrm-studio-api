@@ -56,6 +56,7 @@ using Mshrm.Studio.Auth.Application.Handlers.ApiResources;
 using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
 using Mshrm.Studio.Auth.Api.Middleware;
 using Mshrm.Studio.Auth.Application.Options;
+using Microsoft.IdentityModel.Protocols;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -116,7 +117,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 })
-                .ConfigureApiBehaviorOptions(options => {}).AddApiExplorer();
+                .ConfigureApiBehaviorOptions(options => { }).AddApiExplorer();
 
             return builder;
         }
@@ -355,7 +356,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     opt.ConfigureDbContext = o => o.UseSqlServer(connectionStringWithCredentials.ToString(), sql => sql.MigrationsAssembly(migrationsAssembly));
                     opt.EnableTokenCleanup = true;
                 });
-                //.AddProfileService<IdentityProfileService>();
+            //.AddProfileService<IdentityProfileService>();
 
             // Setup related services for identity user/role
             builder.Services.AddScoped<IUserValidator<MshrmStudioIdentityUser>, UserValidator<MshrmStudioIdentityUser>>();
@@ -370,6 +371,11 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Services.AddScoped<UserManager<MshrmStudioIdentityUser>>();
             builder.Services.AddScoped<SignInManager<MshrmStudioIdentityUser>>();
             builder.Services.AddScoped<RoleManager<IdentityRole>>();
+
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddTransient<IDocumentRetriever>(s => new HttpDocumentRetriever() { RequireHttps = false });
+            }
 
             // What to include in token
             builder.Services.Configure<IdentityOptions>(options =>
@@ -433,7 +439,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
             // Get JWT signing keys
-            var microsoftSigningKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints).GetAwaiter().GetResult();
+            var microsoftSigningKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints, !builder.Environment.IsDevelopment()).GetAwaiter().GetResult();
 
             // Setup JWT Auth
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
