@@ -57,6 +57,7 @@ using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
 using Mshrm.Studio.Auth.Api.Middleware;
 using Mshrm.Studio.Auth.Application.Options;
 using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -342,7 +343,11 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             // Add identity server to API
             builder.Services.AddIdentityServer(options =>
             {
-
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+                options.EmitStaticAudienceClaim = true;
             })
                 .AddAspNetIdentity<MshrmStudioIdentityUser>()
                 .AddDeveloperSigningCredential() //TODO: NOT something we want to use in a production environment
@@ -389,8 +394,8 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Services.Configure<PasswordHasherOptions>(options => options.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3);
 
             // For debugging
-            IdentityModelEventSource.ShowPII = builder.Environment.IsDevelopment();
-            IdentityModelEventSource.LogCompleteSecurityArtifact = builder.Environment.IsDevelopment();
+            IdentityModelEventSource.ShowPII = true;//builder.Environment.IsDevelopment();
+            IdentityModelEventSource.LogCompleteSecurityArtifact = true;//builder.Environment.IsDevelopment();
 
             return builder;
         }
@@ -438,62 +443,44 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             var openIdOptions = new OpenIdOptions();
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
-            // Get JWT signing keys
-            var microsoftSigningKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints, !builder.Environment.IsDevelopment()).GetAwaiter().GetResult();
-
             // Setup JWT Auth
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.Authority = $"{jwtOptions.Audience}"; // IdentityServer URL
+                options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
+                options.RequireHttpsMetadata = false; // Use true in production
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // JWT Signing Key
-                    //IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
-
-                    // OIDC Signing Keys
-                    IssuerSigningKeys = microsoftSigningKeys,
-
-                    // Name claim definition
-                    NameClaimType = ClaimTypes.NameIdentifier,
-
-                    // JWT Signing Key
-                    ValidAudience = jwtOptions.Audience,
-
-                    // External Audiences valid in JWT (to expect from)
-                    ValidAudiences = jwtOptions.ValidAudiences,
-
-                    // JWT Issuer
-                    ValidIssuer = jwtOptions.Issuer,
-
-                    // External Issuers valid in JWT (to expect from)
-                    ValidIssuers = jwtOptions.ValidIssuers,
-
-                    // Ensure issuer is validated
-                    ValidateIssuer = true,
-
-                    // Not required for ID4
-                    ValidateAudience = false,
-
-                    // Require check for expiration
-                    RequireExpirationTime = true,
-
+                    ValidIssuer = $"{jwtOptions.Issuer}",
+                    ValidAudiences = new[] { $"{jwtOptions.Audience}/resources" },
+                    ValidateAudience = true,
                     ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                    {
+                        var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                           $"{jwtOptions.Audience}/.well-known/openid-configuration",
+                            new OpenIdConnectConfigurationRetriever(),
+                            new HttpDocumentRetriever { RequireHttps = false }
+                        );
 
-                    // So expriy works
-                    ClockSkew = TimeSpan.Zero,
-
-                    // Custom issuer validater to support multi tenant requests
-                    IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
-
-                    //IssuerSigningKeyResolver = (string token, Microsoft.IdentityModel.Tokens.SecurityToken securityToken, string kid, Microsoft.IdentityModel.Tokens.TokenValidationParameters validationParameters) => new List<SecurityKey> { SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey) }
+                        var config = configManager.GetConfigurationAsync().Result;
+                        return config.SigningKeys;
+                    }
                 };
-
-                // Add events for adding claims that OpenID cannot (ie. role)
-                options.Events = JwtBearerEventHelper.CreateJwtBearerEvents();
             });
 
             // Setup Authorization for role base access
-            builder.Services.AddAuthorizationPolicies(builder.Configuration);
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "mshrm-studio-api");
+                });
+            });
 
             return builder;
         }

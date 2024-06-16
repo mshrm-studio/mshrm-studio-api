@@ -19,10 +19,12 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.DataAnnotations;
     using Microsoft.AspNetCore.Server.Kestrel.Core;
+    using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Localization;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Logging;
     using Microsoft.IdentityModel.Protocols;
+    using Microsoft.IdentityModel.Protocols.OpenIdConnect;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using Mshrm.Studio.Api.Clients;
@@ -41,6 +43,7 @@
     using Mshrm.Studio.Shared.Builders;
     using Mshrm.Studio.Shared.Enums;
     using Mshrm.Studio.Shared.Exceptions.HttpAction;
+    using Mshrm.Studio.Shared.Extensions;
     using Mshrm.Studio.Shared.Helpers;
     using Mshrm.Studio.Shared.Models;
     using Mshrm.Studio.Shared.Models.Options;
@@ -359,53 +362,40 @@
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.Authority = $"{jwtOptions.Audience}"; // IdentityServer URL
+                options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
+                options.RequireHttpsMetadata = false; // Use true in production
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // JWT Signing Key
-                    //IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
-
-                    // OIDC Signing Keys
-                    IssuerSigningKeys = signingKeys,
-
-                    // Name claim definition
-                    NameClaimType = ClaimTypes.NameIdentifier,
-
-                    // JWT Signing Key
-                    ValidAudience = jwtOptions.Audience,
-
-                    // External Audiences valid in JWT (to expect from)
-                    ValidAudiences = jwtOptions.ValidAudiences,
-
-                    // JWT Issuer
-                    ValidIssuer = jwtOptions.Issuer,
-
-                    // External Issuers valid in JWT (to expect from)
-                    ValidIssuers = jwtOptions.ValidIssuers,
-
-                    // Ensure issuer is validated
-                    ValidateIssuer = true,
-
-                    // Not required for ID4
-                    ValidateAudience = false,
-
-                    // Require check for expiration
-                    RequireExpirationTime = true,
-
+                    ValidIssuer = $"{jwtOptions.Issuer}",
+                    ValidAudiences = new[] { $"{jwtOptions.Audience}/resources" },
+                    ValidateAudience = true,
                     ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                    {
+                        var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                           $"{jwtOptions.Audience}/.well-known/openid-configuration",
+                            new OpenIdConnectConfigurationRetriever(),
+                            new HttpDocumentRetriever { RequireHttps = false }
+                        );
 
-                    // So expriy works
-                    ClockSkew = TimeSpan.Zero,
-
-                    // Custom issuer validater to support multi tenant requests
-                    //IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
+                        var config = configManager.GetConfigurationAsync().Result;
+                        return config.SigningKeys;
+                    }
                 };
-
-                // Add events for adding claims that OpenID cannot (ie. role)
-                options.Events = JwtBearerEventHelper.CreateJwtBearerEvents();
             });
 
             // Setup Authorization for role base access
-            //builder.Services.AddAuthorizationPolicies(builder.Configuration);
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "mshrm-studio-api");
+                });
+            });
 
             return builder;
         }
