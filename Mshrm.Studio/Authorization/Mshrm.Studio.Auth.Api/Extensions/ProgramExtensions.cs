@@ -448,7 +448,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     // JWT Signing Key
-                    IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
+                    //IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
 
                     // OIDC Signing Keys
                     IssuerSigningKeys = microsoftSigningKeys,
@@ -485,7 +485,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     // Custom issuer validater to support multi tenant requests
                     IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
 
-                    IssuerSigningKeyResolver = (string token, Microsoft.IdentityModel.Tokens.SecurityToken securityToken, string kid, Microsoft.IdentityModel.Tokens.TokenValidationParameters validationParameters) => new List<SecurityKey> { SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey) }
+                    //IssuerSigningKeyResolver = (string token, Microsoft.IdentityModel.Tokens.SecurityToken securityToken, string kid, Microsoft.IdentityModel.Tokens.TokenValidationParameters validationParameters) => new List<SecurityKey> { SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey) }
                 };
 
                 // Add events for adding claims that OpenID cannot (ie. role)

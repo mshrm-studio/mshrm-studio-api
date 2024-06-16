@@ -107,6 +107,8 @@ app.UseIpRateLimiting();
 // Use endpoint routing
 app.UseRouting();
 
+app.UseIdentityServer();
+
 //app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
@@ -126,7 +128,5 @@ app.UseEndpoints(endpoints =>
 });
 
 app.MapHealthChecks("/health");
-
-app.UseIdentityServer();
 
 app.Run();

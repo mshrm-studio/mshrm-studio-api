@@ -397,7 +397,7 @@
                     ClockSkew = TimeSpan.Zero,
 
                     // Custom issuer validater to support multi tenant requests
-                    IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
+                    //IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
                 };
 
                 // Add events for adding claims that OpenID cannot (ie. role)
