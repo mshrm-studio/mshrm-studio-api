@@ -362,7 +362,7 @@
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     // JWT Signing Key
-                    IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
+                    //IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
 
                     // OIDC Signing Keys
                     IssuerSigningKeys = signingKeys,
