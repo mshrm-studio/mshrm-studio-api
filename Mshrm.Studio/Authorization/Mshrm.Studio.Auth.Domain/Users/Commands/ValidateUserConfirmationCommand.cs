@@ -11,7 +11,7 @@ namespace Mshrm.Studio.Auth.Domain.User.Commands
     /// <summary>
     /// For confirming users
     /// </summary>
-    public class ValidateUserConfirmationCommand : IRequest<Token>
+    public class ValidateUserConfirmationCommand : IRequest<bool>
     {
         /// <summary>
         /// The email to validate against

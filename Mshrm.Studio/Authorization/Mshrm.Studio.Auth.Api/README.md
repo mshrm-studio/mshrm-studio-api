@@ -11,6 +11,7 @@ dotnet user-secrets set "ApplicationDatabasePassword" "password" --project Autho
 dotnet user-secrets set "ApplicationDatabaseEndpoint" "endpoint" --project Authorization\Mshrm.Studio.Auth.Api
 dotnet user-secrets set "OpenId:MicrosoftClientId" "" --project Authorization\Mshrm.Studio.Auth.Api
 dotnet user-secrets set "OpenId:MicrosoftClientSecret" "" --project Authorization\Mshrm.Studio.Auth.Api
+dotnet user-secrets set "IdentityServerLicenceKey" "" --project Authorization\Mshrm.Studio.Auth.Api
 
 ## Migrations
 

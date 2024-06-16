@@ -17,14 +17,6 @@ namespace Mshrm.Studio.Auth.Application.Services.Interfaces
         public Task<MshrmStudioIdentityUser?> FindByUserNameAsync(string userName);
 
         /// <summary>
-        /// Generate token for user (login)
-        /// </summary>
-        /// <param name="userName">Username</param>
-        /// <param name="password">Password</param>
-        /// <returns></returns>
-        public Task<Token> RequestTokenAsync(string userName, string password);
-
-        /// <summary>
         /// If the user is locked out or not
         /// </summary>
         /// <param name="userName">The user to check</param>
@@ -128,20 +120,6 @@ namespace Mshrm.Studio.Auth.Application.Services.Interfaces
         /// </summary>
         /// <param name="email">Email of user to remove</param>
         public Task<bool> RemoveUserAsync(string email);
-
-        /// <summary>
-        /// Revokes a users refresh token (deletes from db)
-        /// </summary>
-        /// <param name="userName">The user to remove from</param>
-        /// <returns>Operation outcome</returns>
-        public Task<bool> RevokeRefreshTokenAsync(string userName);
-
-        /// <summary>
-        /// Build a access token (and refresh)
-        /// </summary>
-        /// <param name="userName">The user to build it for</param>
-        /// <returns>A set of tokens</returns>
-        public Task<Token> BuildToken(string userName);
 
         /// <summary>
         /// Get a list of all platform roles

@@ -20,6 +20,7 @@ using Dapr.Client;
 using Mshrm.Studio.Auth.Application.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Mshrm.Studio.Auth.Domain.Users;
+using IdentityModel.Client;
 
 namespace Mshrm.Studio.Auth.Application.Services
 {
@@ -58,32 +59,6 @@ namespace Mshrm.Studio.Auth.Application.Services
         public async Task<MshrmStudioIdentityUser?> FindByUserNameAsync(string userName)
         {
             return await _userManager.FindByNameAsync(userName);
-        }
-
-        /// <summary>
-        /// Generate token for user (login)
-        /// </summary>
-        /// <param name="userName">Username</param>
-        /// <param name="password">Password</param>
-        /// <returns></returns>
-        public async Task<Token> RequestTokenAsync(string userName, string password)
-        {
-            // Get existing user
-            var user = await _userManager.FindByNameAsync(userName);
-            // Check password
-            if (user != null && await _userManager.CheckPasswordAsync(user, password))
-            {
-                await _userManager.ResetAccessFailedCountAsync(user);
-
-                // Generate the claims list and then the token from them
-                return await BuildToken(user.UserName);
-            }
-
-            // Update the failed login count
-            if (user != null)
-                await _userManager.AccessFailedAsync(user);
-
-            return null;
         }
 
         /// <summary>
@@ -422,29 +397,6 @@ namespace Mshrm.Studio.Auth.Application.Services
             // Save and return operation outcome
             var identityResult = await _userManager.UpdateAsync(user);
             return identityResult.Succeeded;
-        }
-
-        /// <summary>
-        /// Build a access token (and refresh)
-        /// </summary>
-        /// <param name="userName">The user to build it for</param>
-        /// <returns>A set of tokens</returns>
-        public async Task<Token> BuildToken(string userName)
-        {
-            var user = await _userManager.FindByNameAsync(userName);
-            var roles = await _userManager.GetRolesAsync(user);
-
-            // Generate the claims list and then the token from them
-            var authClaims = GenerateAuthClaims(userName, roles.ToList());
-            var token = GenerateToken(authClaims);
-
-            // Return a generated token
-            return new Token()
-            {
-                TokenValue = new JwtSecurityTokenHandler().WriteToken(token),
-                RefreshTokenValue = await GetUserRefreshToken(userName),
-                ValidTo = token.ValidTo
-            };
         }
 
         /// <summary>

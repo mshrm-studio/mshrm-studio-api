@@ -16,7 +16,6 @@ using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
 using Mshrm.Studio.Auth.Domain.Clients;
 using Mshrm.Studio.Auth.Domain.Clients.Commands;
 using Mshrm.Studio.Auth.Domain.Clients.Queries;
-using Mshrm.Studio.Auth.Domain.Tokens.Commands;
 using Mshrm.Studio.Auth.Domain.User.Commands;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Exceptions;

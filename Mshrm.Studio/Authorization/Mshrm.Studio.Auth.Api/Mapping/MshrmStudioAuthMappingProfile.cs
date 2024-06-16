@@ -10,13 +10,11 @@ using Mshrm.Studio.Auth.Domain.ApiResources.Commands;
 using Mshrm.Studio.Auth.Domain.Clients;
 using Mshrm.Studio.Auth.Domain.Clients.Commands;
 using Mshrm.Studio.Auth.Domain.Clients.Enums;
-using Mshrm.Studio.Auth.Domain.Tokens.Commands;
 using Mshrm.Studio.Auth.Domain.User.Commands;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
 using ApiScope = Duende.IdentityServer.EntityFramework.Entities.ApiScope;
 using Client = Duende.IdentityServer.EntityFramework.Entities.Client;
-using Token = Mshrm.Studio.Auth.Api.Models.Entities.Token;
 
 namespace Mshrm.Studio.Auth.Api.Mapping
 {
@@ -51,8 +49,6 @@ namespace Mshrm.Studio.Auth.Api.Mapping
                 .ForMember(dest => dest.Confirmed, src => src.MapFrom(x => x.EmailConfirmed))
                 .ReverseMap();
 
-            CreateMap<LoginRequestDto, CreateTokenCommand>().ReverseMap();
-            CreateMap<RefreshTokenRequestDto, CreateRefreshTokenCommand>().ReverseMap();
             CreateMap<UpdatePasswordRequestDto, UpdatePasswordCommand>().ReverseMap();
             CreateMap<PasswordResetTokenRequestDto, CreatePasswordResetTokenCommand>().ReverseMap();
             CreateMap<PasswordResetRequestDto, ResetPasswordCommand>().ReverseMap();

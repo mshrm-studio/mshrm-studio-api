@@ -14,7 +14,7 @@ namespace Mshrm.Studio.Auth.Application.Handlers.Users
     /// <summary>
     /// For confirming users
     /// </summary>
-    public class ValidateUserConfirmationCommandHandler : IRequestHandler<ValidateUserConfirmationCommand, Token>
+    public class ValidateUserConfirmationCommandHandler : IRequestHandler<ValidateUserConfirmationCommand, bool>
     {
         private readonly IIdentityUserService _identityUserService;
         private readonly DaprClient _daprClient;
@@ -36,7 +36,7 @@ namespace Mshrm.Studio.Auth.Application.Handlers.Users
         /// <param name="command">The command</param>
         /// <param name="cancellationToken">If the request is aborted</param>
         /// <returns>A valid token if confirmed</returns>
-        public async Task<Token> Handle(ValidateUserConfirmationCommand command, CancellationToken cancellationToken)
+        public async Task<bool> Handle(ValidateUserConfirmationCommand command, CancellationToken cancellationToken)
         {
             // Check email is valid
             var isValidEmail = command.Email.IsValidEmail();
@@ -58,7 +58,8 @@ namespace Mshrm.Studio.Auth.Application.Handlers.Users
                 throw new ForbidException("Failed to validate confirmation token", FailureCode.FailedToValidateConfirmationToken);
 
             // Send email for user confirmation
-            return await _identityUserService.BuildToken(command.Email);
+            //return await _identityUserService.BuildToken(command.Email);
+            return true;
         }
     }
 }

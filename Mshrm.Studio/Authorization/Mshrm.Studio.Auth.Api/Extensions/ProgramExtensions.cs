@@ -28,7 +28,6 @@ using Mshrm.Studio.Shared.Exceptions.HttpAction;
 using Mshrm.Studio.Auth.Api.Models.Pocos;
 using Mshrm.Studio.Auth.Domain.User.Commands;
 using Mshrm.Studio.Auth.Domain.User.Queries;
-using Mshrm.Studio.Auth.Domain.Tokens.Commands;
 using Mshrm.Studio.Auth.Application.Services;
 using Mshrm.Studio.Auth.Application.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -256,9 +255,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<CreatePasswordResetTokenCommand>, CreatePasswordResetTokenCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<ResetPasswordCommand, bool>, ResetPasswordCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<UpdatePasswordCommand>, UpdatePasswordCommandHandler>();
-            builder.Services.AddScoped<IRequestHandler<CreateTokenCommand, Token>, CreateTokenCommandHandler>();
-            builder.Services.AddScoped<IRequestHandler<CreateRefreshTokenCommand, Token>, CreateRefreshTokenCommandHandler>();
-            builder.Services.AddScoped<IRequestHandler<ValidateUserConfirmationCommand, Token>, ValidateUserConfirmationCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<ValidateUserConfirmationCommand, bool>, ValidateUserConfirmationCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<ResendUserConfirmationCommand, bool>, ResendUserConfirmationCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<GetUserByEmailQuery, MshrmStudioUser>, GetUserByEmailQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<CreateClientCommand, ClientWithSecret>, CreateClientCommandHandler>();
@@ -343,6 +340,8 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             // Add identity server to API
             builder.Services.AddIdentityServer(options =>
             {
+                options.LicenseKey = builder.Configuration.GetValue<string>("IdentityServerLicenceKey");
+
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;

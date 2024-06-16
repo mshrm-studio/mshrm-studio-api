@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Mshrm.Studio.Auth.Api.Controllers.Bases;
 using Mshrm.Studio.Auth.Api.Models.Entities;
 using Mshrm.Studio.Auth.Application.Dtos.Users;
-using Mshrm.Studio.Auth.Domain.Tokens.Commands;
 using Mshrm.Studio.Auth.Domain.User.Commands;
 using Mshrm.Studio.Shared.Enums;
 using Mshrm.Studio.Shared.Exceptions;
@@ -42,40 +41,6 @@ namespace Mshrm.Studio.Auth.Api.Controllers
             _mapper = mapper;
 
             _mediator = mediator;
-        }
-
-        /// <summary>
-        /// Returns a new JWT bearer token which can be used to make authenticated calls. 
-        /// </summary>
-        /// <param name="model">Login data - username and password</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
-        [HttpPost]
-        [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
-        [Route("token")]
-        public async Task<ActionResult<TokenResponseDto>> GenerateTokenAsync([FromBody] LoginRequestDto model)
-        {
-            // Generate token
-            var token = await _mediator.Send<Token>(_mapper.Map<CreateTokenCommand>(model), Request.HttpContext.RequestAborted);
-
-            // Return token
-            return Ok(_mapper.Map<TokenResponseDto>(token));
-        }
-
-        /// <summary>
-        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
-        /// </summary>
-        /// <param name="model">Login data</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
-        [HttpPost]
-        [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
-        [Route("refresh/token")]
-        public async Task<ActionResult<TokenResponseDto>> GenerateTokenFromRefreshTokenAsync([FromBody] RefreshTokenRequestDto model)
-        {
-            // Generate token
-            var token = await _mediator.Send<Token>(_mapper.Map<CreateRefreshTokenCommand>(model), Request.HttpContext.RequestAborted);
-
-            // Return token
-            return Ok(_mapper.Map<TokenResponseDto>(token));
         }
 
         /// <summary>
@@ -137,14 +102,13 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(TokenResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [Route("confirmation/validate")]
-        public async Task<ActionResult<TokenResponseDto>> ValidateConfirmationTokenAsync([FromBody] ValidateConfirmationRequestDto model)
+        public async Task<ActionResult<bool>> ValidateConfirmationTokenAsync([FromBody] ValidateConfirmationRequestDto model)
         {
-            var token = await _mediator.Send<Token>(_mapper.Map<ValidateUserConfirmationCommand>(model), Request.HttpContext.RequestAborted);
+            var confirmed = await _mediator.Send<bool>(_mapper.Map<ValidateUserConfirmationCommand>(model), Request.HttpContext.RequestAborted);
 
-            // Map and return
-            return Ok(_mapper.Map<TokenResponseDto>(token));
+            return Ok(confirmed);
         }
 
         /// <summary>

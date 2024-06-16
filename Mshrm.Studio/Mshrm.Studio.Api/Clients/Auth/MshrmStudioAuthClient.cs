@@ -21,42 +21,429 @@ namespace Mshrm.Studio.Api.Clients.Auth
     using System = global::System;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial interface IAuthClient
+    public partial interface IApiScopeClient
     {
         /// <summary>
-        /// Returns a new JWT bearer token which can be used to make authenticated calls.
+        /// Create a new api scope
         /// </summary>
-        /// <param name="model">Login data - username and password</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
+        /// <param name="model">The new api scope configuration</param>
+        /// <returns>The api scope created</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model);
+        System.Threading.Tasks.Task<ApiScopeResponseDto> CreateApiScopeAsync(CreateApiScopeRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Returns a new JWT bearer token which can be used to make authenticated calls.
+        /// Create a new api scope
         /// </summary>
-        /// <param name="model">Login data - username and password</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
+        /// <param name="model">The new api scope configuration</param>
+        /// <returns>The api scope created</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ApiScopeResponseDto> CreateApiScopeAsync(CreateApiScopeRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
+        /// Get a page of api scopes
         /// </summary>
-        /// <param name="model">Login data</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
+        /// <param name="name">The api scopes name</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Api scopes</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model);
+        System.Threading.Tasks.Task<PageResultDtoOfApiScopeResponseDto> GetApiScopesPagedAsync(string name, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
+        /// Get a page of api scopes
         /// </summary>
-        /// <param name="model">Login data</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
+        /// <param name="name">The api scopes name</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Api scopes</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<PageResultDtoOfApiScopeResponseDto> GetApiScopesPagedAsync(string name, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
 
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ApiScopeClient : IApiScopeClient
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _requestSettings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => CreateSerializerSettings(true), true);
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _responseSettings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => CreateSerializerSettings(false), true);
+
+        public ApiScopeClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings(bool isRequest)
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings, isRequest);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            [System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_baseUrl))]
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        public Newtonsoft.Json.JsonSerializerSettings RequestJsonSerializerSettings { get { return _requestSettings.Value; } }
+        public Newtonsoft.Json.JsonSerializerSettings ResponseJsonSerializerSettings { get { return _responseSettings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings, bool isRequest);
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
+        /// <summary>
+        /// Create a new api scope
+        /// </summary>
+        /// <param name="model">The new api scope configuration</param>
+        /// <returns>The api scope created</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<ApiScopeResponseDto> CreateApiScopeAsync(CreateApiScopeRequestDto model)
+        {
+            return CreateApiScopeAsync(model, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new api scope
+        /// </summary>
+        /// <param name="model">The new api scope configuration</param>
+        /// <returns>The api scope created</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<ApiScopeResponseDto> CreateApiScopeAsync(CreateApiScopeRequestDto model, System.Threading.CancellationToken cancellationToken)
+        {
+            if (model == null)
+                throw new System.ArgumentNullException("model");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/api-scopes"
+                    urlBuilder_.Append("api/v1/api-scopes");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiScopeResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new LoginApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get a page of api scopes
+        /// </summary>
+        /// <param name="name">The api scopes name</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Api scopes</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PageResultDtoOfApiScopeResponseDto> GetApiScopesPagedAsync(string name, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage)
+        {
+            return GetApiScopesPagedAsync(name, searchTerm, orderProperty, order, pageNumber, perPage, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a page of api scopes
+        /// </summary>
+        /// <param name="name">The api scopes name</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Api scopes</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PageResultDtoOfApiScopeResponseDto> GetApiScopesPagedAsync(string name, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/api-scopes"
+                    urlBuilder_.Append("api/v1/api-scopes");
+                    urlBuilder_.Append('?');
+                    if (name != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("name")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(name, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (searchTerm != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("searchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (orderProperty != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("orderProperty")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(orderProperty, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (order != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("order")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(order, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageNumber != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("pageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (perPage != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("perPage")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(perPage, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfApiScopeResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new LoginApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, ResponseJsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new LoginApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(ResponseJsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new LoginApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IAuthClient
+    {
         /// <summary>
         /// Updates a users password using the existing one
         /// </summary>
@@ -114,7 +501,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model);
+        System.Threading.Tasks.Task<bool> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -123,7 +510,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<bool> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
         /// Resends confirmation token
@@ -188,192 +575,6 @@ namespace Mshrm.Studio.Api.Clients.Auth
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
-
-        /// <summary>
-        /// Returns a new JWT bearer token which can be used to make authenticated calls.
-        /// </summary>
-        /// <param name="model">Login data - username and password</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
-        /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model)
-        {
-            return GenerateTokenAsync(model, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Returns a new JWT bearer token which can be used to make authenticated calls.
-        /// </summary>
-        /// <param name="model">Login data - username and password</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
-        /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenAsync(LoginRequestDto model, System.Threading.CancellationToken cancellationToken)
-        {
-            if (model == null)
-                throw new System.ArgumentNullException("model");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/v1/auth/token"
-                    urlBuilder_.Append("api/v1/auth/token");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new LoginApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
-
-        /// <summary>
-        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
-        /// </summary>
-        /// <param name="model">Login data</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
-        /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model)
-        {
-            return GenerateTokenFromRefreshTokenAsync(model, System.Threading.CancellationToken.None);
-        }
-
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>
-        /// Returns a new JWT bearer token in exchange for a valid refresh token + old JWT
-        /// </summary>
-        /// <param name="model">Login data</param>
-        /// <returns>Bearer token, refresh token and expiry time</returns>
-        /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenResponseDto> GenerateTokenFromRefreshTokenAsync(RefreshTokenRequestDto model, System.Threading.CancellationToken cancellationToken)
-        {
-            if (model == null)
-                throw new System.ArgumentNullException("model");
-
-            var client_ = _httpClient;
-            var disposeClient_ = false;
-            try
-            {
-                using (var request_ = new System.Net.Http.HttpRequestMessage())
-                {
-                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
-                    var content_ = new System.Net.Http.StringContent(json_);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
-                    request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
-                    var urlBuilder_ = new System.Text.StringBuilder();
-                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/v1/auth/refresh/token"
-                    urlBuilder_.Append("api/v1/auth/refresh/token");
-
-                    PrepareRequest(client_, request_, urlBuilder_);
-
-                    var url_ = urlBuilder_.ToString();
-                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
-
-                    PrepareRequest(client_, request_, url_);
-
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    var disposeResponse_ = true;
-                    try
-                    {
-                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
-                        foreach (var item_ in response_.Headers)
-                            headers_[item_.Key] = item_.Value;
-                        if (response_.Content != null && response_.Content.Headers != null)
-                        {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
-
-                        ProcessResponse(client_, response_);
-
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
-                            {
-                                throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                            }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new LoginApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
-                        }
-                    }
-                    finally
-                    {
-                        if (disposeResponse_)
-                            response_.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (disposeClient_)
-                    client_.Dispose();
-            }
-        }
 
         /// <summary>
         /// Updates a users password using the existing one
@@ -648,7 +849,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model)
+        public virtual System.Threading.Tasks.Task<bool> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model)
         {
             return ValidateConfirmationTokenAsync(model, System.Threading.CancellationToken.None);
         }
@@ -660,7 +861,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         /// <param name="model">The users email and confirmation token</param>
         /// <returns>A JWT token for login if valid</returns>
         /// <exception cref="LoginApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<TokenResponseDto> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<bool> ValidateConfirmationTokenAsync(ValidateConfirmationRequestDto model, System.Threading.CancellationToken cancellationToken)
         {
             if (model == null)
                 throw new System.ArgumentNullException("model");
@@ -708,7 +909,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<TokenResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<bool>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -802,6 +1003,435 @@ namespace Mshrm.Studio.Api.Clients.Auth
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<bool>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new LoginApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        protected struct ObjectResponseResult<T>
+        {
+            public ObjectResponseResult(T responseObject, string responseText)
+            {
+                this.Object = responseObject;
+                this.Text = responseText;
+            }
+
+            public T Object { get; }
+
+            public string Text { get; }
+        }
+
+        public bool ReadResponseAsString { get; set; }
+
+        protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Threading.CancellationToken cancellationToken)
+        {
+            if (response == null || response.Content == null)
+            {
+                return new ObjectResponseResult<T>(default(T), string.Empty);
+            }
+
+            if (ReadResponseAsString)
+            {
+                var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    var typedBody = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(responseText, ResponseJsonSerializerSettings);
+                    return new ObjectResponseResult<T>(typedBody, responseText);
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body string as " + typeof(T).FullName + ".";
+                    throw new LoginApiException(message, (int)response.StatusCode, responseText, headers, exception);
+                }
+            }
+            else
+            {
+                try
+                {
+                    using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                    using (var streamReader = new System.IO.StreamReader(responseStream))
+                    using (var jsonTextReader = new Newtonsoft.Json.JsonTextReader(streamReader))
+                    {
+                        var serializer = Newtonsoft.Json.JsonSerializer.Create(ResponseJsonSerializerSettings);
+                        var typedBody = serializer.Deserialize<T>(jsonTextReader);
+                        return new ObjectResponseResult<T>(typedBody, string.Empty);
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException exception)
+                {
+                    var message = "Could not deserialize the response body stream as " + typeof(T).FullName + ".";
+                    throw new LoginApiException(message, (int)response.StatusCode, string.Empty, headers, exception);
+                }
+            }
+        }
+
+        private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+
+            if (value is System.Enum)
+            {
+                var name = System.Enum.GetName(value.GetType(), value);
+                if (name != null)
+                {
+                    var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
+                    if (field != null)
+                    {
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
+                            as System.Runtime.Serialization.EnumMemberAttribute;
+                        if (attribute != null)
+                        {
+                            return attribute.Value != null ? attribute.Value : name;
+                        }
+                    }
+
+                    var converted = System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
+                    return converted == null ? string.Empty : converted;
+                }
+            }
+            else if (value is bool) 
+            {
+                return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
+            }
+            else if (value is byte[])
+            {
+                return System.Convert.ToBase64String((byte[]) value);
+            }
+            else if (value is string[])
+            {
+                return string.Join(",", (string[])value);
+            }
+            else if (value.GetType().IsArray)
+            {
+                var valueArray = (System.Array)value;
+                var valueTextArray = new string[valueArray.Length];
+                for (var i = 0; i < valueArray.Length; i++)
+                {
+                    valueTextArray[i] = ConvertToString(valueArray.GetValue(i), cultureInfo);
+                }
+                return string.Join(",", valueTextArray);
+            }
+
+            var result = System.Convert.ToString(value, cultureInfo);
+            return result == null ? "" : result;
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial interface IClientClient
+    {
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="model">The new clients configuration</param>
+        /// <returns>The client created</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreatedClientResponseDto> CreateClientAsync(CreateClientRequestDto model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="model">The new clients configuration</param>
+        /// <returns>The client created</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreatedClientResponseDto> CreateClientAsync(CreateClientRequestDto model, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Get a page of clients
+        /// </summary>
+        /// <param name="clientName">The clients name</param>
+        /// <param name="clientId">The clients id</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Clients</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PageResultDtoOfClientResponseDto> GetClientsPagedAsync(string clientName, string clientId, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a page of clients
+        /// </summary>
+        /// <param name="clientName">The clients name</param>
+        /// <param name="clientId">The clients id</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Clients</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<PageResultDtoOfClientResponseDto> GetClientsPagedAsync(string clientName, string clientId, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken);
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientClient : IClientClient
+    {
+        #pragma warning disable 8618
+        private string _baseUrl;
+        #pragma warning restore 8618
+
+        private System.Net.Http.HttpClient _httpClient;
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _requestSettings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => CreateSerializerSettings(true), true);
+        private static System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _responseSettings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => CreateSerializerSettings(false), true);
+
+        public ClientClient(string baseUrl, System.Net.Http.HttpClient httpClient)
+        {
+            BaseUrl = baseUrl;
+            _httpClient = httpClient;
+        }
+
+        private static Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings(bool isRequest)
+        {
+            var settings = new Newtonsoft.Json.JsonSerializerSettings();
+            UpdateJsonSerializerSettings(settings, isRequest);
+            return settings;
+        }
+
+        public string BaseUrl
+        {
+            get { return _baseUrl; }
+            [System.Diagnostics.CodeAnalysis.MemberNotNull(nameof(_baseUrl))]
+            set
+            {
+                _baseUrl = value;
+                if (!string.IsNullOrEmpty(_baseUrl) && !_baseUrl.EndsWith("/"))
+                    _baseUrl += '/';
+            }
+        }
+
+        public Newtonsoft.Json.JsonSerializerSettings RequestJsonSerializerSettings { get { return _requestSettings.Value; } }
+        public Newtonsoft.Json.JsonSerializerSettings ResponseJsonSerializerSettings { get { return _responseSettings.Value; } }
+
+        static partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings, bool isRequest);
+
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
+
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="model">The new clients configuration</param>
+        /// <returns>The client created</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<CreatedClientResponseDto> CreateClientAsync(CreateClientRequestDto model)
+        {
+            return CreateClientAsync(model, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Create a new client
+        /// </summary>
+        /// <param name="model">The new clients configuration</param>
+        /// <returns>The client created</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<CreatedClientResponseDto> CreateClientAsync(CreateClientRequestDto model, System.Threading.CancellationToken cancellationToken)
+        {
+            if (model == null)
+                throw new System.ArgumentNullException("model");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/clients"
+                    urlBuilder_.Append("api/v1/clients");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<CreatedClientResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new LoginApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Get a page of clients
+        /// </summary>
+        /// <param name="clientName">The clients name</param>
+        /// <param name="clientId">The clients id</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Clients</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<PageResultDtoOfClientResponseDto> GetClientsPagedAsync(string clientName, string clientId, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage)
+        {
+            return GetClientsPagedAsync(clientName, clientId, searchTerm, orderProperty, order, pageNumber, perPage, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get a page of clients
+        /// </summary>
+        /// <param name="clientName">The clients name</param>
+        /// <param name="clientId">The clients id</param>
+        /// <param name="searchTerm">A search term</param>
+        /// <param name="orderProperty">The property to order by</param>
+        /// <param name="order">The order to return set in</param>
+        /// <param name="pageNumber">The page number</param>
+        /// <param name="perPage">How many to return in the page</param>
+        /// <returns>Clients</returns>
+        /// <exception cref="LoginApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<PageResultDtoOfClientResponseDto> GetClientsPagedAsync(string clientName, string clientId, string searchTerm, string orderProperty, Order? order, int? pageNumber, int? perPage, System.Threading.CancellationToken cancellationToken)
+        {
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/clients"
+                    urlBuilder_.Append("api/v1/clients");
+                    urlBuilder_.Append('?');
+                    if (clientName != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("clientName")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(clientName, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (clientId != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("clientId")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(clientId, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (searchTerm != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("searchTerm")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(searchTerm, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (orderProperty != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("orderProperty")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(orderProperty, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (order != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("order")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(order, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (pageNumber != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("pageNumber")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(pageNumber, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    if (perPage != null)
+                    {
+                        urlBuilder_.Append(System.Uri.EscapeDataString("perPage")).Append('=').Append(System.Uri.EscapeDataString(ConvertToString(perPage, System.Globalization.CultureInfo.InvariantCulture))).Append('&');
+                    }
+                    urlBuilder_.Length--;
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<PageResultDtoOfClientResponseDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new LoginApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1562,55 +2192,54 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class TokenResponseDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class ApiScopeResponseDto : System.ComponentModel.INotifyPropertyChanged
     {
-        private string _tokenValue;
-        private string _refreshTokenValue;
-        private System.DateTime _validTo;
+        private string _name;
+        private string _displayName;
+        private System.Collections.ObjectModel.ObservableCollection<ApiScopeUserClaimResponseDto> _userClaims = new System.Collections.ObjectModel.Collection<ApiScopeUserClaimResponseDto>();
 
-        [Newtonsoft.Json.JsonProperty("tokenValue", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string TokenValue
+        public string Name
         {
-            get { return _tokenValue; }
+            get { return _name; }
 
             set
             {
-                if (_tokenValue != value)
+                if (_name != value)
                 {
-                    _tokenValue = value;
+                    _name = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("refreshTokenValue", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string RefreshTokenValue
+        [Newtonsoft.Json.JsonProperty("displayName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DisplayName
         {
-            get { return _refreshTokenValue; }
+            get { return _displayName; }
 
             set
             {
-                if (_refreshTokenValue != value)
+                if (_displayName != value)
                 {
-                    _refreshTokenValue = value;
+                    _displayName = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("validTo", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public System.DateTime ValidTo
+        [Newtonsoft.Json.JsonProperty("userClaims", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<ApiScopeUserClaimResponseDto> UserClaims
         {
-            get { return _validTo; }
+            get { return _userClaims; }
 
             set
             {
-                if (_validTo != value)
+                if (_userClaims != value)
                 {
-                    _validTo = value;
+                    _userClaims = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1622,10 +2251,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static TokenResponseDto FromJson(string data)
+        public static ApiScopeResponseDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<TokenResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ApiScopeResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1640,38 +2269,37 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class LoginRequestDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class ApiScopeUserClaimResponseDto : System.ComponentModel.INotifyPropertyChanged
     {
-        private string _userName;
-        private string _password;
+        private string _type;
+        private int _scopeId;
 
-        [Newtonsoft.Json.JsonProperty("userName", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string UserName
+        public string Type
         {
-            get { return _userName; }
+            get { return _type; }
 
             set
             {
-                if (_userName != value)
+                if (_type != value)
                 {
-                    _userName = value;
+                    _type = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string Password
+        [Newtonsoft.Json.JsonProperty("scopeId", Required = Newtonsoft.Json.Required.Always)]
+        public int ScopeId
         {
-            get { return _password; }
+            get { return _scopeId; }
 
             set
             {
-                if (_password != value)
+                if (_scopeId != value)
                 {
-                    _password = value;
+                    _scopeId = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1683,10 +2311,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static LoginRequestDto FromJson(string data)
+        public static ApiScopeUserClaimResponseDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<LoginRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ApiScopeUserClaimResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1701,38 +2329,38 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
-    public partial class RefreshTokenRequestDto : System.ComponentModel.INotifyPropertyChanged
+    public partial class CreateApiScopeRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
-        private string _tokenValue;
-        private string _refreshTokenValue;
+        private string _name;
+        private System.Collections.ObjectModel.ObservableCollection<string> _scopes = new System.Collections.ObjectModel.Collection<string>();
 
-        [Newtonsoft.Json.JsonProperty("tokenValue", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string TokenValue
+        public string Name
         {
-            get { return _tokenValue; }
+            get { return _name; }
 
             set
             {
-                if (_tokenValue != value)
+                if (_name != value)
                 {
-                    _tokenValue = value;
+                    _name = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
-        [Newtonsoft.Json.JsonProperty("refreshTokenValue", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        public string RefreshTokenValue
+        [Newtonsoft.Json.JsonProperty("scopes", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<string> Scopes
         {
-            get { return _refreshTokenValue; }
+            get { return _scopes; }
 
             set
             {
-                if (_refreshTokenValue != value)
+                if (_scopes != value)
                 {
-                    _refreshTokenValue = value;
+                    _scopes = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1744,10 +2372,10 @@ namespace Mshrm.Studio.Api.Clients.Auth
             return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
-        public static RefreshTokenRequestDto FromJson(string data)
+        public static CreateApiScopeRequestDto FromJson(string data)
         {
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<RefreshTokenRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateApiScopeRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
@@ -1759,6 +2387,143 @@ namespace Mshrm.Studio.Api.Clients.Auth
             if (handler != null)
                 handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PageResultDtoOfApiScopeResponseDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private int _pageNumber;
+        private int _perPage;
+        private int _totalResults;
+        private Order _order;
+        private string _propertyName;
+        private System.Collections.ObjectModel.ObservableCollection<ApiScopeResponseDto> _results;
+
+        [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
+        public int PageNumber
+        {
+            get { return _pageNumber; }
+
+            set
+            {
+                if (_pageNumber != value)
+                {
+                    _pageNumber = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("perPage", Required = Newtonsoft.Json.Required.Always)]
+        public int PerPage
+        {
+            get { return _perPage; }
+
+            set
+            {
+                if (_perPage != value)
+                {
+                    _perPage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("totalResults", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalResults
+        {
+            get { return _totalResults; }
+
+            set
+            {
+                if (_totalResults != value)
+                {
+                    _totalResults = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("order", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public Order Order
+        {
+            get { return _order; }
+
+            set
+            {
+                if (_order != value)
+                {
+                    _order = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("propertyName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PropertyName
+        {
+            get { return _propertyName; }
+
+            set
+            {
+                if (_propertyName != value)
+                {
+                    _propertyName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<ApiScopeResponseDto> Results
+        {
+            get { return _results; }
+
+            set
+            {
+                if (_results != value)
+                {
+                    _results = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static PageResultDtoOfApiScopeResponseDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfApiScopeResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum Order
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Ascending")]
+        Ascending = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Descending")]
+        Descending = 1,
+
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
@@ -2044,6 +2809,526 @@ namespace Mshrm.Studio.Api.Clients.Auth
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<ResendConfirmationRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreatedClientResponseDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private ClientResponseDto _client;
+        private string _plainTextSecret;
+
+        [Newtonsoft.Json.JsonProperty("client", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ClientResponseDto Client
+        {
+            get { return _client; }
+
+            set
+            {
+                if (_client != value)
+                {
+                    _client = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("plainTextSecret", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string PlainTextSecret
+        {
+            get { return _plainTextSecret; }
+
+            set
+            {
+                if (_plainTextSecret != value)
+                {
+                    _plainTextSecret = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static CreatedClientResponseDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreatedClientResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientResponseDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _clientId;
+        private string _clientName;
+        private string _protocolType;
+        private bool _enabled;
+        private System.Collections.ObjectModel.ObservableCollection<ClientSecretResponseDto> _clientSecrets = new System.Collections.ObjectModel.Collection<ClientSecretResponseDto>();
+        private System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> _allowedGrantTypes = new System.Collections.ObjectModel.Collection<AllowedGrantType>();
+
+        [Newtonsoft.Json.JsonProperty("clientId", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string ClientId
+        {
+            get { return _clientId; }
+
+            set
+            {
+                if (_clientId != value)
+                {
+                    _clientId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("clientName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string ClientName
+        {
+            get { return _clientName; }
+
+            set
+            {
+                if (_clientName != value)
+                {
+                    _clientName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("protocolType", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string ProtocolType
+        {
+            get { return _protocolType; }
+
+            set
+            {
+                if (_protocolType != value)
+                {
+                    _protocolType = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("enabled", Required = Newtonsoft.Json.Required.Always)]
+        public bool Enabled
+        {
+            get { return _enabled; }
+
+            set
+            {
+                if (_enabled != value)
+                {
+                    _enabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("clientSecrets", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<ClientSecretResponseDto> ClientSecrets
+        {
+            get { return _clientSecrets; }
+
+            set
+            {
+                if (_clientSecrets != value)
+                {
+                    _clientSecrets = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("allowedGrantTypes", Required = Newtonsoft.Json.Required.Always, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> AllowedGrantTypes
+        {
+            get { return _allowedGrantTypes; }
+
+            set
+            {
+                if (_allowedGrantTypes != value)
+                {
+                    _allowedGrantTypes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static ClientResponseDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ClientResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientSecretResponseDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _description;
+        private string _value;
+        private System.DateTime? _expiration;
+        private System.DateTime _created;
+
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Description
+        {
+            get { return _description; }
+
+            set
+            {
+                if (_description != value)
+                {
+                    _description = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Value
+        {
+            get { return _value; }
+
+            set
+            {
+                if (_value != value)
+                {
+                    _value = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("expiration", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.DateTime? Expiration
+        {
+            get { return _expiration; }
+
+            set
+            {
+                if (_expiration != value)
+                {
+                    _expiration = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("created", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public System.DateTime Created
+        {
+            get { return _created; }
+
+            set
+            {
+                if (_created != value)
+                {
+                    _created = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static ClientSecretResponseDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ClientSecretResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public enum AllowedGrantType
+    {
+
+        [System.Runtime.Serialization.EnumMember(Value = @"ClientCredentials")]
+        ClientCredentials = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"ResourceOwnerPassword")]
+        ResourceOwnerPassword = 1,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"AuthorizationCode")]
+        AuthorizationCode = 2,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Hybrid")]
+        Hybrid = 3,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class CreateClientRequestDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _idName;
+        private string _clientName;
+        private System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> _grantTypes = new System.Collections.ObjectModel.Collection<AllowedGrantType>();
+        private System.Collections.ObjectModel.ObservableCollection<string> _scopes = new System.Collections.ObjectModel.Collection<string>();
+
+        [Newtonsoft.Json.JsonProperty("idName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string IdName
+        {
+            get { return _idName; }
+
+            set
+            {
+                if (_idName != value)
+                {
+                    _idName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("clientName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string ClientName
+        {
+            get { return _clientName; }
+
+            set
+            {
+                if (_clientName != value)
+                {
+                    _clientName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("grantTypes", Required = Newtonsoft.Json.Required.Always, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> GrantTypes
+        {
+            get { return _grantTypes; }
+
+            set
+            {
+                if (_grantTypes != value)
+                {
+                    _grantTypes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("scopes", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.ObjectModel.ObservableCollection<string> Scopes
+        {
+            get { return _scopes; }
+
+            set
+            {
+                if (_scopes != value)
+                {
+                    _scopes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static CreateClientRequestDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateClientRequestDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PageResultDtoOfClientResponseDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private int _pageNumber;
+        private int _perPage;
+        private int _totalResults;
+        private Order _order;
+        private string _propertyName;
+        private System.Collections.ObjectModel.ObservableCollection<ClientResponseDto> _results;
+
+        [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
+        public int PageNumber
+        {
+            get { return _pageNumber; }
+
+            set
+            {
+                if (_pageNumber != value)
+                {
+                    _pageNumber = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("perPage", Required = Newtonsoft.Json.Required.Always)]
+        public int PerPage
+        {
+            get { return _perPage; }
+
+            set
+            {
+                if (_perPage != value)
+                {
+                    _perPage = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("totalResults", Required = Newtonsoft.Json.Required.Always)]
+        public int TotalResults
+        {
+            get { return _totalResults; }
+
+            set
+            {
+                if (_totalResults != value)
+                {
+                    _totalResults = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("order", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public Order Order
+        {
+            get { return _order; }
+
+            set
+            {
+                if (_order != value)
+                {
+                    _order = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("propertyName", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PropertyName
+        {
+            get { return _propertyName; }
+
+            set
+            {
+                if (_propertyName != value)
+                {
+                    _propertyName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.ObjectModel.ObservableCollection<ClientResponseDto> Results
+        {
+            get { return _results; }
+
+            set
+            {
+                if (_results != value)
+                {
+                    _results = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static PageResultDtoOfClientResponseDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PageResultDtoOfClientResponseDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 

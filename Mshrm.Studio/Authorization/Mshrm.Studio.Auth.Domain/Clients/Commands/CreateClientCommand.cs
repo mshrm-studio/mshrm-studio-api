@@ -4,7 +4,6 @@ using Mshrm.Studio.Shared.Enums;
 using System.Security.Claims;
 using Mshrm.Studio.Shared.Exceptions.HttpAction;
 using MediatR;
-using Mshrm.Studio.Auth.Domain.Tokens.Commands;
 using Mshrm.Studio.Auth.Domain.Clients.Enums;
 using Duende.IdentityServer.EntityFramework.Entities;
 
