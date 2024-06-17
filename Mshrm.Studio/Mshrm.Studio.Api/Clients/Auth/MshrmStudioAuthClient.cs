@@ -2196,7 +2196,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     {
         private string _name;
         private string _displayName;
-        private System.Collections.ObjectModel.ObservableCollection<ApiScopeUserClaimResponseDto> _userClaims = new System.Collections.ObjectModel.Collection<ApiScopeUserClaimResponseDto>();
+        private System.Collections.Generic.List<ApiScopeUserClaimResponseDto> _userClaims = new System.Collections.Generic.List<ApiScopeUserClaimResponseDto>();
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2231,7 +2231,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         [Newtonsoft.Json.JsonProperty("userClaims", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.ObjectModel.ObservableCollection<ApiScopeUserClaimResponseDto> UserClaims
+        public System.Collections.Generic.List<ApiScopeUserClaimResponseDto> UserClaims
         {
             get { return _userClaims; }
 
@@ -2332,7 +2332,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
     public partial class CreateApiScopeRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _name;
-        private System.Collections.ObjectModel.ObservableCollection<string> _scopes = new System.Collections.ObjectModel.Collection<string>();
+        private System.Collections.Generic.List<string> _scopes = new System.Collections.Generic.List<string>();
 
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2352,7 +2352,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         [Newtonsoft.Json.JsonProperty("scopes", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.ObjectModel.ObservableCollection<string> Scopes
+        public System.Collections.Generic.List<string> Scopes
         {
             get { return _scopes; }
 
@@ -2397,7 +2397,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         private int _totalResults;
         private Order _order;
         private string _propertyName;
-        private System.Collections.ObjectModel.ObservableCollection<ApiScopeResponseDto> _results;
+        private System.Collections.Generic.List<ApiScopeResponseDto> _results;
 
         [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
         public int PageNumber
@@ -2477,7 +2477,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         }
 
         [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<ApiScopeResponseDto> Results
+        public System.Collections.Generic.List<ApiScopeResponseDto> Results
         {
             get { return _results; }
 
@@ -2889,8 +2889,8 @@ namespace Mshrm.Studio.Api.Clients.Auth
         private string _clientName;
         private string _protocolType;
         private bool _enabled;
-        private System.Collections.ObjectModel.ObservableCollection<ClientSecretResponseDto> _clientSecrets = new System.Collections.ObjectModel.Collection<ClientSecretResponseDto>();
-        private System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> _allowedGrantTypes = new System.Collections.ObjectModel.Collection<AllowedGrantType>();
+        private System.Collections.Generic.List<ClientSecretResponseDto> _clientSecrets = new System.Collections.Generic.List<ClientSecretResponseDto>();
+        private System.Collections.Generic.List<AllowedGrantType> _allowedGrantTypes = new System.Collections.Generic.List<AllowedGrantType>();
 
         [Newtonsoft.Json.JsonProperty("clientId", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2957,7 +2957,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         [Newtonsoft.Json.JsonProperty("clientSecrets", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.ObjectModel.ObservableCollection<ClientSecretResponseDto> ClientSecrets
+        public System.Collections.Generic.List<ClientSecretResponseDto> ClientSecrets
         {
             get { return _clientSecrets; }
 
@@ -2973,7 +2973,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         [Newtonsoft.Json.JsonProperty("allowedGrantTypes", Required = Newtonsoft.Json.Required.Always, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> AllowedGrantTypes
+        public System.Collections.Generic.List<AllowedGrantType> AllowedGrantTypes
         {
             get { return _allowedGrantTypes; }
 
@@ -3127,8 +3127,8 @@ namespace Mshrm.Studio.Api.Clients.Auth
     {
         private string _idName;
         private string _clientName;
-        private System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> _grantTypes = new System.Collections.ObjectModel.Collection<AllowedGrantType>();
-        private System.Collections.ObjectModel.ObservableCollection<string> _scopes = new System.Collections.ObjectModel.Collection<string>();
+        private System.Collections.Generic.List<AllowedGrantType> _grantTypes = new System.Collections.Generic.List<AllowedGrantType>();
+        private System.Collections.Generic.List<string> _scopes = new System.Collections.Generic.List<string>();
 
         [Newtonsoft.Json.JsonProperty("idName", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -3164,7 +3164,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         [Newtonsoft.Json.JsonProperty("grantTypes", Required = Newtonsoft.Json.Required.Always, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.ObjectModel.ObservableCollection<AllowedGrantType> GrantTypes
+        public System.Collections.Generic.List<AllowedGrantType> GrantTypes
         {
             get { return _grantTypes; }
 
@@ -3180,7 +3180,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
         [Newtonsoft.Json.JsonProperty("scopes", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.ObjectModel.ObservableCollection<string> Scopes
+        public System.Collections.Generic.List<string> Scopes
         {
             get { return _scopes; }
 
@@ -3225,7 +3225,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         private int _totalResults;
         private Order _order;
         private string _propertyName;
-        private System.Collections.ObjectModel.ObservableCollection<ClientResponseDto> _results;
+        private System.Collections.Generic.List<ClientResponseDto> _results;
 
         [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.Always)]
         public int PageNumber
@@ -3305,7 +3305,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
         }
 
         [Newtonsoft.Json.JsonProperty("results", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.ObjectModel.ObservableCollection<ClientResponseDto> Results
+        public System.Collections.Generic.List<ClientResponseDto> Results
         {
             get { return _results; }
 

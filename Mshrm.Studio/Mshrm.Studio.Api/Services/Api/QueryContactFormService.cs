@@ -2,6 +2,7 @@
 using Mshrm.Studio.Api.Clients.Domain;
 using Mshrm.Studio.Api.Services.Api.Interfaces;
 using Mshrm.Studio.Shared.Models.Pagination;
+using Order = Mshrm.Studio.Api.Clients.Domain.Order;
 
 namespace Mshrm.Studio.Api.Services.Api
 {

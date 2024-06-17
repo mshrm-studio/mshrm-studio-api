@@ -351,9 +351,6 @@
             var openIdOptions = new OpenIdOptions();
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
-            // Get JWT signing keys
-            var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints, !builder.Environment.IsDevelopment()).GetAwaiter().GetResult();
-
             // For debugging
             IdentityModelEventSource.ShowPII = true; //builder.Environment.IsDevelopment();
             IdentityModelEventSource.LogCompleteSecurityArtifact = true; //builder.Environment.IsDevelopment();

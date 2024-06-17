@@ -17,9 +17,9 @@ namespace Mshrm.Studio.Auth.Application.Dtos.Clients
         public string ClientName { get; set; }
 
         [JsonProperty("grantTypes")]
-        public List<AllowedGrantType> GrantTypes { get; set; } = new List<AllowedGrantType>();
+        public List<AllowedGrantType> GrantTypes { get; set; }
 
         [JsonProperty("scopes")]
-        public List<string> Scopes { get; set; } = new List<string>();
+        public List<string> Scopes { get; set; }
     }
 }

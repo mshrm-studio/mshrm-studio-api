@@ -13,6 +13,6 @@ namespace Mshrm.Studio.Auth.Application.Dtos.ApiResources
         public required string Name { get; set; }
 
         [JsonProperty("scopes")]
-        public List<string> Scopes { get; set; } = new List<string>();
+        public List<string> Scopes { get; set; }
     }
 }
