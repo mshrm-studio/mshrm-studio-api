@@ -450,6 +450,42 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                 options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
                 options.RequireHttpsMetadata = false; // Use true in production
 
+                // Setup events 
+                options.Events = new JwtBearerEvents
+                {
+                    // Add role to claims if not there already
+                    OnTokenValidated = async ctx =>
+                    {
+                        // Get the identity service
+                        var identityService = (IIdentityUserService)ctx.HttpContext.RequestServices.GetService(typeof(IIdentityUserService));
+
+                        // Get the callers email - throw error if not provided
+                        var email = ctx.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+                        if (string.IsNullOrEmpty(email))
+                            throw new Exception("Email is empty when it is expected");
+
+                        // Get the users role/s
+                        var roles = await identityService.GetRolesAsync(email);
+
+                        // Create the claims
+                        var claims = new List<Claim>();
+
+                        // Add the role claims
+                        foreach (var role in roles)
+                        {
+                            claims.Add(new Claim(ClaimTypes.Role, role));
+                        }
+
+                        // Create a new claims identity
+                        var appIdentity = new ClaimsIdentity(claims);
+
+                        // Add the identity to the principle
+                        ctx.Principal?.AddIdentity(appIdentity);
+
+                        return;
+                    }
+                };
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = $"{jwtOptions.Issuer}",

@@ -362,6 +362,50 @@
                 options.Authority = $"{jwtOptions.Audience}"; // IdentityServer URL
                 options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
                 options.RequireHttpsMetadata = false; // Use true in production
+                
+                // Setup events 
+                options.Events = new JwtBearerEvents
+                {
+                    // Add role to claims if not there already
+                    OnTokenValidated = async ctx =>
+                    {
+                        // Get the auth service
+                        var authService = (IIdentityUserClient)ctx.HttpContext.RequestServices.GetService(typeof(IIdentityUserClient));
+
+                        // Get the callers email - throw error if not provided
+                        var email = ctx.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+                        if (string.IsNullOrEmpty(email))
+                            throw new Exception("Email is empty when it is expected");
+
+                        // If role alreayd added, stop here. 
+                        var role = ctx.Principal.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+                        if (role != null)
+                        {
+                            return;
+                        }
+                        
+                        var user = await authService.GetIdentityUserAsync(email);
+                        if (user == null)
+                        {
+                            ctx.HttpContext.Response.StatusCode = 401;
+                            return;
+                        }
+
+                        // Create the claims
+                        var claims = new List<Claim>()
+                        {
+                            new Claim(ClaimTypes.Role, user.Role.ToString())
+                        };
+
+                        // Create a new claims identity
+                        var appIdentity = new ClaimsIdentity(claims);
+
+                        // Add the identity to the principle
+                        ctx.Principal?.AddIdentity(appIdentity);
+
+                        return;
+                    }
+                };
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
