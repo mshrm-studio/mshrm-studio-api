@@ -380,20 +380,38 @@ namespace Mshrm.Studio.Domain.Api.Extensions
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidIssuer = $"{jwtOptions.Issuer}",
-                    ValidAudiences = new[] { $"{jwtOptions.Audience}/resources" },
+                    ValidAudiences = jwtOptions.ValidAudiences,
+                    ValidIssuers = jwtOptions.ValidIssuers,
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
+                    IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
                     IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
                     {
-                        var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                        var securityKeys = new List<SecurityKey>();
+
+                        var mshrmStudioConfigManager = new ConfigurationManager<OpenIdConnectConfiguration>(
                            $"{jwtOptions.Audience}/.well-known/openid-configuration",
                             new OpenIdConnectConfigurationRetriever(),
                             new HttpDocumentRetriever { RequireHttps = false }
                         );
 
-                        var config = configManager.GetConfigurationAsync().Result;
-                        return config.SigningKeys;
+                        var mshrmStudioConfig = mshrmStudioConfigManager.GetConfigurationAsync().Result;
+                        var mshrmStudioSigningKeys = mshrmStudioConfig.SigningKeys;
+
+                        var microsoftConfigManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                         $"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+                          new OpenIdConnectConfigurationRetriever(),
+                          new HttpDocumentRetriever { RequireHttps = false }
+                        );
+
+                        var microsoftConfig = microsoftConfigManager.GetConfigurationAsync().Result;
+                        var microsoftSigningKeys = microsoftConfig.SigningKeys;
+
+                        securityKeys.AddRange(microsoftSigningKeys);
+                        securityKeys.AddRange(mshrmStudioSigningKeys);
+
+                        return securityKeys;
                     }
                 };
             });
