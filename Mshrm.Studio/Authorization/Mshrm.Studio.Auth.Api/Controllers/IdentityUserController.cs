@@ -113,7 +113,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
             {
                 Email = email,
                 RequestingUsersEmail = GetLoggedInUsersUserName(),
-                RequestingUsersRole = GetLoggedInUsersRole() 
+                RequestingUsersRole = GetLoggedInUsersRole() ?? RoleType.User,
             }, Request.HttpContext.RequestAborted);
 
             // Map and return

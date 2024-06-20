@@ -42,15 +42,11 @@ namespace Mshrm.Studio.Auth.Api.Controllers.Bases
         /// Get the logged in users role from the JWT claims
         /// </summary>
         /// <returns>A users role</returns>
-        protected RoleType GetLoggedInUsersRole()
+        protected RoleType? GetLoggedInUsersRole()
         {
             var role = Request.HttpContext?.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-            if (string.IsNullOrEmpty(role))
-            {
-                throw new NotFoundException("Role doesn't exist", FailureCode.RoleDoesntExist);
-            }
 
-            return Enum.Parse<RoleType>(role);
+            return string.IsNullOrEmpty(role) ? RoleType.User : Enum.Parse<RoleType>(role);
         }
 
         /// <summary>
