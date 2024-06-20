@@ -421,7 +421,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             // Hosted services
             if (builder.Configuration.GetValue<bool>("HostedServiceOptions:Enabled"))
             {
-                //builder.Services.AddHostedService<MonthlyRewardInstructionIssuerHostedService>();
+
             }
 
             return builder;

@@ -72,7 +72,7 @@ namespace Mshrm.Studio.Auth.Application.Handlers.Users
             }
 
             // Otherwise create new user (set as random password since user is using SSO and has not set one yet)
-            var identityUser = await _identityUserService.CreateIdentityUserAsync(email, firstName, lastName, StringUtility.RandomString(12), command.IPAddress, new List<RoleType>() { RoleType.User }, false);
+            var identityUser = await _identityUserService.CreateIdentityUserAsync(email, firstName, lastName, StringUtility.RandomString(12), command.IPAddress, new List<RoleType>() { RoleType.User }, true);
             if (identityUser == null)
             {
                 throw new UnprocessableEntityException("Failed to create user", FailureCode.FailedToCreateIdentityUser);
