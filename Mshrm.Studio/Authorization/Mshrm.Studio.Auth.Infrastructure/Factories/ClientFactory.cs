@@ -40,7 +40,8 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
                 }).ToList(),
                 ClientSecrets = new List<ClientSecret> { new ClientSecret() { Value = secret.Sha256() } },
                 AllowedScopes = scopes.Select(x => new ClientScope() { Scope = x }).ToList(),
-                RedirectUris = redirectUris.Select(x => new ClientRedirectUri() { RedirectUri = x }).ToList()
+                RedirectUris = redirectUris.Select(x => new ClientRedirectUri() { RedirectUri = x }).ToList(),
+                AllowOfflineAccess = true,
             };
         }
     }

@@ -29,5 +29,8 @@ namespace Mshrm.Studio.Auth.Application.Dtos.Clients
 
         [JsonProperty("allowedGrantTypes")]
         public List<AllowedGrantType> AllowedGrantTypes { get; set; } = new List<AllowedGrantType>();
+
+        [JsonProperty("redirectUris")]
+        public List<ClientRedirectUriDto> ClientRedirectUris { get; set; } = new List<ClientRedirectUriDto>();
     }
 }
