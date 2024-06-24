@@ -43,7 +43,8 @@ namespace Mshrm.Studio.Auth.Application.Handlers.Clients
                 throw new UnprocessableEntityException("Client id needs to be unique", FailureCode.ClientIdShouldBeUnique);
             }
 
-            (var client, var secret) = await _clientRepository.CreateClientAsync(command.IdName, command.ClientName, command.GrantTypes, command.Scopes, command.RedirectUris);
+            (var client, var secret) = await _clientRepository.CreateClientAsync(command.IdName, command.ClientName, command.GrantTypes, command.Scopes, command.RedirectUris,
+                command.PostLogoutRedirectUris);
 
             return new ClientWithSecret()
             {

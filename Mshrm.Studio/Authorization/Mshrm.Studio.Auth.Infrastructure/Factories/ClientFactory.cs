@@ -25,7 +25,7 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
         /// <param name="scopes">Scopes for the new client</param>
         /// <param name="redirectUris">The uris to redirect to</param>
         /// <returns>A new client</returns>
-        public Client CreateNewClient(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, string secret, List<string> redirectUris)
+        public Client CreateNewClient(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, string secret, List<string> redirectUris, List<string> postLogoutRedirectUris)
         {
             return new Client
             {
@@ -41,6 +41,7 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
                 ClientSecrets = new List<ClientSecret> { new ClientSecret() { Value = secret.Sha256() } },
                 AllowedScopes = scopes.Select(x => new ClientScope() { Scope = x }).ToList(),
                 RedirectUris = redirectUris.Select(x => new ClientRedirectUri() { RedirectUri = x }).ToList(),
+                PostLogoutRedirectUris = postLogoutRedirectUris.Select(x => new ClientPostLogoutRedirectUri() { PostLogoutRedirectUri = x }).ToList(),
                 AllowOfflineAccess = true,
             };
         }

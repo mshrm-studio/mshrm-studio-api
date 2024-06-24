@@ -31,6 +31,9 @@ namespace Mshrm.Studio.Auth.Application.Dtos.Clients
         public List<AllowedGrantType> AllowedGrantTypes { get; set; } = new List<AllowedGrantType>();
 
         [JsonProperty("redirectUris")]
-        public List<ClientRedirectUriDto> ClientRedirectUris { get; set; } = new List<ClientRedirectUriDto>();
+        public List<ClientRedirectUriDto> RedirectUris { get; set; } = new List<ClientRedirectUriDto>();
+        
+        [JsonProperty("postLogoutRedirectUris")]
+        public List<PostLogoutRedirectUriDto> ClientPostLogoutRedirectUris { get; set; } = new List<PostLogoutRedirectUriDto>();
     }
 }

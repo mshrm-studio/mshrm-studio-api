@@ -24,5 +24,8 @@ namespace Mshrm.Studio.Auth.Application.Dtos.Clients
 
         [JsonProperty("redirectUris")]
         public List<string>? RedirectUris { get; set; }
+
+        [JsonProperty("postLogoutRedirectUris")]
+        public List<string>? PostLogoutRedirectUris { get; set; }
     }
 }

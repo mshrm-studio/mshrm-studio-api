@@ -20,6 +20,6 @@ namespace Mshrm.Studio.Auth.Domain.Users
         /// <param name="scopes">Scopes for the new client</param>
         /// <param name="redirectUris">The uris to redirect to</param>
         /// <returns>A new client</returns>
-        public Client CreateNewClient(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, string secret, List<string> redirectUris);
+        public Client CreateNewClient(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, string secret, List<string> redirectUris, List<string> postLogoutRedirectUris);
     }
 }

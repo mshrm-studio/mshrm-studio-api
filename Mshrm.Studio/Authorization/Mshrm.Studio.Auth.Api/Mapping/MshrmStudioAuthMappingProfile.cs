@@ -68,6 +68,8 @@ namespace Mshrm.Studio.Auth.Api.Mapping
             CreateMap<ClientSecret, ClientSecretResponseDto>().ReverseMap();
             CreateMap<CreateClientRequestDto, CreateClientCommand>().ReverseMap();
             CreateMap<PagedResult<Client>, PageResultDto<ClientResponseDto>>();
+            CreateMap<ClientPostLogoutRedirectUri, PostLogoutRedirectUriDto>().ReverseMap();
+            CreateMap<ClientRedirectUri, ClientRedirectUriDto>().ReverseMap();
 
             #endregion
 
