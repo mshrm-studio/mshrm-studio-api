@@ -18,8 +18,9 @@ namespace Mshrm.Studio.Auth.Domain.Clients
         /// <param name="clientName">The clients name</param>
         /// <param name="grantTypes">Any grant types to support for the client</param>
         /// <param name="scopes">The scopes the client can access</param>
+        /// <param name="redirectUris">The uris to redirect to</param>
         /// <returns>The new client + its secret as a tuple</returns>
-        public Task<(Client Client, string Secret)> CreateClientAsync(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes);
+        public Task<(Client Client, string Secret)> CreateClientAsync(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, List<string> redirectUris);
 
         /// <summary>
         /// Get client by client id name

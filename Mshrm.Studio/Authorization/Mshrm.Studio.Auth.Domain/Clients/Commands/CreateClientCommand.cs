@@ -15,5 +15,6 @@ namespace Mshrm.Studio.Auth.Domain.Clients.Commands
         public string ClientName { get; set; }
         public List<AllowedGrantType> GrantTypes { get; set; } = new List<AllowedGrantType>();
         public List<string> Scopes { get; set; } = new List<string>();
+        public List<string> RedirectUris { get; set; } = new List<string>();
     }
 }

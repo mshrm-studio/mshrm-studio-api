@@ -21,5 +21,8 @@ namespace Mshrm.Studio.Auth.Application.Dtos.Clients
 
         [JsonProperty("scopes")]
         public List<string> Scopes { get; set; }
+
+        [JsonProperty("redirectUris")]
+        public List<string>? RedirectUris { get; set; }
     }
 }

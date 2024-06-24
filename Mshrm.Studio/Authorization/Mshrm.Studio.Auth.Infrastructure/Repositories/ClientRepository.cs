@@ -37,14 +37,15 @@ namespace Mshrm.Studio.Auth.Infrastructure.Repositories
         /// <param name="clientName">The clients name</param>
         /// <param name="grantTypes">Any grant types to support for the client</param>
         /// <param name="scopes">The scopes the client can access</param>
+        /// <param name="redirectUris">The uris to redirect to</param>
         /// <returns>The new client + its secret as a tuple</returns>
-        public async Task<(Client Client, string Secret)> CreateClientAsync(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes)
+        public async Task<(Client Client, string Secret)> CreateClientAsync(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, List<string> redirectUris)
         {
             // Create the secret
             var secret = StringUtility.GetRandomPassword(32);
 
             // Create client
-            var client = _clientFactory.CreateNewClient(idName, clientName, grantTypes, scopes, secret);
+            var client = _clientFactory.CreateNewClient(idName, clientName, grantTypes, scopes, secret, redirectUris);
 
             // Save client
             _configurationDbContext.Clients.Add(client);

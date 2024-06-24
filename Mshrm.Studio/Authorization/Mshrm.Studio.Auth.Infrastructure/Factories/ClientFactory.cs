@@ -23,9 +23,9 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
         /// <param name="clientName">The new clients name</param>
         /// <param name="grantTypes">Grant types for the new client</param>
         /// <param name="scopes">Scopes for the new client</param>
-        /// <param name="secretLength">The length of the secret hashed</param>
+        /// <param name="redirectUris">The uris to redirect to</param>
         /// <returns>A new client</returns>
-        public Client CreateNewClient(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, string secret)
+        public Client CreateNewClient(string idName, string clientName, List<AllowedGrantType> grantTypes, List<string> scopes, string secret, List<string> redirectUris)
         {
             return new Client
             {
@@ -39,7 +39,8 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
                                 (x == AllowedGrantType.Hybrid) ? GrantType.Hybrid : null
                 }).ToList(),
                 ClientSecrets = new List<ClientSecret> { new ClientSecret() { Value = secret.Sha256() } },
-                AllowedScopes = scopes.Select(x => new ClientScope() { Scope = x }).ToList()
+                AllowedScopes = scopes.Select(x => new ClientScope() { Scope = x }).ToList(),
+                RedirectUris = redirectUris.Select(x => new ClientRedirectUri() { RedirectUri = x }).ToList()
             };
         }
     }
