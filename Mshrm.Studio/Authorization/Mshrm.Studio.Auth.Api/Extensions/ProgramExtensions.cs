@@ -449,6 +449,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                 options.Authority = $"{jwtOptions.Audience}"; // IdentityServer URL
                 options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
                 options.RequireHttpsMetadata = false; // Use true in production
+                options.RequireHttpsMetadata = !builder.Environment.IsDevelopment(); // Use true in production
 
                 // Setup events 
                 options.Events = new JwtBearerEvents
