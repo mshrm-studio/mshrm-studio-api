@@ -1,5 +1,4 @@
-﻿using IdentityServer4.Models;
-using Mshrm.Studio.Auth.Domain.Clients.Enums;
+﻿using Mshrm.Studio.Auth.Domain.Clients.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

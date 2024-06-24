@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer.EntityFramework.Entities;
 using Duende.IdentityServer.Models;
-using IdentityServer4.Models;
 using Mshrm.Studio.Auth.Domain.Clients.Enums;
 using Mshrm.Studio.Auth.Domain.Users;
 using Mshrm.Studio.Shared.Helpers;
@@ -43,6 +42,7 @@ namespace Mshrm.Studio.Auth.Infrastructure.Factories
                 RedirectUris = redirectUris.Select(x => new ClientRedirectUri() { RedirectUri = x }).ToList(),
                 PostLogoutRedirectUris = postLogoutRedirectUris.Select(x => new ClientPostLogoutRedirectUri() { PostLogoutRedirectUri = x }).ToList(),
                 AllowOfflineAccess = true,
+                AllowAccessTokensViaBrowser = true,
             };
         }
     }
