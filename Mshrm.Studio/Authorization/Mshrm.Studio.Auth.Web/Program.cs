@@ -65,11 +65,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Set middleware to rewrite server url for wellknown etc.
-//app.UseMiddleware<IdentityOriginSettingMiddleware>();
-
 if (!builder.Environment.IsDevelopment())
 {
+    app.UseMiddleware<IdentityOriginSettingMiddleware>();
+
     app.Use((context, next) =>
     {
         context.Request.Scheme = "https";
