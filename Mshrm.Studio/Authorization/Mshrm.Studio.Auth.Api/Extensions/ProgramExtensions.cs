@@ -330,7 +330,6 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             .AddEntityFrameworkStores<MshrmStudioAuthDbContext>()
             .AddDefaultTokenProviders();
 
-      
             // Setup related services for identity user/role
             builder.Services.AddScoped<IUserValidator<MshrmStudioIdentityUser>, UserValidator<MshrmStudioIdentityUser>>();
             builder.Services.AddScoped<IPasswordValidator<MshrmStudioIdentityUser>, PasswordValidator<MshrmStudioIdentityUser>>();

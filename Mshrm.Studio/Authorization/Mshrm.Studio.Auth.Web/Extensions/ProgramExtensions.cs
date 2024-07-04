@@ -329,8 +329,7 @@ namespace Mshrm.Studio.Auth.Web.Extensions
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseSuccessEvents = true;
                 options.EmitStaticAudienceClaim = true;
-            })
-                
+            })  
                 .AddInMemoryClients(Configuration.GetClients())
                 .AddAspNetIdentity<MshrmStudioIdentityUser>()
                 .AddDeveloperSigningCredential() //TODO: NOT something we want to use in a production environment
@@ -425,8 +424,8 @@ namespace Mshrm.Studio.Auth.Web.Extensions
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = "/Account/Login";     //set the login path.  
-                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.LoginPath = $"{(builder.Environment.IsDevelopment() ? string.Empty : "/Identity")}/Account/Login"; 
+                options.AccessDeniedPath = $"{(builder.Environment.IsDevelopment() ? string.Empty : "/Identity")}/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
 
