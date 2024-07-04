@@ -66,6 +66,7 @@ public class Index : PageModel
         
     public async Task<IActionResult> OnPost()
     {
+        _logger.LogCritical("Test1234");
         // check if we are in the context of an authorization request
         var context = await _interaction.GetAuthorizationContextAsync(Input.ReturnUrl);
 
@@ -74,6 +75,8 @@ public class Index : PageModel
         {
             if (context != null)
             {
+                _logger.LogCritical("0: HERE");
+
                 // This "can't happen", because if the ReturnUrl was null, then the context would be null
                 ArgumentNullException.ThrowIfNull(Input.ReturnUrl, nameof(Input.ReturnUrl));
 
