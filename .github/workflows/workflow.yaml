@@ -29,6 +29,18 @@ jobs:
     - name: Replace Github Password In Nuget.Config
       run: find . -name "nuget.config*" -type f -exec sed -i -e 's/%NUGETPASSWORD%/${{ secrets.NUGETPASSWORD }}/g' {} \;
             
+    - name: Build and push Identity Web Server Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: Mshrm.Studio/Authorization
+        file: Mshrm.Studio/Authorization/Mshrm.Studio.Auth.Web/Dockerfile
+        push: true
+        tags: registry.digitalocean.com/mshrm-studio-api/mshrmstudioauthweb
+        build-args: |
+           "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
+           "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
+           "IdentityServerLicenceKey=${{ secrets.IDENTITY_SERVER_LICENCE_KEY }}"
+           
     - name: Build and push Auth API Docker image
       uses: docker/build-push-action@v2
       with:
@@ -39,8 +51,6 @@ jobs:
         build-args: |
            "ApplicationDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
-           "IdentityServerLicenceKey=${{ secrets.IDENTITY_SERVER_LICENCE_KEY }}"
         
     - name: Build and push Storage API Docker image
       uses: docker/build-push-action@v2
@@ -74,7 +84,6 @@ jobs:
            "PolygonIOServiceApiKey=${{ secrets.POLYGON_IO_SERVICE_API_KEY }}"
            "TwelveDataServiceApiKey=${{ secrets.TWELVE_DATA_SERVICE_API_KEY }}"
            "MobulaServiceApiKey=${{ secrets.MOBULA_SERVICE_API_KEY }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
 
     - name: Build and push Localization API Docker image
       uses: docker/build-push-action@v2
@@ -88,7 +97,6 @@ jobs:
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
 
     - name: Build and push Domain API Docker image
       uses: docker/build-push-action@v2
@@ -102,7 +110,6 @@ jobs:
            "ApplicationDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "HangfireDatabaseUsername=${{ secrets.APPLICATION_DATABASE_USERNAME }}"
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
                
     - name: Build and push Email API Docker image
       uses: docker/build-push-action@v2
@@ -118,7 +125,6 @@ jobs:
            "HangfireDatabasePassword=${{ secrets.APPLICATION_DATABASE_PASSWORD }}"
            "CompanyEmail=${{ secrets.COMPANY_EMAIL }}"
            "CompanyEmailPassword=${{ secrets.COMPANY_EMAIL_PASSWORD }}"
-           "JwtSigningKey=${{ secrets.JWTSIGNINGKEY }}"
            
     - name: Build and push Aggregator API Docker image
       uses: docker/build-push-action@v2
@@ -176,6 +182,9 @@ jobs:
       
     - name: Add Auth API Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioauthapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioauthapi/g' {} \;
+      
+      - name: Add Auth Identity Web Server Registry to K8 Manifest File
+      run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioauthweb/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioauthweb/g' {} \;
       
     - name: Add Domain API Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudiodomainapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudiodomainapi/g' {} \;
