@@ -63,9 +63,6 @@ app.UseRequestLocalization(options.Value);
 
 if (!builder.Environment.IsDevelopment())
 {
-    // Set middleware to rewrite server url for wellknown etc.
-    app.UseMiddleware<IdentityOriginSettingMiddleware>();
-
     app.Use((context, next) =>
     {
         context.Request.Scheme = "https";
