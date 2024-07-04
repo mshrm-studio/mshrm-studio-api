@@ -26,6 +26,7 @@ public class Index : PageModel
     private readonly IEventService _events;
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
+    private readonly IWebHostEnvironment _webHostEnvironment;
     private ILogger<LoginPageResult> _logger;
 
     public ViewModel View { get; set; } = default!;
@@ -40,7 +41,8 @@ public class Index : PageModel
         IEventService events,
         UserManager<MshrmStudioIdentityUser> userManager,
         SignInManager<MshrmStudioIdentityUser> signInManager,
-        ILogger<LoginPageResult> logger)
+        ILogger<LoginPageResult> logger,
+        IWebHostEnvironment webHostEnvironment)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -49,6 +51,8 @@ public class Index : PageModel
         _identityProviderStore = identityProviderStore;
         _events = events;
         _logger = logger;
+        _webHostEnvironment = webHostEnvironment;
+
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
@@ -96,7 +100,7 @@ public class Index : PageModel
 
                 _logger.LogCritical("2: HERE");
 
-                return Redirect(Input.ReturnUrl ?? "~/");
+                return Redirect(Input.ReturnUrl ?? $"~/");
             }
             else
             {

@@ -405,11 +405,9 @@ namespace Mshrm.Studio.Auth.Web.Extensions
         /// <returns>The api builder</returns>
         public static WebApplicationBuilder ConfigureAuthentication(this WebApplicationBuilder builder)
         {
-            /*
             builder.Services.AddDataProtection()
-                .PersistKeysToFileSystem(new DirectoryInfo(@"c:\PATH TO COMMON KEY RING FOLDER"))
+                .PersistKeysToFileSystem(new DirectoryInfo(@"data/protection/keys"))
                 .SetApplicationName("SharedCookieApp");
-            */
 
             // Setup JWT Auth
             builder.Services.AddAuthentication(options =>
