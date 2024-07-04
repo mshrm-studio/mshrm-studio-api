@@ -19,9 +19,9 @@ COPY ["./Mshrm.Studio.Auth.Web/Mshrm.Studio.Auth.Web.csproj", "Mshrm.Studio.Auth
 COPY ["./Mshrm.Studio.Auth.Application/Mshrm.Studio.Auth.Application.csproj", "Mshrm.Studio.Auth.Application/"]
 COPY ["./Mshrm.Studio.Auth.Domain/Mshrm.Studio.Auth.Domain.csproj", "Mshrm.Studio.Auth.Domain/"]
 COPY ["./Mshrm.Studio.Auth.Infrastructure/Mshrm.Studio.Auth.Infrastructure.csproj", "Mshrm.Studio.Auth.Infrastructure/"]
-RUN dotnet restore "./Mshrm.Studio.Auth.Web/Mshrm.Studio.Auth.Web.csproj"
-COPY . .
+RUN dotnet restore "./Mshrm.Studio.Auth.Api/Mshrm.Studio.Auth.Web.csproj" --configfile nuget.config 
 WORKDIR "/src/Mshrm.Studio.Auth.Web"
+COPY . .
 RUN dotnet build "./Mshrm.Studio.Auth.Web/Mshrm.Studio.Auth.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
