@@ -424,8 +424,12 @@ namespace Mshrm.Studio.Auth.Web.Extensions
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = $"{(builder.Environment.IsDevelopment() ? string.Empty : "/Identity")}/Account/Login"; 
-                options.AccessDeniedPath = $"{(builder.Environment.IsDevelopment() ? string.Empty : "/Identity")}/Account/AccessDenied";
+                //options.LoginPath = $"{(builder.Environment.IsDevelopment() ? string.Empty : "/Identity")}/Account/Login"; 
+                //options.AccessDeniedPath = $"{(builder.Environment.IsDevelopment() ? string.Empty : "/Identity")}/Account/AccessDenied";
+
+                options.LoginPath = $"/Account/Login";
+                options.AccessDeniedPath = $"/Account/AccessDenied";
+
                 options.SlidingExpiration = true;
             });
 
