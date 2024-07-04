@@ -57,6 +57,9 @@ using Mshrm.Studio.Auth.Api.Middleware;
 using Mshrm.Studio.Auth.Application.Options;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Mshrm.Studio.Auth.Api.Config;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace Mshrm.Studio.Auth.Api.Extensions
 {
@@ -328,40 +331,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             .AddEntityFrameworkStores<MshrmStudioAuthDbContext>()
             .AddDefaultTokenProviders();
 
-            // Get connection string to set up stores
-            var username = builder.Configuration.GetValue<string>("ApplicationDatabaseUsername");
-            var password = builder.Configuration.GetValue<string>("ApplicationDatabasePassword");
-            var connectionStringWithCredentials = new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("ApplicationDatabase"));
-            connectionStringWithCredentials.UserID = username;
-            connectionStringWithCredentials.Password = password;
-
-            var migrationsAssembly = typeof(ProgramExtensions).GetTypeInfo().Assembly.GetName().Name;
-
-            // Add identity server to API
-            builder.Services.AddIdentityServer(options =>
-            {
-                options.LicenseKey = builder.Configuration.GetValue<string>("IdentityServerLicenceKey");
-
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-                options.EmitStaticAudienceClaim = true;
-            })
-                .AddAspNetIdentity<MshrmStudioIdentityUser>()
-                .AddDeveloperSigningCredential() //TODO: NOT something we want to use in a production environment
-                .AddResourceOwnerValidator<ResourceOwnerPasswordValidator<MshrmStudioIdentityUser>>()
-                .AddConfigurationStore(opt =>
-                {
-                    opt.ConfigureDbContext = c => c.UseSqlServer(connectionStringWithCredentials.ToString(), sql => sql.MigrationsAssembly(migrationsAssembly));
-                })
-                .AddOperationalStore(opt =>
-                {
-                    opt.ConfigureDbContext = o => o.UseSqlServer(connectionStringWithCredentials.ToString(), sql => sql.MigrationsAssembly(migrationsAssembly));
-                    opt.EnableTokenCleanup = true;
-                });
-            //.AddProfileService<IdentityProfileService>();
-
+      
             // Setup related services for identity user/role
             builder.Services.AddScoped<IUserValidator<MshrmStudioIdentityUser>, UserValidator<MshrmStudioIdentityUser>>();
             builder.Services.AddScoped<IPasswordValidator<MshrmStudioIdentityUser>, PasswordValidator<MshrmStudioIdentityUser>>();
@@ -443,12 +413,13 @@ namespace Mshrm.Studio.Auth.Api.Extensions
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
             // Setup JWT Auth
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
             .AddJwtBearer(options =>
             {
-                options.Authority = $"{jwtOptions.Audience}"; // IdentityServer URL
-                options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
-                options.RequireHttpsMetadata = false; // Use true in production
                 options.RequireHttpsMetadata = !builder.Environment.IsDevelopment(); // Use true in production
 
                 // Setup events 
@@ -485,7 +456,7 @@ namespace Mshrm.Studio.Auth.Api.Extensions
 
                         return;
                     }
-                };
+                }; 
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -500,26 +471,19 @@ namespace Mshrm.Studio.Auth.Api.Extensions
                     {
                         var securityKeys = new List<SecurityKey>();
 
-                        var mshrmStudioConfigManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                           $"{jwtOptions.Audience}/.well-known/openid-configuration",
-                            new OpenIdConnectConfigurationRetriever(),
-                            new HttpDocumentRetriever { RequireHttps = false }
-                        );
+                        foreach (var endpoint in openIdOptions.WellKnownEndpoints)
+                        {
+                            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                                endpoint,
+                                new OpenIdConnectConfigurationRetriever(),
+                                new HttpDocumentRetriever { RequireHttps = false }
+                            );
 
-                        var mshrmStudioConfig = mshrmStudioConfigManager.GetConfigurationAsync().Result;
-                        var mshrmStudioSigningKeys = mshrmStudioConfig.SigningKeys;
+                            var config = configManager.GetConfigurationAsync().Result;
+                            var signingKeys = config.SigningKeys;
 
-                        var microsoftConfigManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                         $"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
-                          new OpenIdConnectConfigurationRetriever(),
-                          new HttpDocumentRetriever { RequireHttps = false }
-                        );
-
-                        var microsoftConfig = microsoftConfigManager.GetConfigurationAsync().Result;
-                        var microsoftSigningKeys = microsoftConfig.SigningKeys;
-
-                        securityKeys.AddRange(microsoftSigningKeys);
-                        securityKeys.AddRange(mshrmStudioSigningKeys);
+                            securityKeys.AddRange(signingKeys);
+                        }
 
                         return securityKeys;
                     }

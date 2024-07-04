@@ -373,13 +373,10 @@ namespace Mshrm.Studio.Domain.Api.Extensions
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = $"{jwtOptions.Audience}"; // IdentityServer URL
-                options.Audience = $"{jwtOptions.Audience}/resources"; // The audience for your API
                 options.RequireHttpsMetadata = false; // Use true in production
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidIssuer = $"{jwtOptions.Issuer}",
                     ValidAudiences = jwtOptions.ValidAudiences,
                     ValidIssuers = jwtOptions.ValidIssuers,
                     ValidateAudience = true,
@@ -390,26 +387,19 @@ namespace Mshrm.Studio.Domain.Api.Extensions
                     {
                         var securityKeys = new List<SecurityKey>();
 
-                        var mshrmStudioConfigManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                           $"{jwtOptions.Audience}/.well-known/openid-configuration",
-                            new OpenIdConnectConfigurationRetriever(),
-                            new HttpDocumentRetriever { RequireHttps = false }
-                        );
+                        foreach (var endpoint in openIdOptions.WellKnownEndpoints)
+                        {
+                            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                                endpoint,
+                                new OpenIdConnectConfigurationRetriever(),
+                                new HttpDocumentRetriever { RequireHttps = false }
+                            );
 
-                        var mshrmStudioConfig = mshrmStudioConfigManager.GetConfigurationAsync().Result;
-                        var mshrmStudioSigningKeys = mshrmStudioConfig.SigningKeys;
+                            var config = configManager.GetConfigurationAsync().Result;
+                            var signingKeys = config.SigningKeys;
 
-                        var microsoftConfigManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                         $"https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
-                          new OpenIdConnectConfigurationRetriever(),
-                          new HttpDocumentRetriever { RequireHttps = false }
-                        );
-
-                        var microsoftConfig = microsoftConfigManager.GetConfigurationAsync().Result;
-                        var microsoftSigningKeys = microsoftConfig.SigningKeys;
-
-                        securityKeys.AddRange(microsoftSigningKeys);
-                        securityKeys.AddRange(mshrmStudioSigningKeys);
+                            securityKeys.AddRange(signingKeys);
+                        }
 
                         return securityKeys;
                     }

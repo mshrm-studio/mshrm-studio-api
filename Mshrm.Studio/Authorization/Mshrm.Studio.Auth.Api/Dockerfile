@@ -7,11 +7,9 @@ EXPOSE 8080
 EXPOSE 8081
 ARG ApplicationDatabaseUsername
 ARG ApplicationDatabasePassword
-ARG JwtSigningKey
 ARG IdentityServerLicenceKey
 ENV ApplicationDatabaseUsername=${ApplicationDatabaseUsername}
 ENV ApplicationDatabasePassword=${ApplicationDatabasePassword}
-ENV Jwt:JwtSigningKey=${JwtSigningKey}
 ENV IdentityServerLicenceKey=${IdentityServerLicenceKey}
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build

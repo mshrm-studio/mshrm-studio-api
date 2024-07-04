@@ -20,7 +20,7 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - mshrm-studio-auth-api
+      - mshrm-studio-auth-web
 
   mshrm-studio-auth-api:
     image: ${DOCKER_REGISTRY-}mshrmstudioauthapi
@@ -41,6 +41,7 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on: 
       - redis
+      - mshrm-studio-auth-web
 
   mshrm-studio-auth-api-dapr:
     image: "daprio/daprd:latest"
@@ -61,6 +62,45 @@ services:
       - mshrm-studio-auth-api
     network_mode: "service:mshrm-studio-auth-api"
 
+  mshrm-studio-auth-web:
+    image: ${DOCKER_REGISTRY-}mshrmstudioauthweb
+    ports:
+      - '1232:8081'
+      - '1252:8080'
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Development 
+    build:
+      context: .
+      dockerfile: Authorization/Mshrm.Studio.Auth.Web/Dockerfile
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:80/health || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on: 
+      - redis
+    
+  mshrm-studio-auth-web-dapr:
+    image: "daprio/daprd:latest"
+    container_name: ${DOCKER_REGISTRY-}authweb-dapr
+    restart: always
+    command: [ 
+      "./daprd",
+      "-app-id", "authweb-dapr",
+      "-app-port", "8080",
+      "-app-protocol", "http",
+      "-components-path", "/DaprComponents",
+      "-log-level", "debug"
+    ]
+    volumes:
+      - "./DaprComponents/:/DaprComponents"
+    depends_on: 
+      - redis
+      - mshrm-studio-auth-web
+    network_mode: "service:mshrm-studio-auth-web"
+
   mshrm-studio-domain-api:
     image: ${DOCKER_REGISTRY-}mshrmstudiodomainapi
     environment: 
@@ -77,6 +117,7 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on: 
       - redis
+      - mshrm-studio-auth-web
 
   mshrm-studio-domain-api-dapr:
     image: "daprio/daprd:latest"
@@ -113,6 +154,7 @@ services:
       - "host.docker.internal:host-gateway"
     depends_on: 
       - redis
+      - mshrm-studio-auth-web
 
   mshrm-studio-email-api-dapr:
     image: "daprio/daprd:latest"
@@ -150,6 +192,7 @@ services:
     depends_on: 
       - redis
       - sqlserver
+      - mshrm-studio-auth-web
 
   mshrm-studio-pricing-api-dapr:
     image: "daprio/daprd:latest"
@@ -224,6 +267,7 @@ services:
     depends_on: 
       - redis
       - sqlserver
+      - mshrm-studio-auth-web
 
   mshrm-studio-localization-api-dapr:
     image: "daprio/daprd:latest"
@@ -260,6 +304,7 @@ services:
     depends_on: 
       - redis
       - sqlserver
+      - mshrm-studio-auth-web
 
   mshrm-studio-subscription-api-dapr:
     image: "daprio/daprd:latest"

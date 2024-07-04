@@ -36,6 +36,9 @@ using System.Data.SqlClient;
 using Mshrm.Studio.Email.Domain.Emails;
 using Mshrm.Studio.Email.Infrastructure.Factories;
 using Mshrm.Studio.Shared.Enums;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Protocols;
 
 namespace Mshrm.Studio.Email.Api.Extensions
 {
@@ -328,60 +331,56 @@ namespace Mshrm.Studio.Email.Api.Extensions
             var openIdOptions = new OpenIdOptions();
             builder.Configuration.GetSection("OpenId").Bind(openIdOptions);
 
-            // Get JWT signing keys
-            var signingKeys = SigningKeyHelper.GetSigningKeysAsync(openIdOptions.WellKnownEndpoints, !builder.Environment.IsDevelopment()).GetAwaiter().GetResult();
+            // For debugging
+            IdentityModelEventSource.ShowPII = true; //builder.Environment.IsDevelopment();
+            IdentityModelEventSource.LogCompleteSecurityArtifact = true; //builder.Environment.IsDevelopment();
 
             // Setup JWT Auth
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.RequireHttpsMetadata = false; // Use true in production
+
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // JWT Signing Key
-                    IssuerSigningKey = SigningKeyHelper.CreateSigningKey(jwtOptions.JwtSigningKey),
-
-                    // OIDC Signing Keys
-                    IssuerSigningKeys = signingKeys,
-
-                    // Name claim definition
-                    NameClaimType = ClaimTypes.NameIdentifier,
-
-                    // JWT Signing Key
-                    ValidAudience = jwtOptions.Audience,
-
-                    // External Audiences valid in JWT (to expect from)
                     ValidAudiences = jwtOptions.ValidAudiences,
-
-                    // JWT Issuer
-                    ValidIssuer = jwtOptions.Issuer,
-
-                    // External Issuers valid in JWT (to expect from)
                     ValidIssuers = jwtOptions.ValidIssuers,
-
-                    // Ensure issuer is validated
-                    ValidateIssuer = true,
-
-                    // Ensure audience is validated
                     ValidateAudience = true,
-
-                    // Require check for expiration
-                    RequireExpirationTime = true,
-
                     ValidateLifetime = true,
-
-                    // So expriy works
-                    ClockSkew = TimeSpan.Zero,
-
-                    // Custom issuer validater to support multi tenant requests
+                    ValidateIssuerSigningKey = true,
                     IssuerValidator = (issuer, securityToken, validationParameters) => IssuerHelper.ValidateIssuer(issuer, securityToken, validationParameters),
-                };
+                    IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
+                    {
+                        var securityKeys = new List<SecurityKey>();
 
-                // Add events for adding claims that OpenID cannot (ie. role)
-                options.Events = JwtBearerEventHelper.CreateJwtBearerEvents();
+                        foreach (var endpoint in openIdOptions.WellKnownEndpoints)
+                        {
+                            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                                endpoint,
+                                new OpenIdConnectConfigurationRetriever(),
+                                new HttpDocumentRetriever { RequireHttps = false }
+                            );
+
+                            var config = configManager.GetConfigurationAsync().Result;
+                            var signingKeys = config.SigningKeys;
+
+                            securityKeys.AddRange(signingKeys);
+                        }
+
+                        return securityKeys;
+                    }
+                };
             });
 
             // Setup Authorization for role base access
-            //builder.Services.AddAuthorizationPolicies(builder.Configuration);
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "mshrm-studio-api");
+                });
+            });
 
             return builder;
         }

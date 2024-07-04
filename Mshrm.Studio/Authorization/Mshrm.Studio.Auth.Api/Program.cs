@@ -61,20 +61,11 @@ var app = builder.Build();
 var options = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
 app.UseRequestLocalization(options.Value);
 
-// Migrate db context
-if (builder.Configuration.GetValue<bool>("EFCore:Migrate") == true)
-{
-    await app.AddDatabaseMigrationAsync<MshrmStudioAuthDbContext>();
-
-    await app.AddDatabaseMigrationAsync<PersistedGrantDbContext>();
-    await app.AddDatabaseMigrationAsync<ConfigurationDbContext>();
-}
-
-// Set middleware to rewrite server url for wellknown etc.
-app.UseMiddleware<IdentityOriginSettingMiddleware>();
-
 if (!builder.Environment.IsDevelopment())
 {
+    // Set middleware to rewrite server url for wellknown etc.
+    app.UseMiddleware<IdentityOriginSettingMiddleware>();
+
     app.Use((context, next) =>
     {
         context.Request.Scheme = "https";
@@ -110,8 +101,6 @@ app.UseIpRateLimiting();
 
 // Use endpoint routing
 app.UseRouting();
-
-app.UseIdentityServer();
 
 //app.UseHttpsRedirection();
 app.UseAuthentication();
