@@ -179,11 +179,11 @@ jobs:
       
     - name: Add Aggregator API Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioapi/g' {} \;
-      
+
     - name: Add Auth API Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioauthapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioauthapi/g' {} \;
       
-      - name: Add Auth Identity Web Server Registry to K8 Manifest File
+    - name: Add Auth Identity Web Server Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudioauthweb/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudioauthweb/g' {} \;
       
     - name: Add Domain API Registry to K8 Manifest File
