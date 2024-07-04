@@ -45,9 +45,6 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-	  <Content Include="wwwroot\*">
-		  <CopyToPublishDirectory>always</CopyToPublishDirectory>
-	  </Content>
   </ItemGroup>
 
 </Project>
