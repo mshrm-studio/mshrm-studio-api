@@ -8,7 +8,6 @@ using Mshrm.Studio.Shared.Extensions;
 using Newtonsoft.Json;
 using Duende.IdentityServer.EntityFramework.DbContexts;
 using Microsoft.EntityFrameworkCore;
-using Mshrm.Studio.Auth.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
