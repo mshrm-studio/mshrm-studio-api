@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 using Duende.IdentityServer;
+using Duende.IdentityServer.Endpoints.Results;
 using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
@@ -25,6 +26,7 @@ public class Index : PageModel
     private readonly IEventService _events;
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
+    private ILogger<LoginPageResult> _logger;
 
     public ViewModel View { get; set; } = default!;
         
@@ -37,7 +39,8 @@ public class Index : PageModel
         IIdentityProviderStore identityProviderStore,
         IEventService events,
         UserManager<MshrmStudioIdentityUser> userManager,
-        SignInManager<MshrmStudioIdentityUser> signInManager)
+        SignInManager<MshrmStudioIdentityUser> signInManager,
+        ILogger<LoginPageResult> logger)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -45,6 +48,7 @@ public class Index : PageModel
         _schemeProvider = schemeProvider;
         _identityProviderStore = identityProviderStore;
         _events = events;
+        _logger = logger;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
@@ -81,15 +85,20 @@ public class Index : PageModel
                 // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                 if (context.IsNativeClient())
                 {
+                    _logger.LogCritical("1: HERE");
                     // The client is native, so this change in how to
                     // return the response is for better UX for the end user.
                     return this.LoadingPage(Input.ReturnUrl);
                 }
 
+                _logger.LogCritical("2: HERE");
+
                 return Redirect(Input.ReturnUrl ?? "~/");
             }
             else
             {
+                _logger.LogCritical("3: HERE");
+
                 // since we don't have a valid context, then we just go back to the home page
                 return Redirect("~/");
             }
@@ -111,10 +120,14 @@ public class Index : PageModel
 
                     if (context.IsNativeClient())
                     {
+                        _logger.LogCritical("4: HERE");
+
                         // The client is native, so this change in how to
                         // return the response is for better UX for the end user.
                         return this.LoadingPage(Input.ReturnUrl);
                     }
+
+                    _logger.LogCritical("5: HERE");
 
                     // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
                     return Redirect(Input.ReturnUrl ?? "~/");
@@ -123,14 +136,20 @@ public class Index : PageModel
                 // request for a local page
                 if (Url.IsLocalUrl(Input.ReturnUrl))
                 {
+                    _logger.LogCritical("6: HERE");
+
                     return Redirect(Input.ReturnUrl);
                 }
                 else if (string.IsNullOrEmpty(Input.ReturnUrl))
                 {
+                    _logger.LogCritical("7: HERE");
+
                     return Redirect("~/");
                 }
                 else
                 {
+                    _logger.LogCritical("8: HERE");
+
                     // user might have clicked on a malicious link - should be logged
                     throw new ArgumentException("invalid return URL");
                 }
@@ -141,6 +160,8 @@ public class Index : PageModel
             Telemetry.Metrics.UserLoginFailure(context?.Client.ClientId, IdentityServerConstants.LocalIdentityProvider, error);
             ModelState.AddModelError(string.Empty, LoginOptions.InvalidCredentialsErrorMessage);
         }
+
+        _logger.LogCritical("9: HERE");
 
         // something went wrong, show form with error
         await BuildModelAsync(Input.ReturnUrl);
