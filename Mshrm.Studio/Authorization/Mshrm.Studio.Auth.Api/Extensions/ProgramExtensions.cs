@@ -53,7 +53,6 @@ using Mshrm.Studio.Auth.Domain.ApiResources;
 using Mshrm.Studio.Auth.Domain.ApiResources.Commands;
 using Mshrm.Studio.Auth.Application.Handlers.ApiResources;
 using Mshrm.Studio.Auth.Domain.ApiResources.Queries;
-using Mshrm.Studio.Auth.Api.Middleware;
 using Mshrm.Studio.Auth.Application.Options;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
