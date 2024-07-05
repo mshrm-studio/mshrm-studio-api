@@ -27,6 +27,7 @@ public class Index : PageModel
     private readonly IAuthenticationSchemeProvider _schemeProvider;
     private readonly IIdentityProviderStore _identityProviderStore;
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IServerUrls _serverUrls;
     private ILogger<LoginPageResult> _logger;
 
     public ViewModel View { get; set; } = default!;
@@ -42,7 +43,8 @@ public class Index : PageModel
         UserManager<MshrmStudioIdentityUser> userManager,
         SignInManager<MshrmStudioIdentityUser> signInManager,
         ILogger<LoginPageResult> logger,
-        IWebHostEnvironment webHostEnvironment)
+        IWebHostEnvironment webHostEnvironment,
+        IServerUrls serverUrls)
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -52,7 +54,7 @@ public class Index : PageModel
         _events = events;
         _logger = logger;
         _webHostEnvironment = webHostEnvironment;
-
+        _serverUrls = serverUrls;
     }
 
     public async Task<IActionResult> OnGet(string? returnUrl)
