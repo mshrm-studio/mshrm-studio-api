@@ -212,3 +212,7 @@ kompose --file Mshrm.Studio/docker-compose.yml --out ./k8s convert
 ## License
 
 The project is under [MIT license](https://github.com/mshrm-studio/mshrm-studio-api/blob/main/LICENSE).
+
+
+
+https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nginx-ingress-with-cert-manager-on-digitalocean-kubernetes

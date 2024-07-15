@@ -162,11 +162,11 @@ jobs:
         kubeconfig: ${{ secrets.KUBECONFIG }}
         
     - name: Delete Previous Containers
-      run: kubectl delete all --all
+      run: kubectl delete all --all --grace-period=0 --force
       
     - name: Reset Dapr
       run: |
-        kubectl delete namespace dapr-system
+        kubectl delete namespace dapr-system --grace-period=0 --force
         
     - name: Install Dapr
       uses: dapr/setup-dapr@v1
@@ -201,6 +201,10 @@ jobs:
     - name: Add Storage API Registry to K8 Manifest File
       run: find k8s -name "*" -type f -exec sed -i -e 's/mshrmstudiostorageapi/registry.digitalocean.com\/mshrm-studio-api\/mshrmstudiostorageapi/g' {} \;
 
+    #- name: Add Load Balancer
+    #  run: |
+    #    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+    
     - name: Deploy to Kubernetes
       run: |
         kubectl apply -f ./k8s/
