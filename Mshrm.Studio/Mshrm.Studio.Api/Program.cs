@@ -13,6 +13,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
 ThreadPool.SetMinThreads(workerThreads: 100, completionPortThreads: 100);
 
 builder.ConfigureSettings();
