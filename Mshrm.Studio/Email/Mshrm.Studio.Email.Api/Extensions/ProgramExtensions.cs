@@ -352,10 +352,12 @@ namespace Mshrm.Studio.Email.Api.Extensions
                     IssuerSigningKeyResolver = (token, securityToken, kid, parameters) =>
                     {
                         var securityKeys = new List<SecurityKey>();
-
-                        foreach (var endpoint in openIdOptions.WellKnownEndpoints)
+     
+                            foreach (var endpoint in openIdOptions.WellKnownEndpoints)
                         {
-                            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                            try
+                            {
+                                var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
                                 endpoint,
                                 new OpenIdConnectConfigurationRetriever(),
                                 new HttpDocumentRetriever { RequireHttps = false }
@@ -365,7 +367,13 @@ namespace Mshrm.Studio.Email.Api.Extensions
                             var signingKeys = config.SigningKeys;
 
                             securityKeys.AddRange(signingKeys);
+
+                            }
+                            catch (Exception ex)
+                        {
+                            // Log?
                         }
+                    }
 
                         return securityKeys;
                     }

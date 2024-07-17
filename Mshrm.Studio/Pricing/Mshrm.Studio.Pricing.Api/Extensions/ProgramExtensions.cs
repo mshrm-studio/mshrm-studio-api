@@ -494,16 +494,23 @@ namespace Mshrm.Studio.Pricing.Api.Extensions
 
                         foreach (var endpoint in openIdOptions.WellKnownEndpoints)
                         {
-                            var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
-                                endpoint,
-                                new OpenIdConnectConfigurationRetriever(),
-                                new HttpDocumentRetriever { RequireHttps = false }
-                            );
+                            try
+                            {
+                                var configManager = new ConfigurationManager<OpenIdConnectConfiguration>(
+                                    endpoint,
+                                    new OpenIdConnectConfigurationRetriever(),
+                                    new HttpDocumentRetriever { RequireHttps = false }
+                                );
 
-                            var config = configManager.GetConfigurationAsync().Result;
-                            var signingKeys = config.SigningKeys;
+                                var config = configManager.GetConfigurationAsync().Result;
+                                var signingKeys = config.SigningKeys;
 
-                            securityKeys.AddRange(signingKeys);
+                                securityKeys.AddRange(signingKeys);
+                            }
+                            catch (Exception ex)
+                            {
+                                // Log?
+                            }
                         }
 
                         return securityKeys;

@@ -153,10 +153,10 @@ jobs:
     #        --from-literal=access-token="${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
     
     - name: Set up Kubectl
-      uses: azure/setup-kubectl@v3
+      uses: azure/setup-kubectl@v1
 
     - name: Configure Kubernetes context
-      uses: azure/k8s-set-context@v3
+      uses: azure/k8s-set-context@v1
       with:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
