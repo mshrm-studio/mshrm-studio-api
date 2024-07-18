@@ -54,7 +54,7 @@ namespace Mshrm.Studio.Api.Controllers
         /// <returns>A tool if exists</returns>
         [HttpGet]
         [ProducesResponseType(typeof(ToolResponseDto), StatusCodes.Status200OK)]
-        [Route("guid/{guid}")]
+        [Route("{guid}")]
         public async Task<ActionResult<ToolResponseDto>> GetToolByGuidAsync([FromRoute] Guid guid)
         {
             // Get tool
@@ -113,17 +113,18 @@ namespace Mshrm.Studio.Api.Controllers
         /// <summary>
         /// Update a new tool
         /// </summary>
+        /// <param name="guid">The tools guid id</param>
         /// <param name="model">The tool to update</param>
         /// <returns>The tool</returns>
         [HttpPatch]
         [ProducesResponseType(typeof(ToolResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ToolResponseDto), StatusCodes.Status201Created)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        [Route("{toolGuidId}")]
-        public async Task<ActionResult<ToolResponseDto>> UpdateToolAsync([FromRoute] Guid toolGuidId, [FromBody] UpdateExistingToolRequestDto model)
+        [Route("{guid}")]
+        public async Task<ActionResult<ToolResponseDto>> UpdateToolAsync([FromRoute] Guid guid, [FromBody] UpdateExistingToolRequestDto model)
         {
             // Update tool
-            var updatedTool = await _updateToolsService.UpdateToolAsync(toolGuidId, model.Logo, model.Name, model.Description, model.Link, model.Rank,
+            var updatedTool = await _updateToolsService.UpdateToolAsync(guid, model.Logo, model.Name, model.Description, model.Link, model.Rank,
                 model.ToolType, HttpContext.RequestAborted);
 
             // Map and return

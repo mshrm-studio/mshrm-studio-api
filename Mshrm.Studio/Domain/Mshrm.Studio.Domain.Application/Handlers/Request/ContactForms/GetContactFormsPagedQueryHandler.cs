@@ -36,7 +36,7 @@ namespace Mshrm.Studio.Domain.Api.Handlers.Request.ContactForms
         /// <returns>A page of contact forms</returns>
         public async Task<PagedResult<ContactForm>> Handle(GetContactFormsPagedQuery query, CancellationToken cancellationToken)
         {
-            using (var scope = _tracer.BuildSpan("GetContactFormsAsync_QueryContactFromService").StartActive(true))
+            using (var scope = _tracer.BuildSpan("GetContactFormsPagedQueryHandler").StartActive(true))
             {
                 return await _contactFormRepository.GetContactFormsAsync(query.SearchTerm, query.ContactEmail, query.CreatedFrom, query.CreatedTo, new Page(query.PageNumber, query.PerPage),
                     new SortOrder(query.OrderProperty, query.Order), cancellationToken);

@@ -129,5 +129,13 @@ namespace Mshrm.Studio.Domain.Api.Models.Entity
             Id = id;
             GuidId = Email.GenerateSeededGuid();
         }
+
+        /// <summary>
+        /// Mark a user as deleted
+        /// </summary>
+        public void Delete()
+        {
+            Active = false;
+        }
     }
 }

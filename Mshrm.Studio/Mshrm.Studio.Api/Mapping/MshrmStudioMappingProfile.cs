@@ -42,8 +42,12 @@ namespace Mshrm.Studio.Api.Mapping
 
             #region ContactForms
 
-            CreateMap<PageResultDtoOfContactFormDto, PageResultDto<ContactFormDto>>().ReverseMap();
-            CreateMap<PageResultDtoOfContactFormDto, PageResultDto<ContactFormResponseDto>>().ReverseMap();
+            CreateMap<PageResultDtoOfContactFormDto, PageResultDto<ContactFormDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
+                .ReverseMap();
+            CreateMap<PageResultDtoOfContactFormDto, PageResultDto<ContactFormResponseDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
+                .ReverseMap();
             CreateMap<ContactFormDto, ContactFormResponseDto>().ConvertUsing<ContactFormConverter>();
 
             #endregion
@@ -51,7 +55,9 @@ namespace Mshrm.Studio.Api.Mapping
             #region Assets
 
             CreateMap<AssetDto, AssetResponseDto>().ConvertUsing<AssetConverter>();
-            CreateMap<PageResultDtoOfAssetDto, PageResultDto<AssetResponseDto>>().ReverseMap();
+            CreateMap<PageResultDtoOfAssetDto, PageResultDto<AssetResponseDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
+                .ReverseMap();
             CreateMap<ProviderAssetDto, ProviderAssetResponseDto>().ReverseMap();
 
             #endregion
@@ -60,8 +66,10 @@ namespace Mshrm.Studio.Api.Mapping
 
             CreateMap<ToolDto, ToolResponseDto>().ConvertUsing<ToolConverter>();
             CreateMap<PageResultDtoOfToolDto, PageResultDto<ToolDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
                .ReverseMap();
             CreateMap<PageResultDtoOfToolDto, PageResultDto<ToolResponseDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
               .ReverseMap();
 
             #endregion
@@ -80,9 +88,13 @@ namespace Mshrm.Studio.Api.Mapping
 
             #region Prices
 
-            CreateMap<PageResultDtoOfContactFormDto, PageResultDto<PriceResponseDto>>().ReverseMap();
+            CreateMap<PageResultDtoOfContactFormDto, PageResultDto<PriceResponseDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
+                .ReverseMap();
             CreateMap<AssetPriceDto, PriceResponseDto>().ReverseMap();
-            CreateMap<PageResultDtoOfAssetPriceHistoryDto, PageResultDto<PriceHistoryResponseDto>>().ReverseMap();
+            CreateMap<PageResultDtoOfAssetPriceHistoryDto, PageResultDto<PriceHistoryResponseDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.PageNumber <= 0 ? 1 : x.PageNumber))
+                .ReverseMap();
             CreateMap<AssetPriceHistoryDto, PriceHistoryResponseDto>().ReverseMap();
 
             #endregion

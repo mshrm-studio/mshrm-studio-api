@@ -61,8 +61,13 @@ namespace Mshrm.Studio.Domain.Api.Repositories
             // Get existing user
             var existingUser = GetAll().FirstOrDefault(x => x.Id == id);
 
-            // Update
-            existingUser.UpdateIp(ip);
+            // Update IP if provided
+            if (string.IsNullOrEmpty(ip))
+            {
+                existingUser.UpdateIp(ip);
+            }
+
+            // Update name
             existingUser.UpdateName(firstName, lastName);
 
             Update(existingUser);
@@ -180,6 +185,25 @@ namespace Mshrm.Studio.Domain.Api.Repositories
             };
         }
 
+        /// <summary>
+        /// Delete an existing user
+        /// </summary>
+        /// <param name="id">The user to delete</param>
+        /// <param name="cancellationToken">A cancellation token</param>
+        /// <returns>True if successful</returns>
+        public async Task<bool> DeleteUserAsync(int id, CancellationToken cancellationToken)
+        {
+            // Get existing user
+            var existingUser = GetAll().FirstOrDefault(x => x.Id == id);
+
+            // Update name
+            existingUser.Delete();
+
+            Update(existingUser);
+            await SaveAsync(cancellationToken);
+
+            return true;
+        }
 
         #region Helpers
 

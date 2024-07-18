@@ -67,7 +67,11 @@ namespace Mshrm.Studio.Auth.Api.Mapping
             CreateMap<ClientWithSecret, CreatedClientResponseDto>().ReverseMap();
             CreateMap<ClientSecret, ClientSecretResponseDto>().ReverseMap();
             CreateMap<CreateClientRequestDto, CreateClientCommand>().ReverseMap();
-            CreateMap<PagedResult<Client>, PageResultDto<ClientResponseDto>>();
+            CreateMap<PagedResult<Client>, PageResultDto<ClientResponseDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
+                .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
+                .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
+                .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName));
             CreateMap<ClientPostLogoutRedirectUri, PostLogoutRedirectUriDto>().ReverseMap();
             CreateMap<ClientRedirectUri, ClientRedirectUriDto>().ReverseMap();
 
@@ -79,7 +83,10 @@ namespace Mshrm.Studio.Auth.Api.Mapping
             CreateMap<ApiScope, ApiScopeResponseDto>().ReverseMap();
             CreateMap<ApiScopeClaim, ApiScopeUserClaimResponseDto>().ReverseMap();
             CreateMap<CreateApiScopeRequestDto, CreateApiScopeCommand>().ReverseMap();
-            CreateMap<PagedResult<ApiScope>, PageResultDto<ApiScopeResponseDto>>();
+            CreateMap<PagedResult<ApiScope>, PageResultDto<ApiScopeResponseDto>>().ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
+                .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
+                .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
+                .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName));
 
             #endregion
         }

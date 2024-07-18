@@ -20,7 +20,10 @@ namespace Mshrm.Studio.Shared.Extensions
         /// <returns>The enumerated set</returns>
         public static async Task<List<T>> PageAsync<T>(this IQueryable<T> set, Page page, CancellationToken cancellationToken)
         {
-            return await set.Skip((int)(page.PageNumber * page.PerPage))
+            // Need to ensure page number starts from 0
+            var pageNumber = (page.PageNumber - 1) <= 0 ? 0 : page.PageNumber - 1;
+
+            return await set.Skip((int)(pageNumber * page.PerPage))
                 .Take((int)page.PerPage)
                 .ToListAsync(cancellationToken);
         }

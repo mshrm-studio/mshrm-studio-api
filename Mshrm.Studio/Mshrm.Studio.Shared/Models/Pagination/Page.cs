@@ -14,12 +14,12 @@ namespace Mshrm.Studio.Shared.Models.Pagination
         /// <summary>
         /// This is the page number of results to get (starts at 0)
         /// </summary>
-        public uint PageNumber { get; set; }
+        public int PageNumber { get; }
 
         /// <summary>
         /// How many items are returned per page
         /// </summary>
-        public uint PerPage { get; set; }
+        public int PerPage { get; }
 
         /// <summary>
         /// Constructor to setup class
@@ -27,8 +27,8 @@ namespace Mshrm.Studio.Shared.Models.Pagination
         public Page(uint pageNumber, uint perPage)
         {
             // Ensure 0 is start for entity framework
-            PageNumber = pageNumber == 0 ? 0 : pageNumber - 1;
-            PerPage = perPage;
+            PageNumber = (int)pageNumber;
+            PerPage = (int)perPage;
         }
     }
 }

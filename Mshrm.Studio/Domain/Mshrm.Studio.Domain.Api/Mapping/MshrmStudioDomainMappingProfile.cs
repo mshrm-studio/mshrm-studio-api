@@ -5,6 +5,7 @@ using Mshrm.Studio.Domain.Api.Models.Dtos.ContactForms;
 using Mshrm.Studio.Domain.Api.Models.Dtos.Tools;
 using Mshrm.Studio.Domain.Api.Models.Dtos.Users;
 using Mshrm.Studio.Domain.Api.Models.Entity;
+using Mshrm.Studio.Domain.Application.Dtos.Users;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
 
@@ -32,6 +33,7 @@ namespace Mshrm.Studio.Domain.Api.Mapping
 
             CreateMap<User,DomainUserDto>().ReverseMap();
             CreateMap<CreateDomainUserDto, CreateUserCommand>().ReverseMap();
+            CreateMap<UpdateUserDto, UpdateUserCommand>().ReverseMap();
 
             #endregion
 
@@ -51,7 +53,12 @@ namespace Mshrm.Studio.Domain.Api.Mapping
             #region Tools
 
             CreateMap<Tool, ToolDto>();
-            CreateMap<PagedResult<Tool>, PageResultDto<ToolDto>>().ReverseMap();
+            CreateMap<PagedResult<Tool>, PageResultDto<ToolDto>>()
+                .ForMember(dest => dest.PageNumber, src => src.MapFrom(x => x.Page.PageNumber))
+                .ForMember(dest => dest.PerPage, src => src.MapFrom(x => x.Page.PerPage))
+                .ForMember(dest => dest.Order, src => src.MapFrom(x => x.SortOrder.Order))
+                .ForMember(dest => dest.PropertyName, src => src.MapFrom(x => x.SortOrder.PropertyName))
+                .ReverseMap();
             CreateMap<CreateToolDto, CreateToolCommand>().ReverseMap();
             CreateMap<UpdateToolDto, UpdateToolCommand>().ReverseMap();
 

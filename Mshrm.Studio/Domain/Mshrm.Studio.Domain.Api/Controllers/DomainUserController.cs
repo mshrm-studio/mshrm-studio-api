@@ -14,6 +14,7 @@ using MediatR;
 using Mshrm.Studio.Domain.Api.Models.CQRS.ContactForms.Queries;
 using Mshrm.Studio.Shared.Models.Dtos;
 using Mshrm.Studio.Shared.Models.Pagination;
+using Mshrm.Studio.Domain.Application.Dtos.Users;
 
 namespace Mshrm.Studio.Domain.Api.Controllers
 {
@@ -22,7 +23,7 @@ namespace Mshrm.Studio.Domain.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("api/v1/users")]
-    public class DomainUserController : ControllerBase
+    public class DomainUserController : BaseDomainController
     {
         private readonly ILogger<DomainUserController> _logger;
         private readonly IMapper _mapper;
@@ -148,6 +149,48 @@ namespace Mshrm.Studio.Domain.Api.Controllers
 
             // Map and return
             return _mapper.Map<DomainUserDto>(user);
+        }
+
+        /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="guid">The user to update</param>
+        /// <param name="model">The updated users information</param>
+        /// <returns>The updated user</returns>
+        [HttpPatch]
+        [ProducesResponseType(typeof(DomainUserDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DomainUserDto), StatusCodes.Status201Created)]
+        [Route("guid/{guid}")]
+        public async Task<ActionResult<DomainUserDto>> UpdateUserAsync([FromRoute] Guid guid, [FromBody] UpdateUserDto model)
+        {
+            // Map to command
+            var command = _mapper.Map<UpdateUserCommand>(model);
+            command.UserId = guid;
+            command.CallingUsersEmail = GetLoggedInUsersUserName();
+            command.CallingUsersRoleType = GetLoggedInUsersRole();
+
+            // Make request
+            var user = await _mediator.Send<User>(command, Request.HttpContext.RequestAborted);
+
+            // Map and return
+            return Ok(_mapper.Map<DomainUserDto>(user));
+        }
+
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="guid">The user to delete</param>
+        /// <returns>If the user was deleted</returns>
+        [HttpDelete]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [Route("guid/{guid}")]
+        public async Task<ActionResult<DomainUserDto>> DeleteUserAsync([FromRoute] Guid guid)
+        {
+            // Make request
+            var deleted = await _mediator.Send<bool>(new DeleteUserCommand() { Guid = guid }, Request.HttpContext.RequestAborted);
+
+            // Map and return
+            return Ok(deleted);
         }
     }
 }

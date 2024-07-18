@@ -284,6 +284,8 @@ namespace Mshrm.Studio.Domain.Api.Extensions
             builder.Services.AddScoped<IRequestHandler<GetContactFormByGuidQuery, ContactForm>, GetContactFormByGuidQueryHandler>();
 
             builder.Services.AddScoped<IRequestHandler<CreateUserCommand, User>, CreateUserCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<UpdateUserCommand, User>, UpdateUserCommandHandler>();
+            builder.Services.AddScoped<IRequestHandler<DeleteUserCommand, bool>, DeleteUserCommandHandler>();
             builder.Services.AddScoped<IRequestHandler<GetUserByGuidQuery, User>, GetUserByGuidQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<GetUserByIdQuery, User>, GetUserByIdQueryHandler>();
             builder.Services.AddScoped<IRequestHandler<GetUserByEmailQuery, User>, GetUserByEmailQueryHandler>();

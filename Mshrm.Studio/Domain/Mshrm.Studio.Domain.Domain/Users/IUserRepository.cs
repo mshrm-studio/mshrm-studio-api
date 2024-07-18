@@ -70,5 +70,13 @@ namespace Mshrm.Studio.Domain.Domain.Users
         /// <returns>Page of users</returns>
         public Task<PagedResult<User>> GetUsersPagedAsync(string? searchTerm, string? email, string? firstName, string? lastName, string? fullName, Page page,
             SortOrder sortOrder, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete an existing user
+        /// </summary>
+        /// <param name="id">The user to delete</param>
+        /// <param name="cancellationToken">A cancellation token</param>
+        /// <returns>True if successful</returns>
+        Task<bool> DeleteUserAsync(int id, CancellationToken cancellationToken);
     }
 }

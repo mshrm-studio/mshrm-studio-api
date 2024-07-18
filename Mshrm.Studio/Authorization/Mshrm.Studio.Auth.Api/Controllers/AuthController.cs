@@ -48,7 +48,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// </summary>
         /// <param name="model">Password update method</param>
         /// <returns>Ok</returns>
-        [HttpPatch]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("password")]
@@ -69,7 +69,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// </summary>
         /// <param name="model">The reset data</param>
         /// <returns>Ok</returns>
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("password/reset/token")]
         public async Task<ActionResult> RequestPasswordResetTokenAsync([FromBody] PasswordResetTokenRequestDto model)
@@ -118,7 +118,7 @@ namespace Mshrm.Studio.Auth.Api.Controllers
         /// <returns>If the confirmation code was resent</returns>
         [HttpPost]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [Route("confirmation")]
+        [Route("confirmation/resend")]
         public async Task<ActionResult<bool>> ResendConfirmationTokenAsync([FromBody] ResendConfirmationRequestDto model)
         {
             var resent = await _mediator.Send<bool>(_mapper.Map<ResendUserConfirmationCommand>(model), Request.HttpContext.RequestAborted);

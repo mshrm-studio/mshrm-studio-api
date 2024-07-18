@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.12" />
+    <PackageReference Include="Mshrm.Studio.Shared" Version="1.0.17" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Authorization\Mshrm.Studio.Auth.Domain\Mshrm.Studio.Auth.Domain.csproj" />
   </ItemGroup>
 
 </Project>

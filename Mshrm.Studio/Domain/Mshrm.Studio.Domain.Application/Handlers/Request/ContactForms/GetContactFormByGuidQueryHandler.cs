@@ -38,7 +38,7 @@ namespace Mshrm.Studio.Domain.Api.Handlers.Request.ContactForms
         /// <exception cref="NotFoundException">Throw if contact form doesn't exist</exception>
         public async Task<ContactForm> Handle(GetContactFormByGuidQuery query, CancellationToken cancellationToken)
         {
-            using (var scope = _tracer.BuildSpan("GetContactFormAsync_QueryContactFromService").StartActive(true))
+            using (var scope = _tracer.BuildSpan("GetContactFormByGuidQueryHandler").StartActive(true))
             {
                 var contactForm = await _contactFormRepository.GetContactFormByGuidAsync(query.GuidId, cancellationToken);
                 if (contactForm == null)

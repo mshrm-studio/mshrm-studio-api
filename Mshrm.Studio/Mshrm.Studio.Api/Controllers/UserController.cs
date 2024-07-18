@@ -54,7 +54,7 @@ namespace Mshrm.Studio.Api.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ProducesResponseType(typeof(MshrmStudioUserResponseDto), StatusCodes.Status200OK)]
-        [Route("guid/{guid}")]
+        [Route("{guid}")]
         public async Task<ActionResult<MshrmStudioUserResponseDto?>> GetUserAsync([FromRoute] Guid guid)
         {
             // Get user
@@ -71,7 +71,7 @@ namespace Mshrm.Studio.Api.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ProducesResponseType(typeof(MshrmStudioUserResponseDto), StatusCodes.Status200OK)]
-        [Route("")]
+        [Route("profile")]
         public async Task<ActionResult<MshrmStudioUserResponseDto?>> GetLoggedInUserAsync()
         {
             // Get user

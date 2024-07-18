@@ -60,7 +60,7 @@ namespace Mshrm.Studio.Auth.Application.Handlers.Users
                 throw new UnprocessableEntityException("User already exists", FailureCode.UserAlreadyExists);
 
             // Otherwise create new user
-            var newIdentityUser = await _identityUserService.CreateIdentityUserAsync(command.Email, command.FirstName, command.LastName, command.Password, null, new List<RoleType>() { command.Role }, true);
+            var newIdentityUser = await _identityUserService.CreateIdentityUserAsync(command.Email, command.FirstName?.Trim(), command.LastName?.Trim(), command.Password, null, new List<RoleType>() { command.Role }, true);
 
             return newIdentityUser;
         }

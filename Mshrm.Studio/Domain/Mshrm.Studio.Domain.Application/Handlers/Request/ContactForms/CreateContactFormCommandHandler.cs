@@ -40,7 +40,7 @@ namespace Mshrm.Studio.Domain.Api.Handlers.Request.ContactForms
         /// <returns>The new contact form</returns>
         public async Task<ContactForm> Handle(CreateContactFormCommand command, CancellationToken cancellationToken)
         {
-            using (var scope = _tracer.BuildSpan("CreateContactFormAsync_CreateContactFormService").StartActive(true))
+            using (var scope = _tracer.BuildSpan("CreateContactFormCommandHandler").StartActive(true))
             {
                 var attachmentGuidIds = command.AttachmentKeys.Select(x => Guid.Parse(x)).ToList();
 

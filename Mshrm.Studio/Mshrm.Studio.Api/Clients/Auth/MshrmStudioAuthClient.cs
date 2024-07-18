@@ -609,7 +609,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
@@ -696,7 +696,7 @@ namespace Mshrm.Studio.Api.Clients.Auth
                     var content_ = new System.Net.Http.StringContent(json_);
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
-                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
@@ -974,8 +974,8 @@ namespace Mshrm.Studio.Api.Clients.Auth
 
                     var urlBuilder_ = new System.Text.StringBuilder();
                     if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
-                    // Operation Path: "api/v1/auth/confirmation"
-                    urlBuilder_.Append("api/v1/auth/confirmation");
+                    // Operation Path: "api/v1/auth/confirmation/resend"
+                    urlBuilder_.Append("api/v1/auth/confirmation/resend");
 
                     PrepareRequest(client_, request_, urlBuilder_);
 
@@ -2891,6 +2891,8 @@ namespace Mshrm.Studio.Api.Clients.Auth
         private bool _enabled;
         private System.Collections.Generic.List<ClientSecretResponseDto> _clientSecrets = new System.Collections.Generic.List<ClientSecretResponseDto>();
         private System.Collections.Generic.List<AllowedGrantType> _allowedGrantTypes = new System.Collections.Generic.List<AllowedGrantType>();
+        private System.Collections.Generic.List<ClientRedirectUriDto> _redirectUris = new System.Collections.Generic.List<ClientRedirectUriDto>();
+        private System.Collections.Generic.List<PostLogoutRedirectUriDto> _postLogoutRedirectUris = new System.Collections.Generic.List<PostLogoutRedirectUriDto>();
 
         [Newtonsoft.Json.JsonProperty("clientId", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -2982,6 +2984,38 @@ namespace Mshrm.Studio.Api.Clients.Auth
                 if (_allowedGrantTypes != value)
                 {
                     _allowedGrantTypes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("redirectUris", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.List<ClientRedirectUriDto> RedirectUris
+        {
+            get { return _redirectUris; }
+
+            set
+            {
+                if (_redirectUris != value)
+                {
+                    _redirectUris = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("postLogoutRedirectUris", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.List<PostLogoutRedirectUriDto> PostLogoutRedirectUris
+        {
+            get { return _postLogoutRedirectUris; }
+
+            set
+            {
+                if (_postLogoutRedirectUris != value)
+                {
+                    _postLogoutRedirectUris = value;
                     RaisePropertyChanged();
                 }
             }
@@ -3123,12 +3157,102 @@ namespace Mshrm.Studio.Api.Clients.Auth
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class ClientRedirectUriDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _redirectUri;
+
+        [Newtonsoft.Json.JsonProperty("redirectUri", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string RedirectUri
+        {
+            get { return _redirectUri; }
+
+            set
+            {
+                if (_redirectUri != value)
+                {
+                    _redirectUri = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static ClientRedirectUriDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ClientRedirectUriDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class PostLogoutRedirectUriDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _postLogoutRedirectUri;
+
+        [Newtonsoft.Json.JsonProperty("postLogoutRedirectUri", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string PostLogoutRedirectUri
+        {
+            get { return _postLogoutRedirectUri; }
+
+            set
+            {
+                if (_postLogoutRedirectUri != value)
+                {
+                    _postLogoutRedirectUri = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static PostLogoutRedirectUriDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<PostLogoutRedirectUriDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
     public partial class CreateClientRequestDto : System.ComponentModel.INotifyPropertyChanged
     {
         private string _idName;
         private string _clientName;
         private System.Collections.Generic.List<AllowedGrantType> _grantTypes = new System.Collections.Generic.List<AllowedGrantType>();
         private System.Collections.Generic.List<string> _scopes = new System.Collections.Generic.List<string>();
+        private System.Collections.Generic.List<string> _redirectUris;
+        private System.Collections.Generic.List<string> _postLogoutRedirectUris;
 
         [Newtonsoft.Json.JsonProperty("idName", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
@@ -3189,6 +3313,36 @@ namespace Mshrm.Studio.Api.Clients.Auth
                 if (_scopes != value)
                 {
                     _scopes = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("redirectUris", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string> RedirectUris
+        {
+            get { return _redirectUris; }
+
+            set
+            {
+                if (_redirectUris != value)
+                {
+                    _redirectUris = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("postLogoutRedirectUris", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string> PostLogoutRedirectUris
+        {
+            get { return _postLogoutRedirectUris; }
+
+            set
+            {
+                if (_postLogoutRedirectUris != value)
+                {
+                    _postLogoutRedirectUris = value;
                     RaisePropertyChanged();
                 }
             }

@@ -1257,6 +1257,42 @@ namespace Mshrm.Studio.Api.Clients.Domain
         System.Threading.Tasks.Task<DomainUserDto> GetUserByGuidAsync(System.Guid guid, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="guid">The user to update</param>
+        /// <param name="model">The updated users information</param>
+        /// <returns>The updated user</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<DomainUserDto> UpdateUserAsync(System.Guid guid, UpdateUserDto model);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="guid">The user to update</param>
+        /// <param name="model">The updated users information</param>
+        /// <returns>The updated user</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<DomainUserDto> UpdateUserAsync(System.Guid guid, UpdateUserDto model, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="guid">The user to delete</param>
+        /// <returns>If the user was deleted</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<bool> DeleteUserAsync(System.Guid guid);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="guid">The user to delete</param>
+        /// <returns>If the user was deleted</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<bool> DeleteUserAsync(System.Guid guid, System.Threading.CancellationToken cancellationToken);
+
+        /// <summary>
         /// Get a user by email
         /// </summary>
         /// <param name="email">The email identifier</param>
@@ -1451,6 +1487,205 @@ namespace Mshrm.Studio.Api.Clients.Domain
                         if (status_ == 200)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<DomainUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new DomainApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new DomainApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="guid">The user to update</param>
+        /// <param name="model">The updated users information</param>
+        /// <returns>The updated user</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<DomainUserDto> UpdateUserAsync(System.Guid guid, UpdateUserDto model)
+        {
+            return UpdateUserAsync(guid, model, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Updates an existing user
+        /// </summary>
+        /// <param name="guid">The user to update</param>
+        /// <param name="model">The updated users information</param>
+        /// <returns>The updated user</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<DomainUserDto> UpdateUserAsync(System.Guid guid, UpdateUserDto model, System.Threading.CancellationToken cancellationToken)
+        {
+            if (guid == null)
+                throw new System.ArgumentNullException("guid");
+
+            if (model == null)
+                throw new System.ArgumentNullException("model");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(model, _requestSettings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PATCH");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/users/guid/{guid}"
+                    urlBuilder_.Append("api/v1/users/guid/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(guid, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<DomainUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new DomainApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 201)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<DomainUserDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new DomainApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new DomainApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="guid">The user to delete</param>
+        /// <returns>If the user was deleted</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<bool> DeleteUserAsync(System.Guid guid)
+        {
+            return DeleteUserAsync(guid, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Deletes a user
+        /// </summary>
+        /// <param name="guid">The user to delete</param>
+        /// <returns>If the user was deleted</returns>
+        /// <exception cref="DomainApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<bool> DeleteUserAsync(System.Guid guid, System.Threading.CancellationToken cancellationToken)
+        {
+            if (guid == null)
+                throw new System.ArgumentNullException("guid");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var urlBuilder_ = new System.Text.StringBuilder();
+                    if (!string.IsNullOrEmpty(_baseUrl)) urlBuilder_.Append(_baseUrl);
+                    // Operation Path: "api/v1/users/guid/{guid}"
+                    urlBuilder_.Append("api/v1/users/guid/");
+                    urlBuilder_.Append(System.Uri.EscapeDataString(ConvertToString(guid, System.Globalization.CultureInfo.InvariantCulture)));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.IEnumerable<string>>();
+                        foreach (var item_ in response_.Headers)
+                            headers_[item_.Key] = item_.Value;
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<bool>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new DomainApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -3310,6 +3545,67 @@ namespace Mshrm.Studio.Api.Clients.Domain
         {
 
             return Newtonsoft.Json.JsonConvert.DeserializeObject<CreateDomainUserDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "14.0.3.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    public partial class UpdateUserDto : System.ComponentModel.INotifyPropertyChanged
+    {
+        private string _firstName;
+        private string _lastName;
+
+        [Newtonsoft.Json.JsonProperty("firstName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string FirstName
+        {
+            get { return _firstName; }
+
+            set
+            {
+                if (_firstName != value)
+                {
+                    _firstName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        [Newtonsoft.Json.JsonProperty("lastName", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string LastName
+        {
+            get { return _lastName; }
+
+            set
+            {
+                if (_lastName != value)
+                {
+                    _lastName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public string ToJson()
+        {
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this, new Newtonsoft.Json.JsonSerializerSettings());
+
+        }
+        public static UpdateUserDto FromJson(string data)
+        {
+
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateUserDto>(data, new Newtonsoft.Json.JsonSerializerSettings());
 
         }
 
